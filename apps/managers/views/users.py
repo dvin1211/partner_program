@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.db.models import Q
 
 from apps.users.models import User
+from apps.managers.models import ManagerActivity
 from utils import _paginate
 
 
@@ -34,10 +35,14 @@ def manager_users(request):
         users = users.filter(user_type=users_type_q)
     
     users = _paginate(request,users,count,"users_page")
+
+    notifications_count = ManagerActivity.objects.filter(manager=user.managerprofile,is_read=False).count()
     
     context = {
         "user": request.user,
-                
+        
+        "notifications_count":notifications_count,
+
         "users":users,
         "users_type_q":users_type_q,
         "users_search_q":users_search_q,

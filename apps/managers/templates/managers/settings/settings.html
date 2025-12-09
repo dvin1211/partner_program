@@ -1,0 +1,263 @@
+{% extends "lk/lk.html" %}
+{% load static %}
+{% load tz %}
+{% load django_vite %}
+{% vite_hmr_client %}
+
+{% block head_js_scripts %}
+{% vite_asset 'apps/managers/assets/js/settings/settings.js' %}
+{% endblock head_js_scripts %}
+
+{% block title %}Настройки{% endblock title %}
+
+{% block header %}
+{% include "managers/header/header.html" %}
+{% endblock %}
+
+{% block main_class %}bg-base-200 min-h-screen{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-6 max-w-7xl">
+    <div id="settings">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-base-content mb-2">Настройки</h1>
+            <p class="text-base-content/60">Управление аккаунтом и настройки профиля</p>
+        </div>
+        {% if messages %}
+        <div id="settings_messages" class="mt-4 mb-4 space-y-2 transition-all duration-500 transform">
+            {% for message in messages %}
+            {% if "profile_update_error" in message.tags %}
+            <div class="alert-message alert alert-error mb-4">
+                <i class="fas fa-exclamation-circle mr-2"></i>
+                <span>{{ message }}</span>
+            </div>
+            {% endif %}
+            {% if "profile_update_success" in message.tags %}
+            <div class="alert-message alert alert-success mb-4">
+                <i class="fas fa-check-circle mr-2"></i>
+                <span>{{ message }}</span>
+            </div>
+            {% endif %}
+
+            {% if "password_update_error" in message.tags %}
+            <div class="alert-message alert alert-error mb-4">
+                <div>
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    <span>{{ message }}</span>
+                </div>
+            </div>
+            {% endif %}
+            {% if "password_update_success" in message.tags %}
+            <div class="alert-message alert alert-success mb-4">
+                <div>
+                    <i class="fas fa-check-circle mr-2"></i>
+                    <span>{{ message }}</span>
+                </div>
+            </div>
+            {% endif %}
+            {% if "update_notifications_success" in message.tags %}
+            <div class="alert-message alert alert-success mb-4">
+                <i class="fas fa-check-circle mr-2"></i>
+                <span>{{ message }}</span>
+            </div>
+            {% endif %}
+
+            {% if "payout_settings_success" in message.tags %}
+            <div class="alert-message alert alert-success mb-4">
+                <i class="fas fa-check-circle mr-2"></i>
+                <span>{{ message }}</span>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Profile Settings -->
+                <div class="card bg-base-100 shadow-lg">
+                    <div class="card-body p-4 sm:p-6">
+                        <h2 class="card-title text-xl sm:text-2xl mb-4 sm:mb-6">
+                            <i class="fas fa-user text-primary mr-2"></i>
+                            Профиль
+                        </h2>
+
+                        <form method="POST" action="{% url 'update_profile' %}" id="profile_settings_form" class="space-y-4">
+                            {% csrf_token %}
+                            <input name="profile_submit" type="hidden" value="1" />
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- Имя -->
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text">Имя</span>
+                                    </label>
+                                    <input name="first_name" type="text" value="{{ request.user.first_name|default:'' }}"
+                                           class="input input-bordered w-full" required />
+                                </div>
+
+                                <!-- Фамилия -->
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text">Фамилия</span>
+                                    </label>
+                                    <input name="last_name" type="text" value="{{ request.user.last_name|default:'' }}"
+                                           class="input input-bordered w-full" required />
+                                </div>
+
+                                <!-- Отчество -->
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text">Отчество</span>
+                                    </label>
+                                    <input name="middle_name" type="text" value="{{ request.user.middle_name|default:'' }}"
+                                           class="input input-bordered w-full" required />
+                                </div>
+
+                                <!-- Email -->
+                                <div class="form-control sm:col-span-2">
+                                    <label class="label">
+                                        <span class="label-text">Email</span>
+                                    </label>
+                                    <input name="email" type="email" value="{{ request.user.email|default:'' }}"
+                                           class="input input-bordered w-full" required />
+                                </div>
+
+                                <!-- Телефон -->
+                                <div class="form-control sm:col-span-2">
+                                    <label class="label">
+                                        <span class="label-text">Телефон</span>
+                                    </label>
+                                    <input name="phone" type="tel" value="{{ request.user.phone|default:'' }}"
+                                           class="input input-bordered w-full" required />
+                                    <label class="label">
+                                        <span class="label-text-alt">Формат: +7 (XXX) XXX-XX-XX</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- О себе -->
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">
+                                        О себе
+                                    </span>
+                                </label>
+
+                                <div class="relative group">
+                                    <textarea name="description" class="textarea w-full"
+                                              placeholder="Расскажите о своих интересах, опыте и целях..."
+                                              data-min-length="20">{{ request.user.description|default:'' }}</textarea>
+                                </div>
+                            </div>
+
+                            <!-- Кнопка сохранения -->
+                            <div class="flex justify-end mt-6">
+                                <button type="submit" class="btn btn-primary w-full sm:w-auto">
+                                    <i class="fas fa-save mr-2"></i>
+                                    Сохранить изменения
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Security Settings -->
+                <div class="card bg-base-100 shadow-lg">
+                    <div class="card-body p-6">
+                        <h2 class="card-title text-xl sm:text-2xl mb-6 flex items-center">
+                            <i class="fas fa-shield-alt text-primary mr-3 text-2xl"></i>
+                            <span>
+                                Безопасность аккаунта
+                            </span>
+                        </h2>
+
+                        <form id="change_password_form" action="{% url 'update_password' %}" class="space-y-6" method="POST">
+                            {% csrf_token %}
+                            <input name="password_submit" value="1" class="hidden">
+
+                            <!-- Текущий пароль -->
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">
+                                        Текущий пароль
+                                    </span>
+                                </label>
+                                <div class="relative">
+                                    <input name="old_password" type="password" class="input input-bordered w-full"
+                                           placeholder="••••••••" required />
+                                </div>
+                            </div>
+
+                            <!-- Новый пароль -->
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">
+                                        Новый пароль
+                                    </span>
+                                </label>
+                                <div class="relative">
+                                    <input name="password1" type="password" class="input input-bordered w-full"
+                                           placeholder="Придумайте надежный пароль" data-min-length="8" required />
+                                </div>
+                            </div>
+
+                            <!-- Подтверждение пароля -->
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">
+                                        Подтвердите пароль
+                                    </span>
+                                </label>
+                                <div class="relative">
+                                    <input name="password2" type="password" class="input input-bordered w-full"
+                                           placeholder="Повторите новый пароль" required />
+                                </div>
+                                <div class="password-match mt-1 hidden text-sm">
+                                    <i class="fas fa-check-circle text-success mr-1"></i>
+                                    <span class="text-success">Пароли совпадают</span>
+                                </div>
+                            </div>
+
+                            <!-- Кнопка отправки -->
+                            <div class="card-actions justify-end mt-8">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-key mr-2"></i>
+                                    Обновить пароль
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Notification Settings -->
+                <div class="card bg-base-100 shadow-lg">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">
+                            <i class="fas fa-bell text-primary mr-2"></i>
+                            Уведомления
+                        </h2>
+                        <form class="space-y-4" method="post" action="{% url 'update_email_notifications' %}">
+                            {% csrf_token %}
+                            <div class="form-control">
+                                <label class="label cursor-pointer flex justify-between">
+                                    <span class="label-text">Email уведомления</span>
+                                    <input name="email_notifications" type="checkbox" class="toggle toggle-primary" {% if user.email_notifications %} checked {% endif %} />
+                                </label>
+                            </div>
+                            <div class="card-actions flex justify-end mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save mr-2"></i>
+                                    Сохранить изменения
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

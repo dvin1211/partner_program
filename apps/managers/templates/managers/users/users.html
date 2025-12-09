@@ -126,16 +126,22 @@
                                             <i class="fas fa-ellipsis-h"></i>
                                         </button>
                                         <ul tabindex="0" class="dropdown-content menu shadow bg-base-100 rounded-box w-52">
-                                            <li><a href="{% url user.user_type user.id %}"><i class="fas fa-eye"></i>
-                                                    Просмотр</a></li>
-                                            <!-- <li><a><i class="fas fa-edit mr-2"></i> Редактировать</a></li> -->
+                                            <li><a href="{% url user.user_type user.id %}"><i class="fas fa-eye"></i>Просмотр</a></li>
+                                            <li class="send_email"
+                                                data-user-id="{{ user.id }}"
+                                                data-user-full-name="{{ user.get_full_name }}"
+                                                data-user-email="{{ user.email }}">
+                                                <a>
+                                                    <i class="fa fa-envelope"></i>Отправить сообщение
+                                                </a>
+                                            </li>
                                             {% if user.advertiserprofile %}
                                             <li><a href="{% url 'advertiser_legal_details' user.id %}"><i class="fa-solid fa-file"></i>Реквизиты</a></li>
                                             {% endif %}
                                             {% if not user.is_blocked %}
                                             <li class="block_user" data-user-id="{{ user.id }}" data-user-email="{{ user.email }}" data-user-full-name="{{ user.get_full_name }}">
                                                 <a class="text-error">
-                                                    <i class="fas fa-ban"></i> Заблокировать
+                                                    <i class="fas fa-ban"></i>Заблокировать
                                                 </a>
                                             </li>
                                             {% else %}
@@ -146,7 +152,7 @@
                                                 data-user-email="{{ user.email }}"
                                                 data-user-full-name="{{ user.get_full_name }}">
                                                 <a class="text-blue-500">
-                                                    <i class="fas fa-ellipsis-h"></i> Разблокировать
+                                                    <i class="fas fa-ellipsis-h"></i>Разблокировать
                                                 </a>
                                             </li>
                                             {% endif %}
@@ -208,6 +214,7 @@
     </div>
 </div>
 
+<div id="toast-container" class="toast toast-top toast-end z-50"></div>
 
 <!-- Модальное окно блокировки пользователя -->
 {% include "managers/users/modals/block_user.html" %}
@@ -215,6 +222,8 @@
 <!-- Модальное окно блокировки пользователя -->
 {% include "managers/users/modals/unblock_user.html" %}
 
+<!-- Модальное окно отправки email пользователю -->
+{% include "managers/users/modals/send_mail.html" %}
 <script>
     const msg = document.querySelectorAll('.alert-message').forEach(element => {
         setTimeout(function () {

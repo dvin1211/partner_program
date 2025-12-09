@@ -4,7 +4,6 @@ from django.views.decorators.http import require_POST
 
 from apps.core.models import UserReview
 
-@login_required
 @require_POST
 def make_review(request):
     """Оставить отзыв на сайте"""

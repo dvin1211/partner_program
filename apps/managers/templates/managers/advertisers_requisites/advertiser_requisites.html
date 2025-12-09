@@ -34,7 +34,7 @@
             <div class="card-body">
                 <!-- Ссылка на рекламодателя -->
                 <div class="flex items-center justify-between mb-6">
-                    <h2 class="card-title text-2xl">{{ advertiser.advertiserrequisites.organization_name }}</h2>
+                    <h2 class="card-title text-2xl">{{ advertiser.advertiserrequisites.organization_name|default:"Не заполнено" }}</h2>
                     <a href="{% url 'advertiser' advertiser.id %}" 
                        class="btn btn-primary btn-sm">
                         👤 Перейти к рекламодателю
@@ -53,7 +53,7 @@
                                 <span class="label-text font-semibold">Ответственное лицо</span>
                             </label>
                             <div class="input input-bordered flex items-center h-12">
-                                {{ advertiser.advertiserrequisites.responsible_person }}
+                                {{ advertiser.advertiserrequisites.responsible_person|default:"Не заполнено" }}
                             </div>
                         </div>
 
@@ -63,19 +63,15 @@
                                 <span class="label-text font-semibold">Контактная информация</span>
                             </label>
                             <div class="space-y-2">
-                                {% if advertiser.advertiserrequisites.phone %}
                                 <div class="flex items-center gap-2">
                                     <span class="text-primary">📞</span>
-                                    <span>{{ advertiser.advertiserrequisites.phone }}</span>
+                                    <span>{{ advertiser.advertiserrequisites.phone|default:"Не заполнено" }}</span>
                                 </div>
-                                {% endif %}
                                 
-                                {% if advertiser.advertiserrequisites.email %}
                                 <div class="flex items-center gap-2">
                                     <span class="text-primary">✉️</span>
-                                    <span>{{ advertiser.advertiserrequisites.email }}</span>
+                                    <span>{{ advertiser.advertiserrequisites.email|default:"Не заполнено" }}</span>
                                 </div>
-                                {% endif %}
                             </div>
                         </div>
 
@@ -86,7 +82,7 @@
                                 <span class="label-text font-semibold">Юридический адрес</span>
                             </label>
                             <div class="textarea textarea-bordered h-20">
-                                {{ advertiser.advertiserrequisites.legal_address }}
+                                {{ advertiser.advertiserrequisites.legal_address|default:"Не заполнено" }}
                             </div>
                         </div>
                         {% endif %}
@@ -102,11 +98,11 @@
                             <div class="space-y-2">
                                 <div class="flex justify-between items-center">
                                     <span class="text-sm">ОГРН:</span>
-                                    <span class="badge badge-primary">{{ advertiser.advertiserrequisites.ogrn }}</span>
+                                    <span class="badge badge-primary">{{ advertiser.advertiserrequisites.ogrn|default:"Не заполнено" }}</span>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <span class="text-sm">ИНН:</span>
-                                    <span class="badge badge-secondary">{{ advertiser.advertiserrequisites.inn }}</span>
+                                    <span class="badge badge-secondary">{{ advertiser.advertiserrequisites.inn|default:"Не заполнено" }}</span>
                                 </div>
                             </div>
                         </div>
@@ -119,15 +115,15 @@
                             <div class="space-y-2 text-sm">
                                 <div class="flex justify-between">
                                     <span>Расчётный счёт:</span>
-                                    <span class="font-mono">{{ advertiser.advertiserrequisites.checking_account }}</span>
+                                    <span class="font-mono">{{ advertiser.advertiserrequisites.checking_account|default:"Не заполнено" }}</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span>Корр. счёт:</span>
-                                    <span class="font-mono">{{ advertiser.advertiserrequisites.correspondent_account }}</span>
+                                    <span class="font-mono">{{ advertiser.advertiserrequisites.correspondent_account|default:"Не заполнено" }}</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span>БИК:</span>
-                                    <span class="font-mono">{{ advertiser.advertiserrequisites.bik }}</span>
+                                    <span class="font-mono">{{ advertiser.advertiserrequisites.bik|default:"Не заполнено" }}</span>
                                 </div>
                             </div>
                         </div>
@@ -137,8 +133,8 @@
                 <!-- Даты создания и обновления -->
                 <div class="divider"></div>
                 <div class="flex flex-col sm:flex-row justify-between items-center text-sm text-base-content/60">
-                    <span>Создано: {{ advertiser.advertiserrequisites.created_at|date:"d.m.Y H:i" }}</span>
-                    <span>Обновлено: {{ advertiser.advertiserrequisites.updated_at|date:"d.m.Y H:i" }}</span>
+                    <span>Создано: {{ advertiser.advertiserrequisites.created_at|date:"d.m.Y H:i"|default:"Ещё не создано" }}</span>
+                    <span>Обновлено: {{ advertiser.advertiserrequisites.updated_at|date:"d.m.Y H:i"|default:"Не обновлялось" }}</span>
                 </div>
             </div>
         </div>

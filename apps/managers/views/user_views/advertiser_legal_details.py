@@ -23,4 +23,4 @@ def advertiser_legal_details(request, advertiser_id):
     context = {
         'advertiser': advertiser,
     }
-    return render(request, 'partner_app/advertisers/advertiser_requisites.html', context)
+    return render(request, 'managers/advertisers_requisites/advertiser_requisites.html', context)

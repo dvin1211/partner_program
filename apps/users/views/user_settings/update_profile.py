@@ -17,6 +17,15 @@ def update_profile(request):
     new_phone = request.POST.get('phone', '').strip()
     new_description = request.POST.get('description', '')
 
+    redirect_to = None
+    if hasattr(user, "advertiserprofile"):
+        redirect_to = 'advertiser_settings'
+    elif hasattr(user, "partner_profile"):
+        redirect_to = 'partner_settings'
+    elif hasattr(user, 'managerprofile'):
+        redirect_to = 'manager_settings'
+    else:
+        redirect_to = 'dashboard'
     # Все ли значения введены верно
     is_correct = (
         new_first_name.isalpha() and 
@@ -26,11 +35,7 @@ def update_profile(request):
 
     if not is_correct:
         messages.error(request,message="ФИО должны содержать только буквы", extra_tags="profile_update_error")
-        if hasattr(user,"advertiserprofile"):
-            return redirect('advertiser_settings')
-        elif hasattr(user,"partner_profile"):
-            return redirect('partner_settings')
-        
+        return redirect(redirect_to)
     
     is_russian_text = (
         is_valid_russian_text(new_first_name) and
@@ -39,10 +44,7 @@ def update_profile(request):
     
     if not is_russian_text:
         messages.error(request,message="ФИО должны быть на русском языке", extra_tags="profile_update_error")
-        if hasattr(user,"advertiserprofile"):
-            return redirect('advertiser_settings')
-        elif hasattr(user,"partner_profile"):
-            return redirect('partner_settings')
+        return redirect(redirect_to)
 
     # Проверяем, есть ли изменения
     has_changes = (
@@ -56,10 +58,7 @@ def update_profile(request):
 
     if not has_changes:
         messages.info(request, message="Данные не изменены", extra_tags="profile_update_error")
-        if hasattr(user,"advertiserprofile"):
-            return redirect('advertiser_settings')
-        elif hasattr(user,"partner_profile"):
-            return redirect('partner_settings')
+        return redirect(redirect_to)
 
     try:
         # Получаем данные из запроса
@@ -75,10 +74,7 @@ def update_profile(request):
         user.save()
         
         messages.success(request, message="Профиль успешно обновлён!", extra_tags="profile_update_success")
-        if hasattr(user,"advertiserprofile"):
-            return redirect('advertiser_settings')
-        elif hasattr(user,"partner_profile"):
-            return redirect('partner_settings')
+        return redirect(redirect_to)
 
     except ValidationError as e:
         # Обрабатываем ВСЕ ошибки валидации
@@ -90,10 +86,7 @@ def update_profile(request):
                     messages.error(request, message="Этот телефон уже занят другим пользователем.", extra_tags="profile_update_error")
                 else:
                     messages.error(request, message=f"Ошибка: {error.messages[0]}", extra_tags="profile_update_error")
-        if hasattr(user,"advertiserprofile"):
-            return redirect('advertiser_settings')
-        elif hasattr(user,"partner_profile"):
-            return redirect('partner_settings')
+        return redirect(redirect_to)
 
     except IntegrityError as e:
         # Обрабатываем ошибки уникальности из БД
@@ -102,15 +95,9 @@ def update_profile(request):
         if 'phone' in str(e):
             messages.error(request, message="Этот телефон уже занят", extra_tags="profile_update_error")
         
-        if hasattr(user,"advertiserprofile"):
-            return redirect('advertiser_settings')
-        elif hasattr(user,"partner_profile"):
-            return redirect('partner_settings')
+        return redirect(redirect_to)
 
     except Exception as e:
         messages.error(request, message=f"Неизвестная ошибка: {e}.", extra_tags="profile_update_error")
         
-        if hasattr(user,"advertiserprofile"):
-            return redirect('advertiser_settings')
-        elif hasattr(user,"partner_profile"):
-            return redirect('partner_settings')
+        return redirect(redirect_to)

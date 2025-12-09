@@ -24,6 +24,32 @@
             <p class="text-base-content/60">Модерация запросов на вывод средств</p>
         </div>
 
+        <div class="flex mb-9">
+            <form method="get" action="" class="join w-full">
+                <div>
+                    <div>
+                        <input name="users_search" class="input input-bordered join-item"
+                               placeholder="Поиск партнёров" value = "{{ users_search_q }}">
+                    </div>
+                </div>
+                <select class="select select-bordered join-item" name="transactions_type_q" required>
+                    <option value="" disabled >Фильтры</option>
+                    <option value="all" {% if transactions_type_q == 'all' %}selected{% endif %}>Все выплаты</option>
+                    <option value="Выплачено" {% if transactions_type_q == 'Выплачено' %}selected{% endif %}>Выплачено</option>
+                    <option value="В обработке" {% if transactions_type_q == 'В обработке' %}selected{% endif %}>В обработке</option>
+                    <option value="Отменено" {% if transactions_type_q == 'Отменено' %}selected{% endif %}>Отменено</option>
+                </select>
+                <div class="indicator">
+                    <button type="submit" class="btn join-item btn-primary">
+                        <i class="fas fa-search mr-2"></i> Найти
+                    </button>
+                </div>
+                <button type="reset" class="btn join-item" onclick="window.location.href='{{ request.path }}'">
+                    <i class="fas fa-times mr-2"></i> Сбросить
+                </button>
+            </form>
+        </div>
+
         <!-- Уведомления -->
         {% if messages %}
         <div class="mt-4">
@@ -92,52 +118,54 @@
                             {{ transaction.date|date:"d.m.Y H:i" }}
                         </td>
                         <td>
-                            <span class="badge badge-warning">
+                            <span class="badge badge-{% if transaction.status == 'В обработке' %}warning{% elif transaction.status == 'Отменено' %}error{% else %}success{% endif %}">
                                 {{ transaction.status }}
                             </span>
                         </td>
                         <td>
                             <div class="flex gap-2">
-                                <button class="btn btn-sm btn-success approve-btn"
-                                        data-transaction-id="{{ transaction.id }}"
-                                        data-transaction-partner-id="{{ transaction.partner.id }}"
-                                        data-transaction-partner="{{ transaction.partner.get_full_name }}"
-                                        data-transaction-partner-email="{{ transaction.partner.email }}"
-                                        data-transaction-amount="{{ transaction.amount }}"
-                                        data-transaction-method="{{ transaction.payment_method }}"
-                                        {% if transaction.payment_method == 'card' %}
-                                        data-transaction-card-number="{{ transaction.partner.payout_settings.card_number}}"
-                                        data-transaction-card-owner="{{ transaction.partner.payout_settings.cardholder_name }}"
-                                        data-transaction-bank-name="{{ transaction.partner.payout_settings.bank_name }}"
-                                        {% elif transaction.payment_method == "bank_transfer" %}
-                                        data-transaction-bank-account-number="{{ transaction.partner.payout_settings.bank_account_number }}"
-                                        data-transaction-bank-account-holder-name="{{ transaction.partner.payout_settings.bank_account_holder_name }}"
-                                        data-transaction-bank-bic="{{ transaction.partner.payout_settings.bank_account_bic }}"
-                                        {% endif %}
-                                        data-transaction-date="{{ transaction.date|date:'d.m.Y H:i' }}"
-                                        data-transaction-status="{{ transaction.status }}">
-                                    <i class="fas fa-check mr-1"></i> Одобрить
-                                </button>
-                                <button class="btn btn-sm btn-error reject-btn"
-                                        data-transaction-id="{{ transaction.id }}"
-                                        data-transaction-partner-id="{{ transaction.partner.id }}"
-                                        data-transaction-partner="{{ transaction.partner.get_full_name }}"
-                                        data-transaction-partner-email="{{ transaction.partner.email }}"
-                                        data-transaction-amount="{{ transaction.amount }}"
-                                        data-transaction-method="{{ transaction.payment_method }}"
-                                        {% if transaction.payment_method == 'card' %}
-                                        data-transaction-card-number="{{ transaction.partner.payout_settings.card_number }}"
-                                        data-transaction-card-owner="{{ transaction.partner.payout_settings.cardholder_name }}"
-                                        data-transaction-bank-name="{{ transaction.partner.payout_settings.bank_name }}"
-                                        {% elif transaction.payment_method == "bank_transfer" %}
-                                        data-transaction-bank-account-number="{{ transaction.partner.payout_settings.bank_account_number }}"
-                                        data-transaction-bank-account-holder-name="{{ transaction.partner.payout_settings.bank_account_holder_name }}"
-                                        data-transaction-bank-bic="{{ transaction.partner.payout_settings.bank_account_bic }}"
-                                        {% endif %}
-                                        data-transaction-date="{{ transaction.date|date:'d.m.Y H:i' }}"
-                                        data-transaction-status="{{ transaction.status }}">
-                                    <i class="fas fa-times mr-1"></i> Отклонить
-                                </button>
+                                {% if transaction.status == 'В обработке' %}
+                                    <button class="btn btn-sm btn-success approve-btn"
+                                            data-transaction-id="{{ transaction.id }}"
+                                            data-transaction-partner-id="{{ transaction.partner.id }}"
+                                            data-transaction-partner="{{ transaction.partner.get_full_name }}"
+                                            data-transaction-partner-email="{{ transaction.partner.email }}"
+                                            data-transaction-amount="{{ transaction.amount }}"
+                                            data-transaction-method="{{ transaction.payment_method }}"
+                                            {% if transaction.payment_method == 'card' %}
+                                            data-transaction-card-number="{{ transaction.partner.payout_settings.card_number}}"
+                                            data-transaction-card-owner="{{ transaction.partner.payout_settings.cardholder_name }}"
+                                            data-transaction-bank-name="{{ transaction.partner.payout_settings.bank_name }}"
+                                            {% elif transaction.payment_method == "bank_transfer" %}
+                                            data-transaction-bank-account-number="{{ transaction.partner.payout_settings.bank_account_number }}"
+                                            data-transaction-bank-account-holder-name="{{ transaction.partner.payout_settings.bank_account_holder_name }}"
+                                            data-transaction-bank-bic="{{ transaction.partner.payout_settings.bank_account_bic }}"
+                                            {% endif %}
+                                            data-transaction-date="{{ transaction.date|date:'d.m.Y H:i' }}"
+                                            data-transaction-status="{{ transaction.status }}">
+                                        <i class="fas fa-check mr-1"></i> Одобрить
+                                    </button>
+                                    <button class="btn btn-sm btn-error reject-btn"
+                                            data-transaction-id="{{ transaction.id }}"
+                                            data-transaction-partner-id="{{ transaction.partner.id }}"
+                                            data-transaction-partner="{{ transaction.partner.get_full_name }}"
+                                            data-transaction-partner-email="{{ transaction.partner.email }}"
+                                            data-transaction-amount="{{ transaction.amount }}"
+                                            data-transaction-method="{{ transaction.payment_method }}"
+                                            {% if transaction.payment_method == 'card' %}
+                                            data-transaction-card-number="{{ transaction.partner.payout_settings.card_number }}"
+                                            data-transaction-card-owner="{{ transaction.partner.payout_settings.cardholder_name }}"
+                                            data-transaction-bank-name="{{ transaction.partner.payout_settings.bank_name }}"
+                                            {% elif transaction.payment_method == "bank_transfer" %}
+                                            data-transaction-bank-account-number="{{ transaction.partner.payout_settings.bank_account_number }}"
+                                            data-transaction-bank-account-holder-name="{{ transaction.partner.payout_settings.bank_account_holder_name }}"
+                                            data-transaction-bank-bic="{{ transaction.partner.payout_settings.bank_account_bic }}"
+                                            {% endif %}
+                                            data-transaction-date="{{ transaction.date|date:'d.m.Y H:i' }}"
+                                            data-transaction-status="{{ transaction.status }}">
+                                        <i class="fas fa-times mr-1"></i> Отклонить
+                                    </button>
+                                {% endif %}
                                 <button class="btn btn-sm btn-outline details-btn"
                                         data-transaction-id="{{ transaction.id }}"
                                         data-transaction-partner-id="{{ transaction.partner.id }}"
@@ -146,7 +174,7 @@
                                         data-transaction-amount="{{ transaction.amount }}"
                                         data-transaction-method="{{ transaction.payment_method }}"
                                         {% if transaction.payment_method == 'card' %}
-                                        data-transaction-card-number="{{ transaction.partner.payout_settings.card_number|truncatechars:6 }}"
+                                        data-transaction-card-number="{{ transaction.partner.payout_settings.card_number }}"
                                         data-transaction-card-owner="{{ transaction.partner.payout_settings.cardholder_name }}"
                                         data-transaction-bank-name="{{ transaction.partner.payout_settings.bank_name }}"
                                         {% elif transaction.payment_method == "bank_transfer" %}

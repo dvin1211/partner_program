@@ -1,28 +1,21 @@
 from django.shortcuts import render,redirect
 
-from apps.core.models import UserReview
 from apps.managers.models import ManagerActivity
-from utils import _paginate
 
-def reviews(request):
-    """Отзывы на модерации"""
+def settings(request):  
+    """Настройки партнёра"""
     user = request.user
     if not user.is_authenticated:
         return redirect('/?show_modal=auth')
-    if not hasattr(user,"managerprofile"):
+    if not hasattr(request.user,"managerprofile"):
         return redirect('index')
     if user.is_authenticated and user.is_currently_blocked():
         return render(request, 'account_blocked/block_info.html')
     
-    reviews = UserReview.objects.filter(status='На модерации').order_by('-created_at')
-    reviews_page = _paginate(request,reviews,10,'reviews_page')
-
     notifications_count = ManagerActivity.objects.filter(manager=user.managerprofile,is_read=False).count()
 
     context = {
-        "reviews":reviews_page,
-        "reviews_count":reviews.count(),
         "notifications_count":notifications_count
     }
-
-    return render(request,'managers/reviews/reviews.html',context)
+    
+    return render(request, 'managers/settings/settings.html',context=context)

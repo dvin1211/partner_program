@@ -17,6 +17,7 @@ urlpatterns = [
     path("edit_review/<int:review_id>",views.edit_review,name="edit_review"),
     path("publish_review/<int:review_id>",views.publish_review,name="publish_review"),
     path("remove_review/<int:review_id>",views.remove_review,name="remove_review"),
+    path("make_single_notification/<int:user_id>",views.make_single_notification,name='make_single_notification'),
     
     # ЛК
     path('dashboard',views.manager_dashboard,name='manager_dashboard'),
@@ -26,6 +27,7 @@ urlpatterns = [
     path('partners',views.manager_partners,name="manager_partners"),
     path('advertisers',views.manager_advertisers,name="manager_advertisers"),
     path('reviews',views.reviews,name='manager_reviews'),
+    path('settings',views.settings,name='manager_settings'),
     
     # Просмотры для менеджера
     path('advertiser_requisites/<int:advertiser_id>',views.advertiser_legal_details,name='advertiser_legal_details'),

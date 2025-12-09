@@ -24,6 +24,33 @@
             <p class="text-base-content/60">Модерация запросов на пополнение</p>
         </div>
 
+        <div class="flex mb-9">
+            <form method="get" action="" class="join w-full">
+                <div>
+                    <div>
+                        <input name="users_search" class="input input-bordered join-item"
+                               placeholder="Поиск рекламодателей" value="{{ users_search_q }}">
+                    </div>
+                </div>
+                <select class="select select-bordered join-item" name="transactions_type_q" required>
+                    <option value="" disabled >Фильтры</option>
+                    <option value="all" {% if transactions_type_q == 'all' %}selected{% endif %}>Все пополнения</option>
+                    <option value="Пополнено" {% if transactions_type_q == 'Пополнено' %}selected{% endif %}>Пополнено</option>
+                    <option value="Обработано" {% if transactions_type_q == 'Обработано' %}selected{% endif %}>Обработано</option>
+                    <option value="В обработке" {% if transactions_type_q == 'В обработке' %}selected{% endif %}>В обработке</option>
+                    <option value="Отменено" {% if transactions_type_q == 'Отменено' %}selected{% endif %}>Отменено</option>
+                </select>
+                <div class="indicator">
+                    <button type="submit" class="btn join-item btn-primary">
+                        <i class="fas fa-search mr-2"></i> Найти
+                    </button>
+                </div>
+                <button type="reset" class="btn join-item" onclick="window.location.href='{{ request.path }}'">
+                    <i class="fas fa-times mr-2"></i> Сбросить
+                </button>
+            </form>
+        </div>
+
         <div id="adv_transactions_messages__container" class="fixed top-4 right-4 space-y-2 z-[99999]">
 
         </div>
@@ -50,11 +77,16 @@
                         <td>
                             <div class="flex items-center gap-3">
                                 <div>
-                                    <div class="font-bold"><a
-                                           href="{% url 'advertiser' transaction.advertiser.user.id %}">{{
-                                            transaction.advertiser.user.get_ifo }}</a></div>
-                                    <div class="adv_transaction_email text-sm opacity-50">{{
-                                        transaction.advertiser.user.email }}</div>
+                                    <div class="font-bold">
+                                        <a href="{% url 'advertiser' transaction.advertiser.user.id %}">
+                                            {% if transaction.advertiser.user.firstname %}
+                                                {{ transaction.advertiser.user.get_ifo }}
+                                            {% else %}
+                                                Не указано
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="adv_transaction_email text-sm opacity-50">{{ transaction.advertiser.user.email }}</div>
                                 </div>
                             </div>
                         </td>
@@ -80,7 +112,7 @@
                         </td>
                         <td>
                             <span
-                                  class="badge badge-{% if transaction.status == 'В обработке' %}warning{% elif transaction.status == 'Обработано'%}info{% else %}success{% endif %}">
+                                  class="badge badge-{% if transaction.status == 'В обработке' %}warning{% elif transaction.status == 'Обработано'%}info{% elif transaction.status == 'Отменено'%}error{% else %}success{% endif %}">
                                 {{ transaction.status }}
                             </span>
                         </td>

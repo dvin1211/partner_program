@@ -137,6 +137,7 @@
                                 <th class="whitespace-nowrap">Тип</th>
                                 <th class="whitespace-nowrap">URL</th>
                                 <th class="whitespace-nowrap">Статус</th>
+                                <th class="whitespace-nowrap">Активна</th>
                                 <th class="whitespace-nowrap">Дата добавления</th>
                                 <th class="whitespace-nowrap">Действия</th>
                             </tr>
@@ -152,7 +153,7 @@
                                         <div class="flex justify-between items-start">
                                             <strong class="text-lg">{{ platform.id }}</strong>
                                             <div>
-                                                <strong class="text-lg">{{ platform.name }}</strong>
+                                                <a href="{% url 'platform' platform.id %}"><strong class="text-lg">{{ platform.name }}</strong></a>
                                                 <div class="text-sm text-gray-500">{{ platform.get_platform_type_display }}
                                                 </div>
                                             </div>
@@ -160,8 +161,14 @@
                                                   class="badge {% if platform.status == 'Подтверждено' %}badge-success{% elif platform.status == 'На модерации' %}badge-warning{% else %}badge-error{% endif %}">
                                                 {{ platform.status }}
                                             </span>
-
                                         </div>
+                                        <span class="badge {% if platform.is_active %}badge-success{% else %}badge-error{% endif %}">
+                                                {% if platform.is_active %}
+                                                    Активна
+                                                {% else %}
+                                                    Неактивна
+                                                {% endif %}
+                                            </span>
 
                                         <div class="text-sm text-primary truncate">
                                             {% if "http" in platform.url_or_id %}
@@ -235,6 +242,15 @@
                                     <span
                                           class="badge {% if platform.status == 'Подтверждено' %}badge-success{% elif platform.status == 'На модерации' %}badge-warning{% else %}badge-error{% endif %}">
                                         {{ platform.status }}
+                                    </span>
+                                </td>
+                                <td class="hidden lg:table-cell">
+                                    <span class="badge {% if platform.is_active %}badge-success{% else %}badge-error{% endif %}">
+                                        {% if platform.is_active %}
+                                            Активна
+                                        {% else %}
+                                            Неактивна
+                                        {% endif %}
                                     </span>
                                 </td>
                                 <td class="hidden lg:table-cell whitespace-nowrap">{{ platform.created_at|timezone:"Europe/Moscow"|date:"j E Y H:i" }}</td>

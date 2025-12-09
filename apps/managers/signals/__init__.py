@@ -1,0 +1,8 @@
+from .projects_observer import make_notification_on_project
+from .platforms_observer import make_notification_on_platform
+
+from .advertisers_observer import make_notification_on_advertiser_topup
+from .partners_observer import make_notification_on_partner_payout
+
+from .reviews_observer import make_notification_on_review
+from .users_observer import make_notification_on_register_advertiser,make_notification_on_register_manager,make_notification_on_register_partner

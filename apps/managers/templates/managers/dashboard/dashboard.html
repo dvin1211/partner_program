@@ -66,7 +66,7 @@
                 <div class="card-body">
                     <div class="flex justify-between items-center">
                         <div>
-                            <p class="text-sm opacity-80">Заявок на выплату средств</p>
+                            <p class="text-sm opacity-80">Заявок на пополнение баланса</p>
                             <p class="text-2xl font-bold">{{ advertiser_transactions_count }}</p>
                         </div>
                         <i class="fas fa-money-bill text-3xl opacity-80"></i>
@@ -83,51 +83,59 @@
                     <div class="card-body">
                         <h2 class="card-title">
                             <i class="fas fa-history text-primary mr-2"></i>
-                            Последние действия
+                            Последняя активность
                         </h2>
                         <div class="space-y-4 max-h-96 overflow-y-auto">
-                            <div class="flex items-center p-3 bg-info/10 rounded-lg mr-2">
-                                <div
-                                     class="w-10 h-10 bg-info text-info-content rounded-full flex items-center justify-center mr-3">
-                                    <i class="fas fa-check"></i>
+                            {% for notification in notifications %}
+                                <div class="flex items-center p-3 bg-warning/10 rounded-lg mr-2">
+                                    {% if notification.activity_type == 'project' %}
+                                        <div
+                                            class="w-10 h-10 bg-info text-info-content rounded-full flex items-center justify-center mr-3">
+                                            <i class="fa-solid fa-suitcase"></i>
+                                        </div>
+                                    {% elif notification.activity_type == 'platform' %}
+                                        <div
+                                            class="w-10 h-10 bg-info text-info-content rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-globe"></i>
+                                        </div>
+                                    {% elif notification.activity_type == 'new_user' %}
+                                        <div
+                                            class="w-10 h-10 bg-success text-info-content rounded-full flex items-center justify-center mr-3">
+                                            <i class="fa fa-user-plus"></i>
+                                        </div>
+                                    {% elif notification.activity_type == 'payout' %}
+                                        <div
+                                            class="w-10 h-10 bg-info text-info-content rounded-full flex items-center justify-center mr-3">
+                                            <i class="fa-solid fa-credit-card"></i>
+                                        </div>
+                                    {% elif notification.activity_type == 'top_up' %}
+                                        <div
+                                            class="w-10 h-10 bg-info text-info-content rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-money-bill-wave"></i>
+                                        </div>
+                                    {% elif notification.activity_type == 'review' %}
+                                        <div
+                                            class="w-10 h-10 bg-info text-info-content rounded-full flex items-center justify-center mr-3">
+                                            <i class="fa-solid fa-comments"></i>
+                                        </div> 
+                                    {% elif notification.activity_type == 'system' %}
+                                        <div
+                                            class="w-10 h-10 bg-info text-info-content rounded-full flex items-center justify-center mr-3">
+                                            <i class="fa fa-cog"></i>
+                                        </div>
+                                    {% elif notification.activity_type == 'other' %}
+                                        <div
+                                            class="w-10 h-10 bg-info text-info-content rounded-full flex items-center justify-center mr-3">
+                                            <i class="fa fa-paper-plane"></i>
+                                        </div>
+                                    {% endif %}
+                                    <div class="flex-1">
+                                        <p class="font-medium">{{ notification.title }}</p>
+                                        <p class="text-sm opacity-60">{{ notification.details }}</p>
+                                    </div>
+                                    <span class="text-sm text-base-content/60">{{ notification.created_at|timesince }} назад</span>
                                 </div>
-                                <div class="flex-1">
-                                    <p class="font-medium">Одобрен проект "Летняя распродажа"</p>
-                                    <p class="text-sm opacity-60">Рекламодатель: Алексей Смирнов</p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="font-bold text-success">Одобрено</p>
-                                    <p class="text-sm opacity-60">2 часа назад</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center p-3 bg-warning/10 rounded-lg mr-2">
-                                <div
-                                     class="w-10 h-10 bg-warning text-warning-content rounded-full flex items-center justify-center mr-3">
-                                    <i class="fas fa-times"></i>
-                                </div>
-                                <div class="flex-1">
-                                    <p class="font-medium">Отклонена площадка блогера</p>
-                                    <p class="text-sm opacity-60">Партнер: Мария Петрова</p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="font-bold text-error">Отклонено</p>
-                                    <p class="text-sm opacity-60">5 часов назад</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center p-3 bg-success/10 rounded-lg mr-2">
-                                <div
-                                     class="w-10 h-10 bg-success text-success-content rounded-full flex items-center justify-center mr-3">
-                                    <i class="fas fa-gavel"></i>
-                                </div>
-                                <div class="flex-1">
-                                    <p class="font-medium">Решен спор #2456</p>
-                                    <p class="text-sm opacity-60">В пользу рекламодателя</p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="font-bold text-success">Решено</p>
-                                    <p class="text-sm opacity-60">Вчера</p>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

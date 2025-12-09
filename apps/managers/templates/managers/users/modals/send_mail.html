@@ -1,0 +1,66 @@
+{% load static %}
+<dialog id="send-msg-modal" class="modal">
+    <div class="modal-box">
+        <!-- Заголовок и закрытие -->
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="font-bold text-lg">Отправить сообщение</h3>
+            <button onclick="this.closest('dialog').close()"
+                    class="btn btn-sm btn-circle btn-ghost">
+                ✕
+            </button>
+        </div>
+
+        <!-- Пользователь -->
+        <div class="bg-gray-100 p-3 rounded-lg mb-4">
+            <p id="send-msg-user-fio" class="font-medium">Иван Петров</p>
+            <p id="send-msg-user-email" class="text-sm text-gray-500">ivan@example.com</p>
+        </div>
+
+        <!-- Простая форма -->
+        <form id="send-msg-form" method="POST">
+            {% csrf_token %}
+            <div class="space-y-4">
+                <div>
+                    <p class="mb-1">Тема:</p>
+                    <input name="send-msg-theme" type="text" class="input input-bordered w-full" required>
+                </div>
+
+                <div>
+                    <p class="mb-1">Сообщение:</p>
+                    <textarea name="send-msg-text" class="textarea textarea-bordered w-full h-24" required></textarea>
+                </div>
+
+                <div>
+                    <p class="mb-2">Отправить:</p>
+                    <div class="flex gap-4">
+                        <label class="flex items-center gap-1">
+                            <input name="send-msg-email" type="checkbox" class="checkbox">
+                            <span class="text-sm">Email</span>
+                        </label>
+                        <label class="flex items-center gap-1">
+                            <input name="send-msg-website" type="checkbox" class="checkbox">
+                            <span class="text-sm">Сайт</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!-- Кнопки внизу -->
+            <div class="modal-action">
+                <form method="dialog">
+                    <button type="button" onclick="this.closest('dialog').close()"
+                            class="btn">
+                        Отмена
+                    </button>
+                </form>
+                <button type="submit" class="btn btn-primary">
+                    Отправить
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Фон для закрытия -->
+    <form method="dialog" class="modal-backdrop">
+        <button></button>
+    </form>
+</dialog>

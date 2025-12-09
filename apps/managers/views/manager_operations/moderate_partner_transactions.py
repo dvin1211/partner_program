@@ -22,8 +22,6 @@ def approve_transaction(request, transaction_id,partner_id):
         title='Выплата средств одобрена',
         details=f'Модератор одобрил транзакцию №{transaction_id}.'
     )
-    user.partner_profile.balance-=transaction.amount
-    user.partner_profile.save()
     messages.success(request, message=f'Заявка #{transaction.id} на сумму {transaction.amount}₽ одобрена',extra_tags='approve_payout_success')
     try:
         send_email_via_mailru.delay(user.email,f"Модератор одобрил транзакцию №{transaction_id} на сумму {transaction.amount}","Одобрена выплата средств")

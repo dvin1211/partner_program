@@ -3,11 +3,25 @@
 <div class="navbar bg-white shadow-lg sticky top-0 z-50" id="navbar">
     <div class="navbar-start">
         <div class="dropdown lg:hidden">
-            <div tabindex="0" role="button" class="btn btn-ghost">
+            <div tabindex="0" role="button" class="btn btn-ghost indicator btn-circle">
                 <i class="fas fa-bars text-lg"></i>
+                {% if notifications_count != 0 %}
+                    <span class="indicator-item badge badge-sm badge-soft">
+                        {{ notifications_count }}
+                    </span>
+                {% endif %}
             </div>
             <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                <li><a href="{% url 'manager_dashboard' %}" class="nav-item"><i class="fas fa-chart-line"></i> Дашборд</a></li>
+                <li>
+                    <a href="{% url 'manager_dashboard' %}" class="nav-item indicator">
+                        {% if notifications_count != 0 %}
+                            <span class="indicator-item badge badge-sm badge-soft">
+                                {{ notifications_count }}
+                            </span>
+                        {% endif %}
+                        <i class="fas fa-chart-line"></i> Дашборд
+                    </a>
+                </li>
                 <li><a href="{% url 'manager_projects' %}" class="nav-item"><i class="fa-solid fa-suitcase"></i> Проекты</a></li>
                 <li><a href="{% url 'manager_platforms' %}" class="nav-item"><i class="fas fa-globe"></i> Площадки</a></li>
                 <li><a href="{% url 'manager_users' %}" class="nav-item"><i class="fas fa-users"></i> Пользователи</a></li>
@@ -24,7 +38,16 @@
     </div>
     <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
-            <li><a href="{% url 'manager_dashboard' %}" class="nav-item"><i class="fas fa-chart-line"></i> Дашборд</a></li>
+            <li>
+                <a href="{% url 'manager_dashboard' %}" class="nav-item indicator">
+                    {% if notifications_count != 0 %}
+                        <span class="indicator-item badge badge-sm badge-soft">
+                            {{ notifications_count }}
+                        </span>
+                    {% endif %}
+                    <i class="fas fa-chart-line"></i> Дашборд
+                </a>
+            </li>
             <li><a href="{% url 'manager_projects' %}" class="nav-item"><i class="fa-solid fa-suitcase"></i> Проекты</a></li>
             <li><a href="{% url 'manager_platforms' %}" class="nav-item"><i class="fas fa-globe"></i> Площадки</a></li>
             <li><a href="{% url 'manager_users' %}" class="nav-item"><i class="fas fa-users"></i> Пользователи</a></li>
@@ -43,6 +66,11 @@
                 </div>
             </div>
             <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box">
+                <li>
+                    <a href="{% url 'manager_settings' %}" class="nav-item text-lg w-full">
+                        <i class="fas fa-cog"></i> Настройки
+                    </a>
+                </li>
                 <li class="w-full p-0 cursor-pointer">
                     <form action="{% url 'logout' %}" class="flex justify-between w-full cursor-pointer" method="post">
                         {% csrf_token %}

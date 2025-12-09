@@ -13,4 +13,5 @@ def update_email_notifications(request):
         return redirect('advertiser_settings')    
     elif hasattr(request.user,'partner_profile'):
         return redirect('partner_settings')
-    return redirect('dashboard')
+    elif hasattr(request.user,'managerprofile'):
+        return redirect('manager_settings')

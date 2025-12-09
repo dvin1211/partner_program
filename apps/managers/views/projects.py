@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.db.models import Q
 
 from apps.advertisers.models import Project
+from apps.managers.models import ManagerActivity
 from utils import _paginate
 
 def manager_projects(request):  
@@ -26,10 +27,13 @@ def manager_projects(request):
         )
     
     projects = _paginate(request, projects, count, "projects_page")
+
+    notifications_count = ManagerActivity.objects.filter(manager=user.managerprofile,is_read=False).count()
     
     context = {
         "user": request.user,  
         "projects":projects,
+        "notifications_count":notifications_count,
         
         "projects_search_q":projects_search_q
     }

@@ -8,7 +8,7 @@ export function setupAdvertiserTransactions() {
             item.addEventListener('click', function () {
                 const dataset = this.dataset;
                 document.getElementById('advertiser_transaction_id').value = dataset.advTransactionId;
-                document.getElementById('advertiser_transaction_requisites').innerHTML = `<a class='text-blue-700' href='/advertiser_requisites/${dataset.advId}'>Реквизиты</a>`
+                document.getElementById('advertiser_transaction_requisites').innerHTML = `<a class='text-blue-700' href='/manager/advertiser_requisites/${dataset.advId}'>Реквизиты</a>`
                 document.getElementById('advertiser_transaction_fio').innerText = dataset.advTransactionIfo;
                 document.getElementById('advertiser_transaction_email').innerText = dataset.advTransactionEmail;
                 document.getElementById('advertiser_transaction_amount').innerText = String(dataset.advTransactionAmount) + "₽";
@@ -87,7 +87,7 @@ export function setupAdvertiserTransactions() {
             btn.addEventListener('click', function () {
                 const dataset = this.dataset;
                 document.getElementById('reject_adv_transaction_id').innerText = dataset.advTransactionId;
-                document.getElementById('reject_adv_transaction_requisites').innerHTML = `<a class='text-blue-700' href='/advertiser_requisites/${dataset.advId}'>Реквизиты</a>`
+                document.getElementById('reject_adv_transaction_requisites').innerHTML = `<a class='text-blue-700' href='/manager/advertiser_requisites/${dataset.advId}'>Реквизиты</a>`
                 document.getElementById('reject_advertiser_transaction_id').value = dataset.advTransactionId;
                 document.getElementById('reject_adv_transaction_fio').innerText = dataset.advTransactionIfo;
                 document.getElementById('reject_adv_transaction_email').innerText = dataset.advTransactionEmail;
@@ -103,7 +103,7 @@ export function setupAdvertiserTransactions() {
             btn.addEventListener('click', function () {
                 const dataset = this.dataset;
                 document.getElementById('approve_adv_transaction_id').innerText = dataset.advTransactionId;
-                document.getElementById('approve_adv_transaction_requisites').innerHTML = `<a class='text-blue-700' href='/advertiser_requisites/${dataset.advId}'>Реквизиты</a>`
+                document.getElementById('approve_adv_transaction_requisites').innerHTML = `<a class='text-blue-700' href='/manager/advertiser_requisites/${dataset.advId}'>Реквизиты</a>`
                 document.getElementById('confirm_advertiser_transaction_id').value = dataset.advTransactionId;
                 document.getElementById('approve_adv_transaction_fio').innerText = dataset.advTransactionIfo;
                 document.getElementById('approve_adv_transaction_email').innerText = dataset.advTransactionEmail;

@@ -1,6 +1,7 @@
 import '@fortawesome/fontawesome-free/js/all'
 import '/apps/managers/assets/css/manager.css'
 
+
 function publishReview(reviewId) {
     const modal = document.getElementById('confirm_modal');
     const modalTitle = document.getElementById('modal-title');
@@ -12,16 +13,12 @@ function publishReview(reviewId) {
     modalMessage.textContent = 'Вы уверены, что хотите одобрить этот отзыв? Он будет опубликован на сайте.';
     confirmButton.innerHTML = '<i class="fas fa-check mr-2"></i>Одобрить';
     confirmButton.className = 'btn btn-success ml-2';
-
-
-    const publishButton = document.querySelector(`.publish-review[data-review-id="${reviewId}"]`);
-
-    confirmForm.addEventListener('click', async function (e) {
+    confirmForm.addEventListener('submit', async function (e) {
         e.preventDefault();
-        const data = new FormData(this);
+        const formData = new FormData(e.target);
         const response = await fetch(`/manager/publish_review/${reviewId}`, {
             method: "POST",
-            body: data
+            body: formData,
         });
 
         if (!response.ok) {
@@ -29,24 +26,7 @@ function publishReview(reviewId) {
             return;
         }
 
-        if (publishButton) {
-            const card = publishButton.closest('.card');
-            if (card) {
-                // Анимация исчезновения
-                card.style.transition = 'all 0.3s ease';
-                card.style.opacity = '0';
-                card.style.height = '0';
-                card.style.overflow = 'hidden';
-                card.style.margin = '0';
-                card.style.padding = '0';
-
-                setTimeout(() => {
-                    card.remove();
-                    updateReviewsCounter();
-                }, 300);
-            }
-        }
-
+        const result = await response.json();
         showNotification('Отзыв одобрен и опубликован', 'success');
         modal.close();
     })
@@ -65,15 +45,12 @@ function deleteReview(reviewId) {
     modalMessage.textContent = 'Вы уверены, что хотите отклонить этот отзыв? Это действие нельзя будет отменить.';
     confirmButton.innerHTML = '<i class="fas fa-times mr-2"></i>Отклонить';
     confirmButton.className = 'btn btn-error ml-2';
-    
-    const publishButton = document.querySelector(`.publish-review[data-review-id="${reviewId}"]`);
-
-    confirmForm.addEventListener('click', async function (e) {
+    confirmForm.addEventListener('submit', async function (e) {
         e.preventDefault();
-        const data = new FormData(this);
+        const formData = new FormData(e.target);
         const response = await fetch(`/manager/remove_review/${reviewId}`, {
             method: "POST",
-            body: data
+            body: formData,
         });
 
         if (!response.ok) {
@@ -81,36 +58,12 @@ function deleteReview(reviewId) {
             return;
         }
 
-        if (publishButton) {
-            const card = publishButton.closest('.card');
-            if (card) {
-                // Анимация исчезновения
-                card.style.transition = 'all 0.3s ease';
-                card.style.opacity = '0';
-                card.style.height = '0';
-                card.style.overflow = 'hidden';
-                card.style.margin = '0';
-                card.style.padding = '0';
-
-                setTimeout(() => {
-                    card.remove();
-                    updateReviewsCounter();
-                }, 300);
-            }
-        }
-
-        showNotification('Отзыв был удалён!', 'success');
+        const result = await response.json();
+        showNotification('Отзыв отклонен', 'error');
         modal.close();
-    })
+    });
 
     modal.showModal();
-}
-
-function updateReviewsCounter() {
-    let counter = document.querySelector('.reviews_count');
-    let value = Number(counter.textContent)
-    value = value - 1;
-    counter.textContent = value;
 }
 
 // Функция для показа уведомлений
