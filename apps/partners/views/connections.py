@@ -6,6 +6,7 @@ from .common import _get_connected_projects
 from utils import _apply_search, _paginate
 from apps.partners.models import PartnerActivity
 
+
 def connections(request):  
     """подключенные проекты"""
     user = request.user
@@ -40,6 +41,7 @@ def connections(request):
     ).count()
     
     connected_projects_page = _paginate(request, connected_projects, 5, 'connected_projects_page')
+
     context = {
         'notifications_count':notifications_count,
         

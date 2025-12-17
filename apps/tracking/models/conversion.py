@@ -54,6 +54,7 @@ class Conversion(models.Model):
     created_at = models.DateTimeField(auto_now_add=True,)
     details = models.TextField(blank=True)
     
+    referrer = models.URLField(null=True, blank=True,default=None, verbose_name="Источник")
     user_agent = models.TextField(null=True, blank=True, verbose_name="User-Agent")
     ip_address = models.GenericIPAddressField(null=True, blank=True, verbose_name="IP-адрес")
 

@@ -167,6 +167,7 @@
                             <th class="text-xs sm:text-sm">ID</th>
                             <th class="texs-xs sm:text-sm">Партнёр</th>
                             <th class="text-xs sm:text-sm">Проект</th>
+                            <th class="text-xs sm:text-sm">Источник перехода</th>
                             <th class="text-xs sm:text-sm">Дата</th>
                             <th class="text-xs sm:text-sm">Сумма</th>
                         </tr>
@@ -176,9 +177,11 @@
                         {% for conversion in conversions %}
                         <tr class="hover:bg-base-200 transition-colors duration-150">
                             <td class="text-xs sm:text-sm">#{{ conversion.id }}</td>
-                            <td><a href="{% url 'partner' conversion.partner.user.id %}">
+                            <td>
+                                <a href="{% url 'partner' conversion.partner.user.id %}">
                                     <div class="font-bold text-xs sm:text-sm"> {{ conversion.partner.user.username }} </div>
-                                </a></td>
+                                </a>
+                            </td>
                             <td>
                                 <div class="flex items-center gap-2 sm:gap-3">
                                     <div>
@@ -186,6 +189,13 @@
                                             <div class="font-bold text-xs sm:text-sm">{% if conversion.project %}{{ conversion.project.name }}{% else %}Удалён{% endif %}</div>
                                         </a>
                                     </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="font-bold text-xs sm:text-sm">
+                                    {% if conversion.platform %}    
+                                        <a href="{% url 'platform' conversion.platform.id %}">{{ conversion.platform.name }}</a>
+                                    {% endif %}
                                 </div>
                             </td>
                             <td class="text-xs sm:text-sm">

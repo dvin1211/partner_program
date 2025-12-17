@@ -160,7 +160,6 @@
                         {% if not project.has_link %}
                         <button data-partnership="{{ membership.id }}"
                                 data-project-params="{{ project.params_json }}"
-                                data-partner-id="{{ membership.partner.id }}"
                                 data-project-link="{{ project.link_template }}"
                                 onclick="document.getElementById('partnerLinkModal').showModal()"
                                 class="generate_partner_link btn btn-primary btn-xs sm:btn-sm">
@@ -187,6 +186,17 @@
                                     data-project-name="{{ project.name }}">
                                     <a>
                                         <i class="fas fa-edit mr-2"></i>Возобновить
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if project.has_link %}
+                                <li button data-partnership="{{ membership.id }}"
+                                data-project-params="{{ project.params_json }}"
+                                data-project-link="{{ project.link_template }}"
+                                onclick="document.getElementById('partnerLinkModal').showModal()"
+                                class="generate_partner_link">
+                                    <a>
+                                        <i class="fa-solid fa-pen-to-square mr-2"></i>Получить ссылку
                                     </a>
                                 </li>
                                 {% endif %}

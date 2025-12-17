@@ -2,13 +2,15 @@ from datetime import timedelta
 import json 
 
 from django.shortcuts import render,redirect
-from django.db.models import Count, F, FloatField, ExpressionWrapper, Sum,Avg
-from django.db.models.functions import TruncDate
+from django.db.models import Count, F, FloatField, ExpressionWrapper, Sum,Avg,Q,Value,OuterRef,Subquery
+from django.db.models.functions import TruncDate,Coalesce
 from django.utils import timezone
 
+from apps.advertisers.models import Project
 from apps.partners.models import PartnerActivity,Platform
 from apps.partnerships.models import ProjectPartner
 from apps.tracking.models import Conversion,ClickEvent
+from decimal import Decimal
 from utils import _paginate
 
 def stats(request):
@@ -41,7 +43,6 @@ def stats(request):
     clicks_count = clicks.count()
 
     last_30_days = timezone.now() - timedelta(days=30)
-    # Агрегируем конверсии по дням
     conversions_by_day = Conversion.objects.filter(
         partner=user.partner_profile,
         created_at__gte=last_30_days
@@ -100,40 +101,55 @@ def stats(request):
     total_revenue_last_month = Conversion.objects.filter(partner=user.partner_profile,created_at__gte=last_month).aggregate(total=Sum('amount'))['total'] or 0
     average_revenue = f"{Conversion.objects.filter(partner=user.partner_profile).aggregate(total=Avg('amount'))['total']:.2f}" or 0
 
-    top_partnerships = ProjectPartner.objects.filter(
-        partner=user
-    ).select_related(
-        'project', 'partner'
-    ).prefetch_related(
-        'conversions'
+    top_projects = Project.objects.filter(
+        partner_memberships__partner=user
     ).annotate(
-        total_amount=Sum('conversions__amount'),
-        conversion_count=Count('conversions__amount'),
+        total_amount=Coalesce(Sum(
+            'conversions__amount',
+            filter=Q(conversions__partner=user.partner_profile)
+        ), Value(Decimal('0.00'))),
+        conversion_count=Coalesce(Count(
+            'conversions',
+            filter=Q(conversions__partner=user.partner_profile)
+        ), 0),
         score=ExpressionWrapper(
-                F('conversion_count') * 0.5 + F('total_amount') * 0.3,
-                output_field=FloatField()
-            )
-        ).order_by('score')[:4]
+            F('conversion_count') * 0.5 + F('total_amount') * 0.3,
+            output_field=FloatField()
+        )
+    ).order_by('-score')[:4]
     
-    for partnership in top_partnerships:
-        clicks = partnership.clicks.count()
-        if clicks == 0:
-            partnership.cr = 0
-        else:
-            partnership.cr = f"{(partnership.conversions.count() / clicks) * 100:.2f}"
+    for project in top_projects:
+        project.cr = project.get_partner_conversion_percent(user)
+
+    conversion_sum_subquery = Conversion.objects.filter(
+        platform=OuterRef('pk')
+    ).values('platform').annotate(
+        total=Sum('amount')
+    ).values('total')[:1]
+
+    click_count_subquery = ClickEvent.objects.filter(
+        platform=OuterRef('pk')
+    ).values('platform').annotate(
+        cnt=Count('id')
+    ).values('cnt')[:1]
+
+    conversion_count_subquery = Conversion.objects.filter(
+        platform=OuterRef('pk')
+    ).values('platform').annotate(
+        cnt=Count('id')
+    ).values('cnt')[:1]
 
     top_platforms = Platform.objects.filter(
-        conversions__partner=user.partner_profile,
-        ).annotate(
-            total_revenue = Sum('conversions__amount',distinct=True),
-            click_count=Count('clicks', distinct=True),
-            conversion_count=Count('conversions', distinct=True),
-            score=ExpressionWrapper(
-                F('conversion_count') * 0.5 + F('click_count') * 0.3,
-                output_field=FloatField()
-            )
-        ).filter(
-            is_active=True
+        partner=user,
+        is_active=True
+    ).annotate(
+        total_revenue=Coalesce(Subquery(conversion_sum_subquery), Value(Decimal('0.00'))),
+        click_count=Coalesce(Subquery(click_count_subquery), Value(0)),
+        conversion_count=Coalesce(Subquery(conversion_count_subquery), Value(0)),
+        score=ExpressionWrapper(
+            F('conversion_count') * 0.5 + F('click_count') * 0.3,
+            output_field=FloatField()
+        )
     ).order_by('-score')[:4]
 
     notifications_count = PartnerActivity.objects.filter(partner=user.partner_profile,is_read=False).count()
@@ -151,7 +167,7 @@ def stats(request):
         "total_revenue_last_month":total_revenue_last_month,
         "average_revenue": average_revenue,
 
-        "top_partnerships": top_partnerships,
+        "top_projects": top_projects,
         "top_platforms": top_platforms,
 
         "conversions_json": json.dumps(chart_data) if chart_data else None,

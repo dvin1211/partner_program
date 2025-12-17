@@ -116,17 +116,17 @@
             <div class="bg-base-100 p-4 sm:p-6 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md">
                 <h2 class="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">Топ проектов</h2>
                 <div class="space-y-4">
-                    {% for partnership in top_partnerships %}
+                    {% for project in top_projects %}
                     <div class="flex items-center justify-between p-3 bg-base-200 rounded-lg">
                         <div class="flex items-center gap-3">
                             <div>
-                                <div class="font-medium text-sm"><a href="{% url 'project' partnership.project.id %}">{{ partnership.project.name }}</a></div>
-                                <div class="text-xs text-gray-500">{{ partnership.conversion_count|default:0 }} конв.</div>
+                                <div class="font-medium text-sm"><a href="{% url 'project' project.id %}">{{ project.name }}</a></div>
+                                <div class="text-xs text-gray-500">{{ project.conversion_count|default:0 }} конв.</div>
                             </div>
                         </div>
                         <div class="text-right">
-                            <div class="font-bold text-sm">₽{{ partnership.total_amount|default:0 }}</div>
-                            <div class="text-xs text-gray-500">{{ partnership.cr }}% CR</div>
+                            <div class="font-bold text-sm">₽{{ project.total_amount|default:0 }}</div>
+                            <div class="text-xs text-gray-500">{{ project.cr }}% CR</div>
                         </div>
                     </div>
                     {% endfor %}
@@ -142,7 +142,7 @@
                         <div class="flex items-center gap-3">
                             <div>
                                 <div class="font-medium text-sm"><a href="{% url 'platform' platform.id %}">{{ platform.name }}</a></div>
-                                <div class="text-xs text-gray-500">{{ platform.conversions_count }} конв.</div>
+                                <div class="text-xs text-gray-500">{{ platform.conversion_count }} конв.</div>
                             </div>
                         </div>
                         <div class="text-right">

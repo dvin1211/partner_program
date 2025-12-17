@@ -66,6 +66,7 @@ Id транзакции: {transaction_id}
     message_list = messages.get_messages(request)
     messages_data = [{"level": message.level_tag, "message": str(message)} for message in message_list]
     transaction.status = AdvertiserTransaction.STATUS_CHOICES.REJECTED
+    transaction.rejection_reason = rejection_reason if not None else ""
     transaction.save()
     try:
         send_email_via_mailru.delay(transaction.advertiser.user.email, msg, "Заявка на пополнение баланса была отклонена!")

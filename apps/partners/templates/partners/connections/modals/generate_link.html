@@ -11,14 +11,13 @@
                     </svg>
                     Получение партнёрской ссылки
                 </h3>
-                <div  onclick="document.getElementById('partnerLinkModal').close()" class="btn btn-sm btn-circle btn-ghost">
+                <div onclick="document.getElementById('partnerLinkModal').close()" class="btn btn-sm btn-circle btn-ghost">
                     ✕
                 </div>
             </div>
 
             <!-- Результат генерации -->
             <div id="generatedLinkContainer" class="mt-6 hidden">
-
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text font-medium">Ваша партнёрская ссылка</span>
@@ -41,16 +40,43 @@
                         <span class="text-sm opacity-70 block">Идентификатор партнёра</span>
                     </label>
                     <div class="flex items-center gap-2 w-full sm:w-auto">
-                        <input type="text" id="fixedPidInput" class="input input-bordered input-sm flex-1" readonly />
+                        <input name="fixedPidInput" type="text" id="fixedPidInput" class="input input-bordered input-sm flex-1" readonly />
                     </div>
                 </div>
             </div>
 
-            <!-- Управление параметрами -->
-            <div class="mt-4 bg-base-200 p-4 rounded-lg">
-                <h4 class="text-lg font-semibold mb-3">Дополнительные параметры</h4>
+            <!-- Стандартные дополнительные параметры -->
+            <div id="AdditionalLinkParamsContainer" class="mt-4 bg-base-200 p-4 rounded-lg">
+                <h4 class="text-lg font-semibold mb-3">
+                    <span>Дополнительные параметры</span>
+                    <span id="requiredParamsError" class="text-error text-sm hidden ml-2">
+                        <i class="fas fa-exclamation-circle mr-1"></i>Заполните все обязательные параметры
+                    </span>
+                </h4>
                 <div id="paramsControls" class="space-y-3">
-                    <!-- Параметры будут добавляться сюда динамически -->
+                    <!-- Стандартные параметры будут добавляться сюда динамически -->
+                </div>
+                
+                <!-- Контейнер для пользовательских параметров -->
+                <div id="customParamsContainer" class="mt-4 pt-4 border-t border-base-300">
+                    <h5 class="text-md font-medium mb-2 text-primary flex justify-between items-center">
+                        <span>Пользовательские параметры</span>
+                        <button type="button" id="addCustomParamBtn" class="btn btn-sm btn-outline btn-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Добавить свой параметр
+                        </button>
+                    </h5>
+                    <div id="customParamsList" class="space-y-3">
+                        <!-- Пользовательские параметры будут добавляться сюда -->
+                    </div>
+                    <div id="noCustomParamsMessage" class="text-center py-4 text-base-content/60">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <p>Пока не добавлено ни одного пользовательского параметра</p>
+                    </div>
                 </div>
             </div>
 
@@ -59,7 +85,7 @@
                 <div onclick="document.getElementById('partnerLinkModal').close()" class="btn btn-ghost">
                     Закрыть
                 </div>
-                <button id="generateLinkBtn" type="submit" class="btn btn-primary">
+                <button id="generateLinkBtn" type="button" class="btn btn-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                     </svg>
@@ -74,3 +100,44 @@
         <button>close</button>
     </form>
 </dialog>
+<style>
+.custom-param-item {
+    transition: all 0.3s ease;
+}
+
+.custom-param-item:hover {
+    border-color: hsl(var(--p) / 0.5);
+    background-color: hsl(var(--b1) / 0.8);
+}
+
+.custom-param-item.border-error {
+    border-color: hsl(var(--er));
+    animation: shake 0.5s ease-in-out;
+}
+
+.border-error {
+    border-color: hsl(var(--er)) !important;
+}
+
+.input-error {
+    border-color: hsl(var(--er)) !important;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.btn-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Адаптивность */
+@media (max-width: 640px) {
+    .custom-param-item {
+        padding: 1rem;
+    }
+}
+</style>

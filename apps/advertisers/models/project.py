@@ -161,14 +161,17 @@ class Project(models.Model):
     
     
     def get_partner_conversion(self,partner):
+        """Получить количество конверсий"""
         return self.conversions.filter(project=self,partner=partner.partner_profile).count()
     
     def get_partner_conversion_percent(self,partner):
+        """Получить Conversion Rate"""
         if self.conversions.filter(project=self,partner=partner.partner_profile).count() == 0 or self.clicks.filter(project=self,partner=partner.partner_profile).count() == 0:
             return 0.0
         return f"{(self.conversions.filter(project=self,partner=partner.partner_profile).count() / self.clicks.filter(project=self,partner=partner.partner_profile).count()) * 100:.2f}"
     
     def get_partner_clicks(self,partner):
+        """Получить количество кликов"""
         return self.clicks.filter(project=self,partner=partner.partner_profile).count()
     
     def has_partner_link(self, partner):

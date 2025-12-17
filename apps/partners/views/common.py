@@ -1,11 +1,11 @@
 from decimal import Decimal
 
-from django.db.models import Prefetch, Value, Sum, DecimalField,Q
+from django.db.models import Prefetch, Value, Sum, Q,Subquery,OuterRef
 from django.db.models.functions import Coalesce
 
 from apps.advertisers.models import Project
 from apps.partnerships.models import ProjectPartner
-
+from apps.tracking.models import Conversion
 
 def _get_available_projects(request):
     """Получение доступных проектов с оптимизацией"""
@@ -34,9 +34,9 @@ def _get_connected_projects(request):
         user_memberships_prefetch,
         'project_links',
         'conversions'
-    ).annotate(
-        conversions_total=Coalesce(
-            Sum('conversions__amount',filter=Q(conversions__partner=request.user.partner_profile), output_field=DecimalField(max_digits=10, decimal_places=2)),
-            Value(Decimal('0.00'))
-        )
+    ).annotate( 
+        conversions_total=Coalesce(Sum(
+            'conversions__amount',
+            filter=Q(conversions__partner=request.user.partner_profile)
+        ),Value(Decimal('0.00')))
     ).order_by('-partner_memberships__joined_at')

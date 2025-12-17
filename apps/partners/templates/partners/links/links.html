@@ -8,7 +8,7 @@
 {% vite_asset 'apps/partners/assets/js/links/links.js' %}
 {% endblock head_js_scripts %}
 
-{% block title %}Партнёрские сссылки{% endblock title %}
+{% block title %}Партнёрские ссылки{% endblock title %}
 
 {% block header %}
 {% include "partners/header/header.html" %}
@@ -60,12 +60,18 @@
         {% if messages %}
         <div class="mt-4">
             {% for message in messages %}
-            {% if "delete_link_success" in message.extra_tags %}
-            <div class="alert-message alert alert-success mb-4">
-                <i class="fas fa-check-circle mr-2"></i>
-                <b>{{ message }}</b>
-            </div>
-            {% endif %}
+                {% if "delete_link_success" in message.extra_tags %}
+                    <div class="alert-message alert alert-success mb-4">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <b>{{ message }}</b>
+                    </div>
+                {% endif %}
+                {% if "edit_link_success" in message.extra_tags %}
+                    <div class="alert-message alert alert-success mb-4">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <b>{{ message }}</b>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
         {% endif %}
@@ -97,7 +103,7 @@
                                 <th>Действия</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="partner_links">
                             {% for link in partner_links %}
                             <tr class="sm:table-row block sm:table-row mb-4 sm:mb-0">
                                 <td class="hidden sm:table-cell">{{ link.id }}</td>
@@ -140,9 +146,12 @@
                                                 <li class="copy_generated_link" data-clipboard-text="{{ link.url }}">
                                                     <a><i class="fas fa-copy mr-2"></i>Копировать</a>
                                                 </li>
-                                                <li class="delete_generated_link" data-link-id="{{ link.id }}"><a
-                                                       class="text-red-500"><i
-                                                           class="fas fa-trash-alt mr-2"></i>Удалить</a></li>
+                                                <li class="edit_generated_link" data-link-url="{{ link.url }}" data-link-id="{{ link.id }}" data-link-params="{{ link.params }}">
+                                                    <a><i class="fa-solid fa-pen-to-square mr-2"></i>Изменить</a>
+                                                </li>
+                                                <li class="delete_generated_link" data-link-id="{{ link.id }}">
+                                                    <a class="text-red-500"><i class="fas fa-trash-alt mr-2"></i>Удалить</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -289,4 +298,5 @@
     </script>
 </div>
 {% include "partners/links/modals/delete_link.html" %}
+{% include "partners/links/modals/edit_link.html" %}
 {% endblock %}

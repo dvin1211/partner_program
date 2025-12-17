@@ -12,9 +12,11 @@ urlpatterns = [
     path('resume_partnership/<int:project_id>',views.resume_partnership,name='resume_partnership'),
     path('generate_partner_link/<int:partnership_id>',views.generate_link,name='generate_link'),
     path('delete_partner_link/<int:link_id>',views.delete_partner_link,name='delete_partner_link'),
+    path('edit_partner_link/<int:link_id>',views.edit_link,name='edit_partner_link'),
     path('update_payout_settings',views.payout_settings_view,name='update_payout_settings'),
     path('create_payout_request',views.create_payout_request,name='create_payout_request'),
     path('read_notifications',views.read_partner_notifications,name='read_partner_notifications'),
+    path('generate_next_link_id',views.generate_next_link_id,name='generate_next_link_id'),
     
     # ЛК
     path('dashboard',views.dashboard,name='partner_dashboard'),

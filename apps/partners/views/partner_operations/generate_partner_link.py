@@ -14,7 +14,11 @@ def generate_link(request, partnership_id):
         partnership = get_object_or_404(ProjectPartner, id=partnership_id)
         
         generated_link = request.POST.get('generated_link', '').strip()
+        generated_id = int(request.POST.get('fixedPidInput','0').strip())
         
+        if generated_id <= 0:
+            messages.error(request, "Id ссылки должен быть больше 0",extra_tags="generate_link_error")
+            return redirect('partner_connections')
         # Валидация ссылки
         if not generated_link:
             messages.error(request, "Ссылка не может быть пустой",extra_tags="generate_link_error")
@@ -31,6 +35,7 @@ def generate_link(request, partnership_id):
         
         # Создание ссылки
         partner_link = PartnerLink.objects.create(
+            id=generated_id,
             partner=request.user,
             project=partnership.project,
             partnership=partnership,
@@ -47,7 +52,6 @@ def generate_link(request, partnership_id):
         messages.error(request, "Ошибка базы данных при создании ссылки",extra_tags="generate_link_error")
         return redirect('partner_connections')
     except Exception as e:
-        # В продакшне лучше использовать логирование
         print(f"Unexpected error: {e}")
         messages.error(request, f"Произошла непредвиденная ошибка: {e}",extra_tags="generate_link_error")
         return redirect('partner_connections')

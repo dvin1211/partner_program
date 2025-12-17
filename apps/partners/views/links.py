@@ -1,10 +1,11 @@
 from decimal import Decimal
 
 from django.shortcuts import render,redirect
-from django.db.models import Count, F, FloatField, ExpressionWrapper, Sum,Value
+from django.db.models import Count, F, FloatField, ExpressionWrapper, Sum,Value, Prefetch
 from django.db.models.functions import Coalesce
 
 from apps.partners.models import PartnerActivity,PartnerLink
+from apps.advertisers.models import ProjectParam
 from utils import _paginate
 
 def links(request):  
@@ -41,13 +42,21 @@ def links(request):
         ).filter(
             is_active=True
     ).order_by('-score').first()
-    
-    partner_links = PartnerLink.objects.filter(partner=request.user).annotate(
+
+    partner_links = PartnerLink.objects.filter(
+        partner=request.user
+    ).annotate(
         conversions_total=Coalesce(Sum('conversions__amount'), Value(Decimal(0.0)))
+    ).select_related('project').prefetch_related(
+        Prefetch(
+            'project__params',
+            queryset=ProjectParam.objects.all(),
+            to_attr='project_params_list'
+        )
     ).order_by('-created_at')
-    
+    for link in partner_links:
+        link.params = [param.name for param in link.project.project_params_list if param.name != 'pid' and param.param_type == 'required']
     partner_links_page = _paginate(request, partner_links, 6, 'partner_links_page')
-    
     context = {
         'notifications_count':notifications_count,
         

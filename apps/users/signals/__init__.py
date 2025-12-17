@@ -1,0 +1,1 @@
+from .register import send_welcome_email

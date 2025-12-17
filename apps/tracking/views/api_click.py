@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
 from apps.users.models import User
-from apps.partners.models import Platform,PartnerProfile
+from apps.partners.models import Platform,PartnerProfile,PartnerLink
 from apps.advertisers.models import AdvertiserProfile,Project
 from apps.partnerships.models import ProjectPartner
 
@@ -15,12 +15,15 @@ class ClickAPIView(APIView):
     
     def post(self, request):
         partner_id = request.data.get("partner")
+        partner_link_id = request.POST.get('pid')
+        project_id = request.data.get("project")
+        referrer_id = request.data.get('referrer')
+
         if partner_id is None:
             return Response(
                 {"detail": "Параметр 'partner' обязателен. Пожалуйста, укажите ID партнера."},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        project_id = request.data.get("project")
         if project_id is None:
             return Response(
                 {"detail": "Параметр 'project' обязателен. Пожалуйста, укажите ID проекта."},
@@ -73,19 +76,31 @@ class ClickAPIView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
             
-        if len(partnership.partner_links.all()) < 1:
+        if partnership.partner_links.count() < 1:
             return Response({"detail":"Переход не может быть засчитан, т.к. не сгенерирована партнёрская ссылка!"},status=status.HTTP_400_BAD_REQUEST)
-        referrer_id = request.data.get('referrer')
+        
+        partner_link = None
+        try:
+            partner_link = PartnerLink.objects.get(id=partner_link_id)
+            if partner_link.project != project:
+                return Response({"detail":"Переход не может быть засчитан, т.к. не ссылка не принадлежит данному проекту!"},status=status.HTTP_400_BAD_REQUEST)
+        except PartnerLink.DoesNotExist:
+            return Response({"detail":"Переход не может быть засчитан, т.к. не найдена партнёрская ссылка с таким id!"},status=status.HTTP_400_BAD_REQUEST)
+        
         if referrer_id:
             try:
                 platform = Platform.objects.get(
                     id=referrer_id,
-                    is_active=True
+                    is_active=True,
+                    status=Platform.StatusType.APPROVED
                 )
                 platform_id = platform.id
+                referrer = platform.url_or_id
             except Exception:
+                referrer = request.META.get('HTTP_REFERER', '')
                 platform_id = None
         else:
+            referrer = request.META.get('HTTP_REFERER', '')
             platform_id = None
         
         ip = request.META.get('HTTP_X_FORWARDED_FOR',None)
@@ -94,15 +109,14 @@ class ClickAPIView(APIView):
         else:
             ip = request.META.get("REMOTE_ADDR")
 
-        print(partnership.partner_links.all()[0])
         data = {
             "project":request.data["project"],
             "partner":partnerprofile.id,
             "advertiser":adv_profile.id,
             "platform":platform_id,
-            "partner_link":partnership.partner_links.all()[0].id,
+            "partner_link":partner_link.id,
             "partnership":partnership.id,
-            "referrer":str(partnership.partner_links.all()[0].url),
+            "referrer":referrer,
             "user_agent":request.META.get('HTTP_USER_AGENT', None),
             "ip_address":ip,
         }

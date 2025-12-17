@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
 from apps.users.models import User
-from apps.partners.models import Platform,PartnerProfile,PartnerActivity
+from apps.partners.models import Platform,PartnerProfile,PartnerActivity, PartnerLink
 from apps.advertisers.models import AdvertiserProfile,Project,AdvertiserActivity
 from apps.partnerships.models import ProjectPartner
 from apps.tracking.serializers import ConversionSerializer
@@ -17,12 +17,20 @@ class ConversionAPIView(APIView):
     
     def post(self, request):
         partner_id = request.data.get("partner")
+        partner_link_id = request.POST.get('pid')
+        project_id = request.data.get("project")
+        referrer_id = request.data.get('referrer')
+
+        if partner_link_id is None:
+            return Response(
+                {"detail": "Параметр 'pid' обязателен для зачисления конверсии. Пожалуйста, укажите ID ссылки."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         if partner_id is None:
             return Response(
                 {"detail": "Параметр 'partner' обязателен для зачисления конверсии. Пожалуйста, укажите ID партнера."},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        project_id = request.data.get("project")
         if project_id is None:
             return Response(
                 {"detail": "Параметр 'project' обязателен для зачисления конверсии. Пожалуйста, укажите ID проекта."},
@@ -42,18 +50,20 @@ class ConversionAPIView(APIView):
                 {"detail": "Сотрудничество с данным партнёром на данный момент приостановлено, т.к. аккаунт партнёра заблокирован!"},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        referrer_id = request.data.get('referrer')
+        
+        platform_id = None
+        referrer = request.META.get('HTTP_REFERER', '')
         if referrer_id:
             try:
                 platform = Platform.objects.get(
                     id=referrer_id,
-                    is_active=True
+                    is_active=True,
+                    status=Platform.StatusType.APPROVED
                 )
                 platform_id = platform.id
+                referrer = platform.url_or_id
             except Platform.DoesNotExist:
-                platform_id = None
-        else:
-            platform_id = None
+                pass
             
         try:
             partnership = ProjectPartner.objects.get(
@@ -90,8 +100,16 @@ class ConversionAPIView(APIView):
         if not partnership:
             return Response({"detail":"Нет такого проекта или партнёр не сотрудничает с ним!"},status=status.HTTP_400_BAD_REQUEST)
         
-        if len(partnership.partner_links.all()) < 1:
+        if partnership.partner_links.count() < 1:
             return Response({"detail":"Конверсия не может быть засчитана, т.к. не сгенерирована партнёрская ссылка!"},status=status.HTTP_400_BAD_REQUEST)
+        
+        partner_link = None
+        try:
+            partner_link = PartnerLink.objects.get(id=partner_link_id)
+            if partner_link.project != project:
+                return Response({"detail":"Переход не может быть засчитан, т.к. не ссылка не принадлежит данному проекту!"},status=status.HTTP_400_BAD_REQUEST)
+        except PartnerLink.DoesNotExist:
+            return Response({"detail":"Переход не может быть засчитан, т.к. не найдена партнёрская ссылка с таким id!"},status=status.HTTP_400_BAD_REQUEST)
         
         ip = request.META.get('HTTP_X_FORWARDED_FOR',None)
         if ip:
@@ -100,7 +118,7 @@ class ConversionAPIView(APIView):
             ip = request.META.get("REMOTE_ADDR")
             
         amount = project.cost_per_action
-        if 'amount' in request.data:
+        if 'amount' in request.data and request.data['amount'].isdigit():
             if float(request.data['amount']) >= project.get_reduced_price:
                 amount = request.data['amount']
         data = {
@@ -109,9 +127,10 @@ class ConversionAPIView(APIView):
             "advertiser":adv_profile.id,
             "amount":amount,
             "details":details,
-            "partner_link":partnership.partner_links.first().id,
+            "partner_link":partner_link.id,
             "partnership":partnership.id,
             "platform":platform_id,
+            "referrer":referrer,
             "user_agent":request.META.get('HTTP_USER_AGENT', None),
             "ip_address":ip,
             
