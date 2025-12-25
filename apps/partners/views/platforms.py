@@ -1,29 +1,32 @@
 from decimal import Decimal
+from datetime import timedelta
 
-from django.shortcuts import render,redirect
-from django.db.models import Count, Sum,Value
+from django.shortcuts import render
+from django.db.models import Count, Sum,Value,Q
 from django.db.models.functions import Coalesce
+from django.utils import timezone
 
+from apps.core.decorators import role_required
 from apps.partners.forms import PlatformForm
 from apps.partners.models import PartnerActivity, Platform
 from utils import _paginate, _apply_search
 
+
+@role_required('partner')
 def platforms(request):  
     """Площадки партнёра"""
     user = request.user
-    if not user.is_authenticated:
-        return redirect('/?show_modal=auth')
-    if not hasattr(request.user,"partner_profile"):
-        return redirect('index')
-    if user.is_authenticated and user.is_currently_blocked():
-        return render(request, 'account_blocked/block_info.html')
+    user.partner_profile.is_complete_profile()
     
-    notifications_count = PartnerActivity.objects.filter(partner=request.user.partner_profile,is_read=False).count()
+    notifications_count = PartnerActivity.objects.filter(partner=user.partner_profile,is_read=False).count()
     
     platforms_search_q = request.GET.get('platforms_search', '').strip()
     
+    three_days_ago = timezone.now() - timedelta(days=3)
     platforms = Platform.objects.filter(
-            partner=request.user).annotate(
+        Q(deleted_at__isnull=True) | Q(deleted_at__isnull=False,deleted_at__gte=three_days_ago),
+        partner=user,
+    ).annotate(
         conversions_total=Coalesce(Sum('conversions__amount'), Value(Decimal(0.0))),
         conversion_count=Coalesce(Count('conversions'),Value(0))
     ).order_by('-created_at')

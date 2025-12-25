@@ -1,19 +1,16 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from apps.advertisers.models import AdvertiserActivity
+from apps.core.decorators import role_required
 from apps.tracking.models import Conversion
 
+
+@role_required('advertiser')
 def notifications(request):  
     """Уведомления рекламодателя"""
     user = request.user
-    if not user.is_authenticated:
-        return redirect('/?show_modal=auth')
-    if not hasattr(request.user,"advertiserprofile"):
-        return redirect('index')
-    if user.is_authenticated and user.is_currently_blocked():
-        return render(request, 'account_blocked/block_info.html')
     
     unread_notifications_count = AdvertiserActivity.objects.filter(advertiser=user.advertiserprofile,is_read=False).count()
     total_notifications_count = AdvertiserActivity.objects.filter(advertiser=user.advertiserprofile).count()
@@ -30,7 +27,7 @@ def notifications(request):
     except (PageNotAnInteger, EmptyPage):
         notifications_page = notifications_page.page(1)
     context = {
-        "user": request.user,
+        "user": user,
         
         "notifications":notifications_page,
         "notifications_count":unread_notifications_count,

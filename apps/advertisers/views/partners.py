@@ -1,29 +1,26 @@
 from decimal import Decimal
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.db.models.functions import Coalesce
 from django.db.models import Sum, Count, Value,Subquery,OuterRef
 
-from apps.users.models import User
 from apps.advertisers.models import AdvertiserActivity
+from apps.core.decorators import role_required
 from apps.tracking.models import Conversion
+from apps.users.models import User
 from utils import _paginate,_apply_search
 
+
+@role_required('advertiser')
 def partners(request):
     """Страница с подключенными партнёрами рекламодателя"""
     user = request.user
-    if not user.is_authenticated:
-        return redirect('/?show_modal=auth')
-    if not hasattr(request.user,"advertiserprofile"):
-        return redirect('index')
-    if user.is_authenticated and user.is_currently_blocked():
-        return render(request, 'account_blocked/block_info.html')
     
-    notifications_count = AdvertiserActivity.objects.filter(advertiser=request.user.advertiserprofile,is_read=False).count()
+    notifications_count = AdvertiserActivity.objects.filter(advertiser=user.advertiserprofile,is_read=False).count()
     
     conversion_sum_subquery = Conversion.objects.filter(
         partner__user_id=OuterRef('pk'),
-        project__advertiser=request.user
+        project__advertiser=user
     ).values('partner__user_id').annotate(
         total=Sum('amount')
     ).values('total')[:1]
@@ -31,13 +28,13 @@ def partners(request):
     # Подзапрос для количества
     conversion_count_subquery = Conversion.objects.filter(
         partner__user_id=OuterRef('pk'),
-        project__advertiser=request.user
+        project__advertiser=user
     ).values('partner__user_id').annotate(
         count=Count('id')
     ).values('count')[:1]
 
     partners = User.objects.filter(
-        project_memberships__project__advertiser=request.user
+        project_memberships__project__advertiser=user
     ).annotate(
         conversions_total=Coalesce(Subquery(conversion_sum_subquery), Value(Decimal(0))),
         conversions_count=Coalesce(Subquery(conversion_count_subquery), Value(0))

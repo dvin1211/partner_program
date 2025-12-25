@@ -3,6 +3,8 @@ from decimal import Decimal
 from django.db import models
 from django.core.validators import MinLengthValidator,MinValueValidator
 from django.core.exceptions import ValidationError
+from django.utils import timezone
+
 
 class Project(models.Model):
     class StatusType(models.TextChoices):
@@ -10,6 +12,7 @@ class Project(models.Model):
         APPROVED = 'Подтверждено'
         REJECTED = 'Отклонено'
         BLOCKED = 'Заблокировано'
+        DELETED = 'Удалено'
         
     advertiser = models.ForeignKey(
         'users.User',
@@ -82,6 +85,15 @@ class Project(models.Model):
         auto_now_add=True,
         verbose_name='Дата добавления'
     )
+
+    deleted_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        default=None,
+        verbose_name='Дата удаления',
+        help_text='Дата мягкого удаления записи. NULL если запись активна.'
+    )
+
     status = models.CharField(
         default="На модерации",
         choices=StatusType,
@@ -99,6 +111,13 @@ class Project(models.Model):
 
     is_active = models.BooleanField(default=True)
     
+    def soft_delete(self):
+        """Мягкое удаление записи"""
+        self.deleted_at = timezone.now()
+        self.status = self.StatusType.DELETED
+        self.is_active = False
+        self.save()
+
     @property
     def conversions_count(self):
         return self.conversions.count()

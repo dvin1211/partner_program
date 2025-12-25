@@ -1,21 +1,18 @@
 import json
 
-from django.shortcuts import render,redirect
+from django.shortcuts import render
 
 from .common import _get_connected_projects
 from utils import _apply_search, _paginate
+from apps.core.decorators import role_required
 from apps.partners.models import PartnerActivity
 
 
+@role_required('partner')
 def connections(request):  
     """подключенные проекты"""
     user = request.user
-    if not user.is_authenticated:
-        return redirect('/?show_modal=auth')
-    if not hasattr(request.user,"partner_profile"):
-        return redirect('index')
-    if user.is_authenticated and user.is_currently_blocked():
-        return render(request, 'account_blocked/block_info.html')
+    user.partner_profile.is_complete_profile()
     
     notifications_count = PartnerActivity.objects.filter(partner=request.user.partner_profile,is_read=False).count()
     
@@ -43,6 +40,7 @@ def connections(request):
     connected_projects_page = _paginate(request, connected_projects, 5, 'connected_projects_page')
 
     context = {
+        "user":user,
         'notifications_count':notifications_count,
         
         'connected_projects': connected_projects_page,

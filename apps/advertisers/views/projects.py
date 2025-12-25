@@ -1,27 +1,28 @@
-from django.shortcuts import render, redirect
+from datetime import timedelta
+
+from django.shortcuts import render
+from django.db.models import Q
+from django.utils import timezone
 
 from utils import _paginate,_apply_search
 
-from apps.tracking.models import Conversion, ClickEvent
-from apps.advertisers.models import Project, AdvertiserActivity
+
+from apps.core.decorators import role_required
 from apps.advertisers.forms import ProjectForm,ProjectParamForm
+from apps.advertisers.models import Project, AdvertiserActivity
+from apps.tracking.models import Conversion, ClickEvent
 
 
+@role_required('advertiser')
 def projects(request):
     """Страница с проектами рекламодателя"""
-    
     user = request.user
-    if not user.is_authenticated:
-        return redirect('/?show_modal=auth')
-    if not hasattr(request.user,"advertiserprofile"):
-        return redirect('index')
-    if user.is_authenticated and user.is_currently_blocked():
-        return render(request, 'account_blocked/block_info.html')
     
-    notifications_count = AdvertiserActivity.objects.filter(advertiser=request.user.advertiserprofile,is_read=False).count()
+    notifications_count = AdvertiserActivity.objects.filter(advertiser=user.advertiserprofile,is_read=False).count()
     
+    three_days_ago = timezone.now() - timedelta(days=3)
     projects = Project.objects.filter(
-        advertiser=request.user
+        Q(deleted_at__isnull=True) | Q(deleted_at__isnull=False,deleted_at__gte=three_days_ago),advertiser=user
     ).select_related('advertiser').order_by('-created_at')
     
     projects_search_q = request.GET.get('projects_search', '').strip()
@@ -31,9 +32,9 @@ def projects(request):
         
     projects_page = _paginate(request, projects, 6, 'projects_page')
     
-    clicks_count = ClickEvent.objects.filter(advertiser=request.user.advertiserprofile).count()
+    clicks_count = ClickEvent.objects.filter(advertiser=user.advertiserprofile).count()
     conversion_percent = 0
-    conversions = Conversion.objects.filter(advertiser=request.user.advertiserprofile).select_related("project","partner").order_by("-created_at")
+    conversions = Conversion.objects.filter(advertiser=user.advertiserprofile).select_related("project","partner").order_by("-created_at")
     conversions_count = conversions.count()
     if clicks_count > 0:
         conversion_percent =  f"{(conversions_count / clicks_count) * 100:.2f}"

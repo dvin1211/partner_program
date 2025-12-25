@@ -1,19 +1,15 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
 from apps.advertisers.models import AdvertiserActivity
+from apps.core.decorators import role_required
 
 
+@role_required('advertiser')
 def requisites(request):
     """Страница с настройками юр. данных рекламодателя"""
     user = request.user
-    if not user.is_authenticated:
-        return redirect('/?show_modal=auth')
-    if not hasattr(request.user,"advertiserprofile"):
-        return redirect('index')
-    if user.is_authenticated and user.is_currently_blocked():
-        return render(request, 'account_blocked/block_info.html')
     
-    notifications_count = AdvertiserActivity.objects.filter(advertiser=request.user.advertiserprofile,is_read=False).count()
+    notifications_count = AdvertiserActivity.objects.filter(advertiser=user.advertiserprofile,is_read=False).count()
     
     context = {
         "notifications_count":notifications_count

@@ -9,11 +9,8 @@ from django.conf import settings
 from apps.advertisers.models import AdvertiserTransaction,AdvertiserActivity
 from utils import send_email_via_mailru,send_email_via_mailru_with_attachment
 
-@require_POST
-def proccess_adv_transaction(request,transaction_id):
-    """Отправки реквизиты для заявки на пополнение рекламодателя"""
-    transaction = get_object_or_404(AdvertiserTransaction,id=transaction_id)
-    msg = """Здравствуйте
+
+proccessed_transaction_msg = """Здравствуйте
     
 Мы рады сообщить вам, что ваш запрос на пополнение баланса был успешно обработан.
 Реквизиты для перевода прикреплены в файле. Пожалуйста, используйте их для завершения оплаты.
@@ -22,6 +19,13 @@ def proccess_adv_transaction(request,transaction_id):
 
 С уважением,
 Команда LinkOffer"""
+
+
+
+@require_POST
+def proccess_adv_transaction(request,transaction_id):
+    """Отправки реквизиты для заявки на пополнение рекламодателя"""
+    transaction = get_object_or_404(AdvertiserTransaction,id=transaction_id)
     attachments = []
     if 'invoiceFile' in request.FILES:
         uploaded_file = request.FILES['invoiceFile']
@@ -33,7 +37,7 @@ def proccess_adv_transaction(request,transaction_id):
         }
         attachments.append(file_data)
     try:
-        send_email_via_mailru_with_attachment(transaction.advertiser.user.email,msg,"Счет на оплату для пополнения баланса на вашем аккаунте",attachments)
+        send_email_via_mailru_with_attachment(transaction.advertiser.user.email,proccessed_transaction_msg,"Счет на оплату для пополнения баланса на вашем аккаунте",attachments)
     except:
         pass
     messages.success(request,message="Реквизиты для пополнения отправлены рекламодателю!",extra_tags='adv_transaction_success')

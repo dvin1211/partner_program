@@ -40,7 +40,45 @@
                             <div class="badge badge-primary badge-lg ml-2 animate-pulse">Рекламодатель</div>
                             {{ advertiser.username }}
                         </h2>
-                        <p class="text-base-content/60">Присоединился {{ advertiser.date_joined|timezone:"Europe/Moscow"|date:"j E Y H:i" }}</p>
+
+                        <div class="mt-4">
+                            <div class="flex items-center gap-2 mb-2">
+                                <svg class="w-5 h-5 text-base-content/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                    </path>
+                                </svg>
+                                <span class="text-sm font-semibold uppercase tracking-wider text-base-content/60">Описание</span>
+                            </div>
+
+                            <div class="bg-base-200/50 rounded-xl p-4 border border-base-300/30">
+                                {% if advertiser.description %}
+                                <div class="prose prose-sm max-w-none">
+                                    <p class="text-base-content/80 leading-relaxed">
+                                        {{ advertiser.description|linebreaksbr }}
+                                    </p>
+                                </div>
+                                {% else %}
+                                <div class="flex items-center gap-3 text-base-content/40">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                        </path>
+                                    </svg>
+                                    <span class="italic">Описание отсутствует</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <p class="text-base-content/60 mt-6">
+                            <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            Присоединился {{ advertiser.date_joined|timezone:"Europe/Moscow"|date:"j E Y H:i" }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -62,18 +100,18 @@
                         <div class="flex justify-between items-start">
                             <h3 class="card-title"><a href="{% url 'project' project.id %}">{{ project.name }}</a></h3>
                             <div
-                                class="badge badge-outline {% if project.is_active %}badge-success{% else %}badge-error{% endif %}">
+                                 class="badge badge-outline {% if project.is_active %}badge-success{% else %}badge-error{% endif %}">
                                 {% if project.is_active %}Активен{% else %}Неактивен{% endif %}
                             </div>
                         </div>
 
                         <div class="flex justify-between">URL: <a class="text-blue-500"
-                                href="{{ project.url }}">ссылка</a></div>
+                               href="{{ project.url }}">ссылка</a></div>
                         <div class="flex justify-between">Дата создания: <span>{{ project.created_at|timezone:"Europe/Moscow"|date:"j E Y H:i" }}</span></div>
 
                         <h4 class="card-title">Описание</h4>
                         <p
-                            class="text-base-content/80 mb-3 w-full break-words overflow-wrap-break-word whitespace-normal">
+                           class="text-base-content/80 mb-3 w-full break-words overflow-wrap-break-word whitespace-normal">
                             {{ project.description }}
                         </p>
                     </div>
@@ -95,12 +133,12 @@
         <div class="pagination flex flex-wrap justify-center items-center gap-2 my-6 px-2">
             {% if projects.has_previous %}
             <a href="?projects_page=1"
-                class="btn btn-sm btn-square md:btn-md btn-primary transition-all duration-200 hover:scale-105"
-                aria-label="Первая страница">
+               class="btn btn-sm btn-square md:btn-md btn-primary transition-all duration-200 hover:scale-105"
+               aria-label="Первая страница">
                 <i class="fas fa-angle-double-left"></i>
             </a>
             <a href="?projects_page={{ projects.previous_page_number }}"
-                class="btn btn-sm md:btn-md btn-outline transition-all duration-200 hover:scale-[1.02]">
+               class="btn btn-sm md:btn-md btn-outline transition-all duration-200 hover:scale-[1.02]">
                 <span class="hidden sm:inline">Предыдущая</span>
                 <span class="sm:hidden"><i class="fas fa-chevron-left"></i></span>
             </a>
@@ -109,20 +147,20 @@
             <div class="flex items-center mx-1 md:mx-3 text-sm md:text-base">
                 <span class="hidden sm:inline">Страница</span>
                 <input type="number" min="1" max="{{ projects.paginator.num_pages }}" value="{{ projects.number }}"
-                    class="input input-bordered input-sm md:input-md w-12 md:w-16 mx-1 md:mx-2 text-center transition-all duration-200 focus:ring-2 focus:ring-primary focus:border-transparent"
-                    onchange="window.location.href = '?projects_page=' + this.value" aria-label="Номер страницы">
+                       class="input input-bordered input-sm md:input-md w-12 md:w-16 mx-1 md:mx-2 text-center transition-all duration-200 focus:ring-2 focus:ring-primary focus:border-transparent"
+                       onchange="window.location.href = '?projects_page=' + this.value" aria-label="Номер страницы">
                 <span>из {{ projects.paginator.num_pages }}</span>
             </div>
 
             {% if projects.has_next %}
             <a href="?projects_page={{ projects.next_page_number }}"
-                class="btn btn-sm md:btn-md btn-outline transition-all duration-200 hover:scale-[1.02]">
+               class="btn btn-sm md:btn-md btn-outline transition-all duration-200 hover:scale-[1.02]">
                 <span class="hidden sm:inline">Следующая</span>
                 <span class="sm:hidden"><i class="fas fa-chevron-right"></i></span>
             </a>
             <a href="?projects_page={{ projects.paginator.num_pages }}"
-                class="btn btn-sm btn-square md:btn-md btn-primary transition-all duration-200 hover:scale-105"
-                aria-label="Последняя страница">
+               class="btn btn-sm btn-square md:btn-md btn-primary transition-all duration-200 hover:scale-105"
+               aria-label="Последняя страница">
                 <i class="fas fa-angle-double-right"></i>
             </a>
             {% endif %}

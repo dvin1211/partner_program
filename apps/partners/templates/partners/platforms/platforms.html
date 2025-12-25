@@ -19,13 +19,13 @@
 {% block content %}
 <div class="container mx-auto px-4 py-6 max-w-7xl">
     <div id="my_platforms">
-        <div class="mb-8">
+        <div class="mb-8 {% if not user.profile_completed %}blur-xs{% endif %}">
             <h1 class="text-3xl font-bold text-base-content mb-2">Мои площадки</h1>
             <p class="text-base-content/60">Добавляйте и управляйте своими источниками трафика (TikTok, YouTube, блоги,
                 сайты и др.)</p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8 {% if not user.profile_completed %}blur-xs{% endif %}">
             <div class="card bg-base-100 shadow-lg">
                 <div class="card-body text-center">
                     <i class="fas fa-layer-group text-3xl text-primary mb-2"></i>
@@ -56,7 +56,72 @@
             </div>
         </div>
 
-        <div class="flex justify-between items-center mb-6">
+        {% if not user.profile_completed %}
+            <div class="absolute inset-0 z-10 flex items-center justify-center p-3">
+                <div class="bg-white/30 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-white/20 text-center w-full max-w-md">
+                    <!-- Заголовок -->
+                    <div class="mb-4">
+                        <h3 class="text-lg font-bold text-gray-800 mb-1">Завершите регистрацию</h3>
+                        <p class="text-sm text-gray-600">Для доступа заполните профиль</p>
+                    </div>
+
+                    <!-- Прогресс -->
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center text-sm mb-1">
+                            <span class="font-medium">Прогресс:</span>
+                            <span class="font-bold text-primary">{{ request.user.partner_profile.get_profile_status.progress }}%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-primary h-2 rounded-full"
+                                style="width: {{ request.user.partner_profile.get_profile_status.progress }}%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Быстрый список -->
+                    <div class="bg-white/50 rounded-lg p-3 mb-4">
+                        <h4 class="font-semibold text-gray-800 mb-3 text-sm">Необходимо заполнить:</h4>
+                        <div class="space-y-2">
+                            {% for field in request.user.partner_profile.get_profile_status.fields %}
+                                {% if not field.is_filled and not field.get.is_optional %}
+                                    <div class="flex items-center gap-2 text-sm">
+                                        <span class="text-error font-bold">×</span>
+                                        <span class="text-gray-700">{{ field.name }}</span>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        {% if request.user.partner_profile.get_profile_status.filled_count > 0 %}
+                            <div class="mt-3 pt-3 border-t border-gray-200">
+                                <h5 class="font-semibold text-gray-800 mb-2 text-sm">Уже заполнено:</h5>
+                                <div class="space-y-2">
+                                    {% for field in request.user.partner_profile.get_profile_status.fields %}
+                                        {% if field.is_filled %}
+                                            <div class="flex items-center gap-2 text-sm">
+                                                <span class="text-success font-bold">✓</span>
+                                                <span class="text-gray-700">{{ field.name }}</span>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Кнопки -->
+                    <div class="space-y-2">
+                        <a href="{% url 'partner_settings' %}" class="btn btn-primary btn-block text-sm">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                            Заполнить профиль
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="flex justify-between items-center mb-6 {% if not user.profile_completed %}blur-xs{% endif %}">
             <form method="get" action="" class="join w-full">
                 <div>
                     <div>
@@ -75,7 +140,9 @@
             </form>
         </div>
 
-        <div class="card bg-base-100 shadow-lg">
+        
+
+        <div class="card bg-base-100 shadow-lg {% if not user.profile_completed %}blur-xs{% endif %}">
             <div class="card-body p-2 lg:p-4">
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-4 gap-3">
                     <h2 class="card-title text-lg lg:text-xl flex items-center gap-2">
@@ -163,12 +230,12 @@
                                             </span>
                                         </div>
                                         <span class="badge {% if platform.is_active %}badge-success{% else %}badge-error{% endif %}">
-                                                {% if platform.is_active %}
-                                                    Активна
-                                                {% else %}
-                                                    Неактивна
-                                                {% endif %}
-                                            </span>
+                                            {% if platform.is_active %}
+                                            Активна
+                                            {% else %}
+                                            Неактивна
+                                            {% endif %}
+                                        </span>
 
                                         <div class="text-sm text-primary truncate">
                                             {% if "http" in platform.url_or_id %}
@@ -187,38 +254,43 @@
                                                 <ul tabindex="0"
                                                     class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-40">
                                                     {% if platform.status != 'Отклонено' %}
-                                                    <li class="show_partner_platforms" data-platform-name="{{ platform.name }}"
-                                                        data-platform-type="{{ platform.get_platform_type_display }}"
-                                                        data-platform-income="{{ platform.income }}"
-                                                        data-platform-created-at="{{ platform.created_at }}"
-                                                        data-platform-status="{{ platform.is_active }}"
+                                                        <li class="show_partner_platforms" data-platform-name="{{ platform.name }}"
+                                                            data-platform-type="{{ platform.get_platform_type_display }}"
+                                                            data-platform-income="{{ platform.income }}"
+                                                            data-platform-created-at="{{ platform.created_at }}"
+                                                            data-platform-status="{{ platform.is_active }}"
 
-                                                        data-platform-conversions-total="{{ platform.conversions_total }}"
-                                                        data-platform-conversions-count="{{ platform.conversion_count }}"
-                                                        data-platform-conversions-percent="{{ platform.conversions_percent }}"
-                                                        data-platform-clicks-count="{{ platform.clicks_count }}">
-                                                        <a>
-                                                            <i class="fa-solid fa-square-poll-vertical mr-2"></i>Стат.
-                                                        </a>
-                                                    </li>
-                                                    <li class="edit-platform-btn" data-platform-id="{{ platform.id }}"
-                                                        data-platform-name="{{ platform.name }}"
-                                                        data-platform-type="{{ platform.get_platform_type_display }}"
-                                                        data-platform-url="{{ platform.url_or_id }}"
-                                                        data-platform-is-active="{{ platform.is_active }}"
-                                                        data-platform-description="{{ platform.description }}">
-                                                        <a href="#">
-                                                            <i class="fas fa-edit mr-2"></i>Ред.
-                                                        </a>
-                                                    </li>
+                                                            data-platform-conversions-total="{{ platform.conversions_total }}"
+                                                            data-platform-conversions-count="{{ platform.conversion_count }}"
+                                                            data-platform-conversions-percent="{{ platform.conversions_percent }}"
+                                                            data-platform-clicks-count="{{ platform.clicks_count }}">
+                                                            <a>
+                                                                <i class="fa-solid fa-square-poll-vertical mr-2"></i>Стат.
+                                                            </a>
+                                                        </li>
+                                                        {% if platform.status != 'Удалено' %}
+                                                            <li class="edit-platform-btn" data-platform-id="{{ platform.id }}"
+                                                                data-platform-name="{{ platform.name }}"
+                                                                data-platform-type="{{ platform.get_platform_type_display }}"
+                                                                data-platform-url="{{ platform.url_or_id }}"
+                                                                data-platform-is-active="{{ platform.is_active }}"
+                                                                data-platform-description="{{ platform.description }}">
+                                                                <a href="#">
+                                                                    <i class="fas fa-edit mr-2"></i>Ред.
+                                                                </a>
+                                                            </li>
+                                                        {% endif %}
                                                     {% endif %}
-                                                    <li>
-                                                        <a href="#" class="text-error delete-platform-btn"
-                                                           data-platform-id="{{ platform.id }}"
-                                                           data-platform-name="{{ platform.name }}">
-                                                            <i class="fas fa-trash-alt mr-2"></i>Удалить
-                                                        </a>
-                                                    </li>
+
+                                                    {% if platform.status != 'Удалено' %}
+                                                        <li>
+                                                            <a href="#" class="text-error delete-platform-btn"
+                                                            data-platform-id="{{ platform.id }}"
+                                                            data-platform-name="{{ platform.name }}">
+                                                                <i class="fas fa-trash-alt mr-2"></i>Удалить
+                                                            </a>
+                                                        </li>
+                                                    {% endif %}
                                                 </ul>
                                             </div>
                                         </div>
@@ -247,9 +319,9 @@
                                 <td class="hidden lg:table-cell">
                                     <span class="badge {% if platform.is_active %}badge-success{% else %}badge-error{% endif %}">
                                         {% if platform.is_active %}
-                                            Активна
+                                        Активна
                                         {% else %}
-                                            Неактивна
+                                        Неактивна
                                         {% endif %}
                                     </span>
                                 </td>
@@ -262,37 +334,41 @@
                                         <ul tabindex="0"
                                             class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                                             {% if platform.status != 'Отклонено' %}
-                                            <li class="show_partner_platforms" data-platform-name="{{ platform.name }}"
-                                                data-platform-type="{{ platform.get_platform_type_display }}"
-                                                data-platform-income="{{ platform.income }}"
-                                                data-platform-created-at="{{ platform.created_at }}"
-                                                data-platform-status="{{ platform.is_active }}"
+                                                <li class="show_partner_platforms" data-platform-name="{{ platform.name }}"
+                                                    data-platform-type="{{ platform.get_platform_type_display }}"
+                                                    data-platform-income="{{ platform.income }}"
+                                                    data-platform-created-at="{{ platform.created_at }}"
+                                                    data-platform-status="{{ platform.is_active }}"
 
-                                                data-platform-conversions-total="{{ platform.conversions_total }}"
-                                                data-platform-conversions-count="{{ platform.conversion_count }}"
-                                                data-platform-conversions-percent="{{ platform.conversions_percent }}"
-                                                data-platform-clicks-count="{{ platform.clicks_count }}">
-                                                <a>
-                                                    <i class="fa-solid fa-square-poll-vertical mr-2"></i>Статистика
-                                                </a>
-                                            </li>
-                                            <li class="edit-platform-btn" data-platform-id="{{ platform.id }}"
-                                                data-platform-name="{{ platform.name }}"
-                                                data-platform-type="{{ platform.get_platform_type_display }}"
-                                                data-platform-url="{{ platform.url_or_id }}"
-                                                data-platform-is-active="{{ platform.is_active }}"
-                                                data-platform-description="{{ platform.description }}">
-                                                <a>
-                                                    <i class="fas fa-edit mr-2"></i>Редактировать
-                                                </a>
-                                            </li>
+                                                    data-platform-conversions-total="{{ platform.conversions_total }}"
+                                                    data-platform-conversions-count="{{ platform.conversion_count }}"
+                                                    data-platform-conversions-percent="{{ platform.conversions_percent }}"
+                                                    data-platform-clicks-count="{{ platform.clicks_count }}">
+                                                    <a>
+                                                        <i class="fa-solid fa-square-poll-vertical mr-2"></i>Статистика
+                                                    </a>
+                                                </li>
+                                                {% if platform.status != 'Удалено' %}
+                                                    <li class="edit-platform-btn" data-platform-id="{{ platform.id }}"
+                                                        data-platform-name="{{ platform.name }}"
+                                                        data-platform-type="{{ platform.get_platform_type_display }}"
+                                                        data-platform-url="{{ platform.url_or_id }}"
+                                                        data-platform-is-active="{{ platform.is_active }}"
+                                                        data-platform-description="{{ platform.description }}">
+                                                        <a>
+                                                            <i class="fas fa-edit mr-2"></i>Редактировать
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
                                             {% endif %}
-                                            <li class="text-error delete-platform-btn" data-platform-id="{{ platform.id }}"
-                                                data-platform-name="{{ platform.name }}">
-                                                <a>
-                                                    <i class="fas fa-trash-alt mr-2"></i>Удалить
-                                                </a>
-                                            </li>
+                                            {% if platform.status != 'Удалено' %}
+                                                <li class="text-error delete-platform-btn" data-platform-id="{{ platform.id }}"
+                                                    data-platform-name="{{ platform.name }}">
+                                                    <a>
+                                                        <i class="fas fa-trash-alt mr-2"></i>Удалить
+                                                    </a>
+                                                </li>
+                                            {% endif %}
                                         </ul>
                                     </div>
                                 </td>

@@ -5,6 +5,7 @@ from django.db.utils import IntegrityError
 from django.views.decorators.http import require_POST
 
 from apps.users.forms import PartnerRegistrationForm, AdvertiserRegistrationForm
+from apps.partners.models import PartnerPayoutSettings
 
 @require_POST
 def handle_registration(request):
@@ -19,6 +20,14 @@ def handle_registration(request):
     
     try:
         user = form.save()
+        if user_type == "partner":
+            payout_settings = PartnerPayoutSettings.objects.create(
+                partner=user
+            )
+
+            payout_settings.save()
+
+
         authenticated_user = authenticate(
             request, 
             email=user.email, 

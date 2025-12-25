@@ -59,6 +59,8 @@ class User(AbstractUser):
         null=True
     )
     block_until = models.DateTimeField(null=True, blank=True) 
+    
+    profile_completed = models.BooleanField(default=False, verbose_name="Профиль настроен")
 
     def block(self, days=None):
         """Блокировать пользователя"""

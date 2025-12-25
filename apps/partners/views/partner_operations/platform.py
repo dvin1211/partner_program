@@ -52,7 +52,7 @@ def edit_platform(request,platform_id):
 def delete_platform(request, platform_id):
     try:
         platform = get_object_or_404(Platform,id=platform_id,partner=request.user)
-        platform.delete()
+        platform.soft_delete()
         messages.success(request,message=f"Платформа {platform.name} успешно удалена",extra_tags="platform_delete_success")
     except Exception as e:
         messages.error(request, message=f"Ошибка удаления платформы: {e}",extra_tags="platform_delete_error")

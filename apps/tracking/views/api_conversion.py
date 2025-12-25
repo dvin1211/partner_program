@@ -6,11 +6,12 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
 from apps.users.models import User
-from apps.partners.models import Platform,PartnerProfile,PartnerActivity, PartnerLink
-from apps.advertisers.models import AdvertiserProfile,Project,AdvertiserActivity
+from apps.partners.models import Platform,PartnerProfile, PartnerLink
+from apps.advertisers.models import AdvertiserProfile,Project
 from apps.partnerships.models import ProjectPartner
 from apps.tracking.serializers import ConversionSerializer
-
+from apps.tracking.signals import create_activities_signal
+from apps.tracking.models import Conversion
 
 class ConversionAPIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -150,17 +151,14 @@ class ConversionAPIView(APIView):
             else:
                 title = f'Новая продажа. Проект: {partnership.project.name}'
             
-            PartnerActivity.objects.create(
+            create_activities_signal.send(
+                sender=Conversion.__class__,
                 partner=partnerprofile,
-                activity_type='sale',
-                title=title,
-                details=f'Комиссия: {amount} ₽'
-            )
-            AdvertiserActivity.objects.create(
                 advertiser=adv_profile,
                 activity_type='sale',
                 title=title,
-                details=f'Комиссия: {amount} ₽. Партнёр: {partner.username}'
+                partner_details = f'Комиссия: {amount} ₽',
+                advertiser_details = f'Комиссия: {amount} ₽. Партнёр: {partner.username}'
             )
             return Response({"status": "success", "data": serializer.data}, status=status.HTTP_201_CREATED)
         return Response({"status": "error", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)

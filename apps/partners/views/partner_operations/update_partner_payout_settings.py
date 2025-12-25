@@ -18,7 +18,8 @@ def payout_settings_view(request):
         return redirect('dashboard')
     
     payout_method = request.POST.get('payout_method', None)
-    if payout_method not in dict(PartnerPayoutSettings.PAYOUT_METHOD_CHOICES) and payout_method is not None:
+    
+    if payout_method not in dict(PartnerPayoutSettings.PAYOUT_METHOD_CHOICES) or payout_method.strip() is None:
         messages.error(request, message="Выберите корректный способ вывода средств.", extra_tags="payout_settings_error")
         return redirect('partner_settings')
 

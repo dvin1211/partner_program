@@ -1,20 +1,16 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render
 from django.db.models import Q
 
+from apps.core.decorators import role_required
 from apps.advertisers.models import Project, AdvertiserTransaction
 from apps.managers.models import ManagerActivity
 from apps.partners.models import Platform,PartnerTransaction
 
 
+@role_required('manager')
 def manager_dashboard(request):  
     """Информационная панель менеджера"""
     user = request.user
-    if not user.is_authenticated:
-        return redirect('/?show_modal=auth')
-    if not hasattr(request.user,"managerprofile"):
-        return redirect('index')
-    if user.is_authenticated and user.is_currently_blocked():
-        return render(request, 'account_blocked/block_info.html')
     
     pending_projects_count = Project.objects.filter(status='На модерации').count()
     pending_platforms_count = Platform.objects.filter(status='На модерации').count()
@@ -25,7 +21,7 @@ def manager_dashboard(request):
     notifications_count = notifications.count()
     
     context = {
-        "user": request.user,  
+        "user": user,  
         "pending_projects_count":pending_projects_count,
         "pending_platforms_count":pending_platforms_count,
         "transactions_count":transactions_count,

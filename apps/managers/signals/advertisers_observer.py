@@ -1,6 +1,5 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.utils.translation import gettext as _
 
 from apps.advertisers.models import AdvertiserTransaction
 from apps.managers.models import ManagerActivity, ManagerProfile

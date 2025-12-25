@@ -93,7 +93,7 @@ def add_project(request):
 def delete_project(request, project_id):
     try:
         project = get_object_or_404(Project,id=project_id,advertiser=request.user)
-        project.delete()
+        project.soft_delete()
         messages.success(request, message="Проект успешно удалён",extra_tags="project_delete_success")
     except Exception as e:
         messages.error(request, message=f"Произошла ошибка при удалении проекта: {e}",extra_tags="project_delete_error")

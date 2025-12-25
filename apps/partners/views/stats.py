@@ -6,23 +6,20 @@ from django.db.models import Count, F, FloatField, ExpressionWrapper, Sum,Avg,Q,
 from django.db.models.functions import TruncDate,Coalesce
 from django.utils import timezone
 
+from apps.core.decorators import role_required
 from apps.advertisers.models import Project
 from apps.partners.models import PartnerActivity,Platform
-from apps.partnerships.models import ProjectPartner
 from apps.tracking.models import Conversion,ClickEvent
 from decimal import Decimal
 from utils import _paginate
 
+
+@role_required('partner')
 def stats(request):
     """Статистика партнёра"""
 
     user = request.user
-    if not user.is_authenticated:
-        return redirect('/?show_modal=auth')
-    if not hasattr(user,"partner_profile"):
-        return redirect('index')
-    if user.is_authenticated and user.is_currently_blocked():
-        return render(request, 'account_blocked/block_info.html')
+    user.partner_profile.is_complete_profile()
     
     conversions = Conversion.objects.filter(
         partner=user.partner_profile
@@ -97,12 +94,14 @@ def stats(request):
     
     last_month = timezone.now() - timedelta(days=30)
 
-    total_revenue = Conversion.objects.filter(partner=user.partner_profile).aggregate(total=Sum('amount'))['total'] or 0
-    total_revenue_last_month = Conversion.objects.filter(partner=user.partner_profile,created_at__gte=last_month).aggregate(total=Sum('amount'))['total'] or 0
-    average_revenue = f"{Conversion.objects.filter(partner=user.partner_profile).aggregate(total=Avg('amount'))['total']:.2f}" or 0
+    total_revenue = Conversion.objects.filter(partner=user.partner_profile).aggregate(total=Coalesce(Sum('amount'),0.0,output_field=FloatField()))['total'] or 0
+    total_revenue_last_month = Conversion.objects.filter(partner=user.partner_profile,created_at__gte=last_month).aggregate(total=Coalesce(Sum('amount'),0.0,output_field=FloatField()))['total'] or 0
+    average_revenue = f"{Conversion.objects.filter(partner=user.partner_profile).aggregate(total=Coalesce(Avg('amount'),0.0, output_field=FloatField()))['total']:.2f}" or 0
 
     top_projects = Project.objects.filter(
-        partner_memberships__partner=user
+        partner_memberships__partner=user,
+        deleted_at__isnull = True,
+        is_active=True
     ).annotate(
         total_amount=Coalesce(Sum(
             'conversions__amount',
@@ -141,6 +140,7 @@ def stats(request):
 
     top_platforms = Platform.objects.filter(
         partner=user,
+        deleted_at__isnull = True,
         is_active=True
     ).annotate(
         total_revenue=Coalesce(Subquery(conversion_sum_subquery), Value(Decimal('0.00'))),
@@ -155,6 +155,7 @@ def stats(request):
     notifications_count = PartnerActivity.objects.filter(partner=user.partner_profile,is_read=False).count()
     
     context = {
+        "user":user,
         'notifications_count':notifications_count,
 
         "conversions":conversions_page,

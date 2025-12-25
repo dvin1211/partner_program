@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
+from django.utils import timezone
 
 
 class Platform(models.Model):
@@ -15,6 +16,7 @@ class Platform(models.Model):
         APPROVED = 'Подтверждено'
         REJECTED = 'Отклонено'
         BLOCKED = 'Заблокировано'
+        DELETED = 'Удалено'
 
     partner = models.ForeignKey(
         'users.User',
@@ -52,6 +54,15 @@ class Platform(models.Model):
         auto_now_add=True,
         verbose_name='Дата добавления'
     )
+
+    deleted_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        default=None,
+        verbose_name='Дата удаления',
+        help_text='Дата мягкого удаления записи. NULL если запись активна.'
+    )
+
     status = models.CharField(
         default="На модерации",
         choices=StatusType,
@@ -60,6 +71,13 @@ class Platform(models.Model):
 
     is_active = models.BooleanField(default=True)
     
+    def soft_delete(self):
+        """Мягкое удаление записи"""
+        self.deleted_at = timezone.now()
+        self.status = self.StatusType.DELETED
+        self.is_active = False
+        self.save()
+
     @property
     def conversions_count(self):
         return self.conversions.count()
@@ -83,6 +101,9 @@ class Platform(models.Model):
                 fields=['partner', 'url_or_id'],
                 name='unique_platform'
             )
+        ]
+        indexes = [
+            models.Index(fields=['deleted_at']),
         ]
 
     def __str__(self):

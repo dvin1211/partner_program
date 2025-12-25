@@ -1,26 +1,23 @@
 import json 
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.db.models import Sum, Avg
 
-from utils import _paginate
-from apps.tracking.models import Conversion
+from apps.core.decorators import role_required
 from apps.advertisers.models import AdvertiserActivity
+from apps.tracking.models import Conversion
+from utils import _paginate
 
+
+@role_required('advertiser')
 def sales(request):
     """Страница со статистикой о продажах рекламодателя"""
     
     user = request.user
-    if not user.is_authenticated:
-        return redirect('/?show_modal=auth')   
-    if not hasattr(request.user,"advertiserprofile"):
-        return redirect('index') 
-    if user.is_authenticated and user.is_currently_blocked():
-        return render(request, 'account_blocked/block_info.html')
     
-    conversions = Conversion.objects.filter(project__advertiser=request.user).select_related("project","partner").order_by("-created_at")
+    conversions = Conversion.objects.filter(project__advertiser=user).select_related("project","partner").order_by("-created_at")
     conversions_count = conversions.count()
-    notifications_count = AdvertiserActivity.objects.filter(advertiser=request.user.advertiserprofile,is_read=False).count()
+    notifications_count = AdvertiserActivity.objects.filter(advertiser=user.advertiserprofile,is_read=False).count()
     
     
     chart_data = None

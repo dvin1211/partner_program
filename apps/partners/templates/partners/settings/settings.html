@@ -38,7 +38,12 @@
                 <span>{{ message }}</span>
             </div>
             {% endif %}
-
+            {% if "payout_settings_error" in message.tags %}
+            <div class="alert-message alert alert-error mb-4">
+                <i class="fas fa-exclamation-circle mr-2"></i>
+                <span>{{ message }}</span>
+            </div>
+            {% endif %}
             {% if "password_update_error" in message.tags %}
             <div class="alert-message alert alert-error mb-4">
                 <div>
@@ -147,7 +152,7 @@
                                 <div class="relative group">
                                     <textarea name="description" class="textarea w-full"
                                               placeholder="Расскажите о своих интересах, опыте и целях..."
-                                              data-min-length="20">{{ request.user.description|default:'' }}</textarea>
+                                              data-min-length="20" required>{{ request.user.description|default:'' }}</textarea>
                                 </div>
                             </div>
 
@@ -289,13 +294,13 @@
                                     <input type="text" name="card_number" maxlength="19" pattern="\d{16,19}"
                                            placeholder="0000 0000 0000 0000" class="input input-bordered w-full"
                                            value='{{ request.user.payout_settings.card_number|default:"" }}'
-                                           autocomplete="cc-number" />
+                                           autocomplete="cc-number"/>
                                 </div>
                                 <div class="form-control">
                                     <label class="label"><span class="label-text">Имя владельца карты</span></label>
                                     <input type="text" name="cardholder_name" maxlength="100" placeholder="Иван Иванов"
                                            value='{{ request.user.payout_settings.cardholder_name|default:"" }}'
-                                           class="input input-bordered w-full" autocomplete="cc-name" />
+                                           class="input input-bordered w-full" autocomplete="cc-name"/>
                                 </div>
                             </div>
 
@@ -304,17 +309,17 @@
                                 <div class="form-control">
                                     <label class="label"><span class="label-text">Номер счёта</span></label>
                                     <input type="text" name="bank_account_number" maxlength="30"
-                                           placeholder="40817810099910004312" class="input input-bordered w-full" value="{{ request.user.payout_settings.bank_account_number|default:'' }}" />
+                                           placeholder="40817810099910004312" class="input input-bordered w-full" value="{{ request.user.payout_settings.bank_account_number|default:'' }}"/>
                                 </div>
                                 <div class="form-control">
                                     <label class="label"><span class="label-text">Владелец счёта</span></label>
                                     <input type="text" name="bank_account_holder_name" maxlength="100"
-                                           placeholder="Иван Иванов" class="input input-bordered w-full" value="{{ request.user.payout_settings.bank_account_holder_name|default:'' }}" />
+                                           placeholder="Иван Иванов" class="input input-bordered w-full" value="{{ request.user.payout_settings.bank_account_holder_name|default:'' }}"/>
                                 </div>
                                 <div class="form-control">
                                     <label class="label"><span class="label-text">БИК банка</span></label>
                                     <input type="text" name="bank_bic_transfer" maxlength="9" pattern="\d{9}"
-                                           placeholder="044525225" class="input input-bordered w-full" value="{{ request.user.payout_settings.bank_account_bic|default:'' }}" />
+                                           placeholder="044525225" class="input input-bordered w-full" value="{{ request.user.payout_settings.bank_account_bic|default:'' }}"/>
                                 </div>
                             </div>
 
@@ -323,7 +328,7 @@
                                 <div class="form-control">
                                     <label class="label"><span class="label-text">Идентификатор кошелька</span></label>
                                     <input type="text" name="e_wallet_identifier" maxlength="100"
-                                           placeholder="Email или номер кошелька" class="input input-bordered w-full" />
+                                           placeholder="Email или номер кошелька" class="input input-bordered w-full"/>
                                 </div>
                             </div>
 
@@ -332,12 +337,12 @@
                                 <div class="form-control">
                                     <label class="label"><span class="label-text">Идентификатор СБП</span></label>
                                     <input type="text" name="sbp_identifier" maxlength="100"
-                                           placeholder="Номер телефона или email" class="input input-bordered w-full" />
+                                           placeholder="Номер телефона или email" class="input input-bordered w-full"/>
                                 </div>
                             </div>
 
                             <div class="card-actions flex justify-end mt-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" id="payout_submit" disabled>
                                     <i class="fas fa-save mr-2"></i>
                                     Сохранить изменения
                                 </button>
@@ -352,6 +357,7 @@
 
     <script>
         const payoutMethodSelect = document.getElementById('payout_method');
+        const submitPayoutSettings = document.getElementById('payout_submit');
 
         const fieldsMap = {
             card: document.getElementById('card_fields'),
@@ -365,6 +371,7 @@
                 div.classList.add('hidden');
                 div.querySelectorAll('input').forEach(input => {
                     input.disabled = true;
+                    submitPayoutSettings.disabled = true;
                 });
             });
         }
@@ -375,7 +382,10 @@
                 fieldsMap[method].classList.remove('hidden');
                 fieldsMap[method].querySelectorAll('input').forEach(input => {
                     input.disabled = false;
+                    console.log(input)
+                    input.required = true;
                 });
+                submitPayoutSettings.disabled = false;
             }
         }
 

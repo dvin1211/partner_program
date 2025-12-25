@@ -1,20 +1,16 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render
 from django.db.models import Q
 
-from apps.users.models import User
+from apps.core.decorators import role_required
 from apps.managers.models import ManagerActivity
+from apps.users.models import User
 from utils import _paginate
 
 
+@role_required('manager')
 def manager_users(request):  
     """Модерация пользователей"""
     user = request.user
-    if not user.is_authenticated:
-        return redirect('/?show_modal=auth')
-    if not hasattr(request.user,"managerprofile"):
-        return redirect('index')
-    if user.is_authenticated and user.is_currently_blocked():
-        return render(request, 'account_blocked/block_info.html')
     
     users_search_q = request.GET.get('users_search','').strip()
     users_type_q = request.GET.get('users_type','').strip()
@@ -39,7 +35,7 @@ def manager_users(request):
     notifications_count = ManagerActivity.objects.filter(manager=user.managerprofile,is_read=False).count()
     
     context = {
-        "user": request.user,
+        "user": user,
         
         "notifications_count":notifications_count,
 
