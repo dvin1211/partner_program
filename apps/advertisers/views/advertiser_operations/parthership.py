@@ -31,10 +31,10 @@ def stop_partnership_with_partner(request,partner_id):
     date_str = now().strftime("%d.%m.%Y %H:%M")
     
     title = "❌ Остановка сотрудничества"
-    message = f"""Здравствуйте,{user.get_full_name()}!
+    message = f"""Здравствуйте,{user.username}!
     
     
-Рекламодатель {request.user.email} прекратил сотрудничество с вами {date_str}.\n\n\n
+Рекламодатель {request.user.username} прекратил сотрудничество с вами {date_str}.\n\n\n
 С уважением,\nКоманда поддержки"""
     if user.email_notifications:
         send_email_via_mailru.delay(user.email,message,title)

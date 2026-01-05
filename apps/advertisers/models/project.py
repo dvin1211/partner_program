@@ -1,6 +1,7 @@
 from decimal import Decimal
 
 from django.db import models
+from django.db.models import Sum
 from django.core.validators import MinLengthValidator,MinValueValidator
 from django.core.exceptions import ValidationError
 from django.utils import timezone
@@ -178,23 +179,68 @@ class Project(models.Model):
                 
         super().save(*args,**kwargs)
     
-    
+    ######## Общие показатели
     def get_partner_conversion(self,partner):
-        """Получить количество конверсий"""
-        return self.conversions.filter(project=self,partner=partner.partner_profile).count()
+        """Получить общее количество конверсий по проекту и партнёру"""
+        if hasattr(partner,"partner_profile"):
+            return self.conversions.filter(project=self,partner=partner.partner_profile).count()
+        return {"details":"not partner"}
     
     def get_partner_conversion_percent(self,partner):
-        """Получить Conversion Rate"""
-        if self.conversions.filter(project=self,partner=partner.partner_profile).count() == 0 or self.clicks.filter(project=self,partner=partner.partner_profile).count() == 0:
-            return 0.0
-        return f"{(self.conversions.filter(project=self,partner=partner.partner_profile).count() / self.clicks.filter(project=self,partner=partner.partner_profile).count()) * 100:.2f}"
+        """Получить общий показатель Conversion Rate по проекту и партнёру"""
+        if hasattr(partner,"partner_profile"):
+            conversions_count = self.conversions.filter(project=self,partner=partner.partner_profile).count()
+            clicks_count = self.clicks.filter(project=self,partner=partner.partner_profile).count()
+            if conversions_count  == 0 or clicks_count == 0:
+                return 0.0
+            return f"{(conversions_count / clicks_count) * 100:.2f}"
+        return {"details":"not partner"}
     
     def get_partner_clicks(self,partner):
-        """Получить количество кликов"""
-        return self.clicks.filter(project=self,partner=partner.partner_profile).count()
+        """Получить общее количество кликов по проекту и партнёру"""
+        if hasattr(partner,"partner_profile"):
+            return self.clicks.filter(project=self,partner=partner.partner_profile).count()
+        return {"details":"not partner"}
     
     def has_partner_link(self, partner):
         """
         Проверяет, есть ли у партнёра сгенерированная ссылка для этого проекта
         """
         return self.project_links.filter(project=self,partner=partner, is_active=True).exists()
+    
+    ####### Конкретные показатели
+    def get_partnership_conversions_sum(self, partner, partnership):
+        """Получить сумму конверсий по партнёрству"""
+        if hasattr(partner, "partner_profile"):
+            # Используем aggregate для суммирования
+            result = self.conversions.filter(
+                project=self,
+                partner=partner.partner_profile,
+                partnership=partnership
+            ).aggregate(total_sum=Sum('amount'))
+            
+            # Возвращаем сумму или 0, если нет конверсий
+            return result['total_sum'] or 0
+        return {"details": "not partner"}
+
+    def get_partnerhip_conversions_count(self,partner,partnership):
+        """Получить количество конверсий по партнёрству"""
+        if hasattr(partner,"partner_profile"):
+            return self.conversions.filter(project=self,partner=partner.partner_profile,partnership=partnership).count()
+        return {"details":"not partner"}
+    
+    def get_partnerhip_clicks_count(self,partner,partnership):
+        """Получить количество кликов по партнёрству"""
+        if hasattr(partner,"partner_profile"):
+            return self.clicks.filter(project=self,partner=partner.partner_profile, partnership=partnership).count()
+        return {"details":"not partner"}
+        
+    def get_partnerhip_conversion_percent(self,partner,partnership):
+        """Получить показатель Conversion Rate по партнёрству"""
+        if hasattr(partner,"partner_profile"):
+            conversions_count = self.conversions.filter(project=self,partner=partner.partner_profile,partnership=partnership).count()
+            clicks_count = self.clicks.filter(project=self,partner=partner.partner_profile, partnership=partnership).count()
+            if conversions_count == 0 or clicks_count == 0:
+                return 0.0
+            return f"{(conversions_count / clicks_count) * 100:.2f}"
+        return {"details":"not partner"}

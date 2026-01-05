@@ -15,9 +15,11 @@ from utils import _paginate,_apply_search
 def partners(request):
     """Страница с подключенными партнёрами рекламодателя"""
     user = request.user
+    user.advertiserprofile.is_complete_profile()
     
     notifications_count = AdvertiserActivity.objects.filter(advertiser=user.advertiserprofile,is_read=False).count()
     
+    # Подзапрос для суммы конверсий
     conversion_sum_subquery = Conversion.objects.filter(
         partner__user_id=OuterRef('pk'),
         project__advertiser=user

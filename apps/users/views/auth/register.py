@@ -6,6 +6,7 @@ from django.views.decorators.http import require_POST
 
 from apps.users.forms import PartnerRegistrationForm, AdvertiserRegistrationForm
 from apps.partners.models import PartnerPayoutSettings
+from apps.advertisers.models import AdvertiserRequisites
 
 @require_POST
 def handle_registration(request):
@@ -26,7 +27,11 @@ def handle_registration(request):
             )
 
             payout_settings.save()
-
+        elif user_type == 'advertiser':
+            requisites = AdvertiserRequisites.objects.create(
+                user=user
+            )
+            requisites.save()
 
         authenticated_user = authenticate(
             request, 

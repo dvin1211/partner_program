@@ -2,14 +2,13 @@ from django.utils.timesince import timesince
 from django.utils.timezone import now
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET
 
 from apps.advertisers.models import AdvertiserActivity
+from apps.core.decorators import role_required
 
-
-@login_required
 @require_GET
+@role_required('advertiser')
 def notifications_json(request):
     advertiser = request.user.advertiserprofile
 

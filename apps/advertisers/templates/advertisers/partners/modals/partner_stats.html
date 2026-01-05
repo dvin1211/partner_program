@@ -1,0 +1,150 @@
+<!-- Модальное окно для детальной статистики партнера -->
+<dialog id="partnerStatsModal" class="modal modal-bottom sm:modal-middle flex justify-center">
+    <div class="modal-box max-w-6xl p-0 overflow-hidden bg-gradient-to-br from-white to-gray-50">
+        <!-- Заголовок с градиентом -->
+        <div class="sticky top-0 z-10 bg-gradient-to-r from-primary via-primary-focus to-secondary text-white p-4 sm:p-6 shadow-lg">
+            <div class="flex justify-between items-start">
+                <div class="flex items-center gap-3">
+                    <div class="avatar-placeholder">
+                        <div class="bg-white/20 text-white rounded-full w-12 h-12 flex items-center justify-center">
+                            <span class="text-xl font-bold" id="partnerInitials"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl sm:text-2xl font-bold" id="partnerName"></h3>
+                    </div>
+                </div>
+                <button onclick="partnerStatsModal.close()" class="btn btn-ghost btn-circle text-white hover:bg-white/20 transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Основная статистика в карточках -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-5">
+                <div class="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-white/80 text-sm font-medium">Доход</p>
+                            <p class="text-lg font-bold text-white mt-1" id="totalAmount"></p>
+                        </div>
+                        <div class="p-2 bg-green-500/20 rounded-lg">
+                            <svg class="w-5 h-5 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-white/80 text-sm font-medium">Конверсий</p>
+                            <p class="text-2xl font-bold text-white mt-1" id="totalConversions">127</p>
+                        </div>
+                        <div class="p-2 bg-blue-500/20 rounded-lg">
+                            <svg class="w-6 h-6 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-white/60 text-xs mt-2">Средняя конверсия: <span id="AverageConversion">356</span>₽</p>
+                </div>
+                
+                <div class="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-white/80 text-sm font-medium">Проектов</p>
+                            <p class="text-2xl font-bold text-white mt-1" id="totalProjects">4</p>
+                        </div>
+                        <div class="p-2 bg-purple-500/20 rounded-lg">
+                            <svg class="w-6 h-6 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-white/60 text-xs mt-2">активных: <span id="activeProjects">3</span><br>на паузе: <span id="pausedProjects">1</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Контент с проектами -->
+        <div class="p-4 sm:p-6 max-h-[60vh] overflow-y-auto">
+            
+            <!-- Список проектов -->
+            <div class="space-y-4 mb-10" id="projectsList">
+            </div>
+        </div>
+        
+        <!-- Футер -->
+        <div class="sticky bottom-0 bg-gray-50 border-t p-4 sm:p-6">
+            <div class="flex flex-col sm:flex-row gap-3 w-full">
+                <button onclick="partnerStatsModal.close()" class="btn btn-ghost flex-1">
+                    Закрыть
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Фон модального окна -->
+    <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+    </form>
+</dialog>
+
+<style>
+/* Анимации */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-in {
+    animation: slideIn 0.3s ease-out forwards;
+    opacity: 0;
+}
+
+/* Кастомный скроллбар */
+.modal-box::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-box::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.modal-box::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.modal-box::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Плавные переходы */
+.project-card {
+    transition: all 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Градиентные границы */
+.border-gradient {
+    border-image: linear-gradient(to right, #3b82f6, #8b5cf6) 1;
+}
+</style>

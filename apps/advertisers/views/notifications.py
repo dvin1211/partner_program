@@ -11,6 +11,7 @@ from apps.tracking.models import Conversion
 def notifications(request):  
     """Уведомления рекламодателя"""
     user = request.user
+    user.advertiserprofile.is_complete_profile()
     
     unread_notifications_count = AdvertiserActivity.objects.filter(advertiser=user.advertiserprofile,is_read=False).count()
     total_notifications_count = AdvertiserActivity.objects.filter(advertiser=user.advertiserprofile).count()

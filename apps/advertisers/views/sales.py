@@ -14,6 +14,7 @@ def sales(request):
     """Страница со статистикой о продажах рекламодателя"""
     
     user = request.user
+    user.advertiserprofile.is_complete_profile()
     
     conversions = Conversion.objects.filter(project__advertiser=user).select_related("project","partner").order_by("-created_at")
     conversions_count = conversions.count()

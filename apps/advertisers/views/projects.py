@@ -17,6 +17,7 @@ from apps.tracking.models import Conversion, ClickEvent
 def projects(request):
     """Страница с проектами рекламодателя"""
     user = request.user
+    user.advertiserprofile.is_complete_profile()
     
     notifications_count = AdvertiserActivity.objects.filter(advertiser=user.advertiserprofile,is_read=False).count()
     

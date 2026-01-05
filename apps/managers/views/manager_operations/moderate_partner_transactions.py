@@ -3,12 +3,14 @@ from django.contrib import messages
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 
+from apps.core.decorators import role_required
 from apps.users.models import User
 from apps.partners.models import PartnerTransaction, PartnerActivity
 from utils import send_email_via_mailru
 
-@login_required
+
 @require_POST
+@role_required('manager')
 def approve_transaction(request, transaction_id,partner_id):
     """Одобрить вывод средств партнёра"""
     transaction = get_object_or_404(PartnerTransaction,id=transaction_id)
@@ -30,8 +32,9 @@ def approve_transaction(request, transaction_id,partner_id):
     return redirect('manager_partners')
     
     
-@login_required
+
 @require_POST
+@role_required('manager')
 def reject_transaction(request, transaction_id, partner_id):
     """Отклонить вывод средств партнёра"""
     rejection_reason = request.POST.get('rejection_reason',None)

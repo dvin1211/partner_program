@@ -7,3 +7,4 @@ from .parthership import stop_partnership_with_partner
 from .mark_all_as_read import mark_all_notifications_read
 from .mark_as_read import mark_notification_read
 from .notifications_json import notifications_json
+from .get_connected_partners_info import partners_json

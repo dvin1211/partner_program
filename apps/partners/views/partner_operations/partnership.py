@@ -17,7 +17,7 @@ def stop_partnership_with_project(request,project_id):
     
     title = '❌ Остановка сотрудничества'
     message = f"""Уважаемый рекламодатель,
-сообщаем вам, что партнёр {partnership.partner.email} {partnership.partner.email} прекратил сотрудничество по проекту «{partnership.project.name}»\n
+сообщаем вам, что партнёр {partnership.partner} прекратил сотрудничество по проекту «{partnership.project.name}»\n
 Причина: {request.POST.get('suspension_reason', "Не указана")}\n
 Комментарий: {request.POST.get('suspension_comment', "Не указан")}
 **Что это значит:**  
@@ -33,6 +33,7 @@ def stop_partnership_with_project(request,project_id):
 
 @login_required
 @require_POST
+@transaction.atomic
 def suspend_partnership(request,project_id):
     """Приостановить сотрудничество партнёра с проектом рекламодателя. Для партнёра"""
     partnership = ProjectPartner.objects.get(partner=request.user,project=project_id)
@@ -43,7 +44,7 @@ def suspend_partnership(request,project_id):
     
     title = '❌ Приостановление сотрудничества'
     message = f"""Уважаемый рекламодатель,
-Сообщаем вам, что партнёр {partnership.partner.email} {partnership.partner.email} временно прекратил сотрудничество по проекту «{partnership.project.name}» временно приостановлено.
+Сообщаем вам, что партнёр {partnership.partner} временно прекратил сотрудничество по проекту «{partnership.project.name}» временно приостановлено.
 Причина: {request.POST.get('suspension_reason',"Не указана")}
 Комментарий: {request.POST.get('suspension_comment',"Не указан")}
 
@@ -61,6 +62,7 @@ def suspend_partnership(request,project_id):
 
 @login_required
 @require_POST
+@transaction.atomic
 def resume_partnership(request,project_id):
     """ Воозобновить сотрудничество партнёра с проектом рекламодателя. Для партнёра"""
     partnership = get_object_or_404(ProjectPartner,partner=request.user,project=project_id)
@@ -70,7 +72,7 @@ def resume_partnership(request,project_id):
     partnership.save()
     
     title = f'✅ Возобновление сотрудничества'
-    message = f"""Партнёр {partnership.partner.email} снова продвигает ваш проект «{partnership.project.name}».  
+    message = f"""Партнёр {partnership.partner} снова продвигает ваш проект «{partnership.project.name}».  
 
 После возобновления сотрудничества у вас будут учитываться конверсии/переходы.
 Это письмо отправлено автоматически."""

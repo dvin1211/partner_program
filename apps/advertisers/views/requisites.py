@@ -8,6 +8,7 @@ from apps.core.decorators import role_required
 def requisites(request):
     """Страница с настройками юр. данных рекламодателя"""
     user = request.user
+    user.advertiserprofile.is_complete_profile()
     
     notifications_count = AdvertiserActivity.objects.filter(advertiser=user.advertiserprofile,is_read=False).count()
     

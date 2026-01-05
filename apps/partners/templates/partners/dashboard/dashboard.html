@@ -265,7 +265,7 @@
                             Быстрые действия
                         </h2>
                         <div class="space-y-2">
-                            {% if is_completed_profile %}
+                            {% if user.partner_profile.is_complete_profile %}
                                 <a href="{% url 'partner_platforms' %}"
                                 class="btn btn-outline btn-block justify-start">
                                     <i class="fas fa-globe text-indigo-600 mr-2"></i>
@@ -274,7 +274,7 @@
                             {% endif %}
                             <button id="make_payout_quick"
                                     onclick="document.getElementById('withdrawModal').show()"
-                                    class="btn btn-outline btn-block justify-start" {% if not is_payout_available or not is_completed_profile %}disabled{% endif %}>
+                                    class="btn btn-outline btn-block justify-start" {% if not is_payout_available or not user.partner_profile.is_complete_profile %}disabled{% endif %}>
                                 <i class="fas fa-credit-card text-green-700 mr-2"></i>
                                 Запросить выплату
                             </button>

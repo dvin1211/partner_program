@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from django.db import transaction
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -13,9 +14,11 @@ from apps.tracking.serializers import ConversionSerializer
 from apps.tracking.signals import create_activities_signal
 from apps.tracking.models import Conversion
 
+
 class ConversionAPIView(APIView):
     permission_classes = [IsAuthenticated]
     
+    @transaction.atomic
     def post(self, request):
         partner_id = request.data.get("partner")
         partner_link_id = request.POST.get('pid')
@@ -82,6 +85,16 @@ class ConversionAPIView(APIView):
         if not project.is_active:
             return Response(
                 {"detail": "На данный момент проект неактивен!"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        if project.status == project.StatusType.DELETED:
+            return Response(
+                {"detail": "Сотрудничество остановлено, т.к. проект рекламодателя был удален!"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        elif project.status == project.StatusType.BLOCKED:
+            return Response(
+                {"detail": "Сотрудничество остановлено, т.к. проект рекламодателя заблокирован!"},
                 status=status.HTTP_400_BAD_REQUEST
             )
         if partnership.status != partnership.StatusType.ACTIVE:

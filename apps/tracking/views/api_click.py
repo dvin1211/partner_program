@@ -1,3 +1,4 @@
+from django.db import transaction
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -7,12 +8,12 @@ from apps.users.models import User
 from apps.partners.models import Platform,PartnerProfile,PartnerLink
 from apps.advertisers.models import AdvertiserProfile,Project
 from apps.partnerships.models import ProjectPartner
-
 from apps.tracking.serializers import ClickSerializer
 
 class ClickAPIView(APIView):
     permission_classes = [IsAuthenticated]
     
+    @transaction.atomic
     def post(self, request):
         partner_id = request.data.get("partner")
         partner_link_id = request.POST.get('pid')
@@ -59,6 +60,16 @@ class ClickAPIView(APIView):
         if not project.is_active:
             return Response(
                 {"detail": "На данный момент проект неактивен!"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        if project.status == project.StatusType.DELETED:
+            return Response(
+                {"detail": "Сотрудничество остановлено, т.к. проект рекламодателя был удален!"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        elif project.status == project.StatusType.BLOCKED:
+            return Response(
+                {"detail": "Сотрудничество остановлено, т.к. проект рекламодателя заблокирован!"},
                 status=status.HTTP_400_BAD_REQUEST
             )
         if partnership.status != partnership.StatusType.ACTIVE:

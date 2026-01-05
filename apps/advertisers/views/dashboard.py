@@ -11,7 +11,8 @@ from apps.users.models import User
 def dashboard(request):  
     """Информационная панель рекламодателя"""
     user = request.user
-    
+    user.advertiserprofile.is_complete_profile()
+
     partners = User.objects.filter(
         project_memberships__project__advertiser=user
     ).distinct().count()

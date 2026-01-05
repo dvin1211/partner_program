@@ -1,9 +1,10 @@
 from functools import wraps 
+from typing import Literal
 
 from django.shortcuts import render,redirect
 
 
-def role_required(role: str):
+def role_required(role: Literal['partner','manager','advertiser']):
     """Функция для проверки типа пользователя
 
     Args:
@@ -20,7 +21,7 @@ def role_required(role: str):
                 return redirect('/?show_modal=auth')
             if user.user_type != role:
                 return redirect('index')
-            if user.is_authenticated and user.is_currently_blocked():
+            if user.is_currently_blocked():
                 return render(request, 'account_blocked/block_info.html')
             return view_func(request,*args,**kwargs)
         return wrapper

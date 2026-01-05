@@ -15,6 +15,7 @@ urlpatterns = [
     # ЛК
     path('dashboard',views.dashboard,name='advertiser_dashboard'),
     path('partners',views.partners,name='advertiser_partners'),
+    path('partners/json/<int:partner_id>',views.partners_json,name='advertiser_partners_json'),
     path('sales',views.sales,name='advertiser_sales'),
     path('projects',views.projects,name='advertiser_projects'),
     path('settings',views.settings,name='advertiser_settings'),
