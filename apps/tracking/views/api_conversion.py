@@ -154,9 +154,9 @@ class ConversionAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
             
-            partnership.project.advertiser.advertiserprofile.balance -= Decimal(amount)
+            partnership.advertiser.advertiserprofile.balance -= Decimal(amount)
             partnership.partner.partner_profile.balance += Decimal(amount)
-            partnership.project.advertiser.advertiserprofile.save()
+            partnership.advertiser.advertiserprofile.save()
             partnership.partner.partner_profile.save()
             
             if 'details' in request.data:

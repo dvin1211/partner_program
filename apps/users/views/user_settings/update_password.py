@@ -1,8 +1,11 @@
-from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
+from django.views.decorators.http import require_POST
 
-
+@login_required
+@require_POST
 def update_password(request):
     """Изменить пароль пользователя"""
     user = request.user
@@ -17,12 +20,10 @@ def update_password(request):
     else:
         redirect_to = 'dashboard'
     
-    # Вспомогательная функция для ошибок
     def error_redirect(message):
         messages.error(request, message=message, extra_tags="password_update_error")
         return redirect(redirect_to)
     
-    # Проверки
     curr_password = request.POST.get('old_password')
     if not user.check_password(curr_password):
         return error_redirect("Текущий пароль введен неверно.")
@@ -36,7 +37,6 @@ def update_password(request):
     if new_password == curr_password:
         return error_redirect("Новый пароль не может совпадать со старым.")
     
-    # Дополнительные проверки (опционально)
     if len(new_password) < 8:
         return error_redirect("Пароль должен содержать минимум 8 символов.")
     

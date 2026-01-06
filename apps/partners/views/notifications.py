@@ -10,7 +10,9 @@ from apps.tracking.models import Conversion
 def notifications(request):  
     """Уведомления партнёра"""
     user = request.user
-    
+    if not user.profile_completed:
+        user.partner_profile.is_complete_profile()
+        
     unread_notifications_count = PartnerActivity.objects.filter(partner=user.partner_profile,is_read=False).count()
     total_notifications_count = PartnerActivity.objects.filter(partner=user.partner_profile).count()
     today_conversions_count = Conversion.objects.filter(partner=user.partner_profile, created_at__date=timezone.now()).count()

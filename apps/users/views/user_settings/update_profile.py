@@ -2,9 +2,14 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 from utils.is_russian_text import is_valid_russian_text
 
+
+@login_required
+@require_POST
 def update_profile(request):
     """Обновление профиля с выводом ВСЕХ ошибок"""
     
@@ -26,6 +31,7 @@ def update_profile(request):
         redirect_to = 'manager_settings'
     else:
         redirect_to = 'dashboard'
+        
     # Все ли значения введены верно
     is_correct = (
         new_first_name.isalpha() and 

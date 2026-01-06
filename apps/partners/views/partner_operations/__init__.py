@@ -1,13 +1,6 @@
-from .platform import add_platform, delete_platform, edit_platform
-from .connect_project import connect_project
-from .generate_partner_link import generate_link
-from .generate_next_id import generate_next_link_id
-from .delete_partner_link import delete_partner_link
-from .edit_partner_link import edit_link
-from .update_partner_payout_settings import payout_settings_view
-from .read_notifications import read_partner_notifications
-from .notifications_json import notifications_json
+from .link import *
+from .partner_notifications import *
+from .partner_settings import payout_settings_view
+from .partnership import *
+from .platform import *
 from .create_payout_transaction import create_payout_request
-from .partnership import stop_partnership_with_project, suspend_partnership, resume_partnership
-from .mark_all_as_read import mark_all_notifications_read
-from .mark_as_read import mark_notification_read

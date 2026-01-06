@@ -8,9 +8,9 @@ export function setupProjectEdit() {
             const projectData = {
                 id: button.dataset.projectId,
                 name: button.dataset.projectName,
-                url: button.dataset.projectUrl,
                 description: button.dataset.projectDescription,
                 isActive: button.dataset.projectIsActive === 'true',
+                actionName: button.dataset.projectActionName,
                 costPerAction: button.dataset.projectCost.replace(',', '.'),
                 reducedPrice: button.dataset.projectReducedPrice.replace(',', '.')
             };
@@ -22,14 +22,15 @@ export function setupProjectEdit() {
                 url: 'editProjectUrl',
                 description: 'editProjectDescription',
                 isActive: 'editProjectActive',
+                actionName:'customActionNameInput',
                 costPerAction: 'costPerActionInput'
             };
 
             document.getElementById(formFields.id).value = projectData.id;
             document.getElementById(formFields.name).value = projectData.name;
-            document.getElementById(formFields.url).value = projectData.url;
             document.getElementById(formFields.description).value = projectData.description;
             document.getElementById(formFields.isActive).checked = projectData.isActive;
+            document.getElementById(formFields.actionName).value = projectData.actionName;
             document.getElementById(formFields.costPerAction).value = projectData.costPerAction;
 
             // Устанавливаем минимальное значение для reducedPrice

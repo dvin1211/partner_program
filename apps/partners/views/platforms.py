@@ -16,7 +16,8 @@ from utils import _paginate, _apply_search
 def platforms(request):  
     """Площадки партнёра"""
     user = request.user
-    user.partner_profile.is_complete_profile()
+    if not user.profile_completed:
+        user.partner_profile.is_complete_profile()
     
     notifications_count = PartnerActivity.objects.filter(partner=user.partner_profile,is_read=False).count()
     

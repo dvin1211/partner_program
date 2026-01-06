@@ -12,7 +12,6 @@ from apps.advertisers.forms import ProjectForm,ProjectParamForm
 from apps.advertisers.models import Project, AdvertiserActivity
 from apps.tracking.models import Conversion, ClickEvent
 
-
 @role_required('advertiser')
 def projects(request):
     """Страница с проектами рекламодателя"""

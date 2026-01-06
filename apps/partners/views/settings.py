@@ -8,7 +8,9 @@ from apps.partners.models import PartnerActivity
 def settings(request):  
     """Настройки партнёра"""
     user = request.user
-    
+    if not user.profile_completed:
+        user.partner_profile.is_complete_profile()
+        
     notifications_count = PartnerActivity.objects.filter(partner=user.partner_profile,is_read=False).count()
     
     context = {

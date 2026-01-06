@@ -14,7 +14,8 @@ from utils import _paginate
 def links(request):  
     """сгенерированные ссылки партнёра"""
     user = request.user
-    user.partner_profile.is_complete_profile()
+    if not user.profile_completed:
+        user.partner_profile.is_complete_profile()
     
     active_links = PartnerLink.objects.filter(
         partner=user,

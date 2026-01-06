@@ -1,13 +1,13 @@
 from datetime import timedelta
 import json 
 
-from django.shortcuts import render,redirect
+from django.shortcuts import render
 from django.db.models import Count, F, FloatField, ExpressionWrapper, Sum,Avg,Q,Value,OuterRef,Subquery
 from django.db.models.functions import TruncDate,Coalesce
 from django.utils import timezone
 
-from apps.core.decorators import role_required
 from apps.advertisers.models import Project
+from apps.core.decorators import role_required
 from apps.partners.models import PartnerActivity,Platform
 from apps.tracking.models import Conversion,ClickEvent
 from decimal import Decimal
@@ -19,7 +19,8 @@ def stats(request):
     """Статистика партнёра"""
 
     user = request.user
-    user.partner_profile.is_complete_profile()
+    if not user.profile_completed:
+        user.partner_profile.is_complete_profile()
     
     conversions = Conversion.objects.filter(
         partner=user.partner_profile

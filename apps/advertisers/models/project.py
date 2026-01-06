@@ -51,11 +51,19 @@ class Project(models.Model):
 
     url = models.CharField(
         max_length=150,
-        verbose_name='URL или ID',
-        help_text='Ссылка или идентификатор (@username, channel ID)',
+        verbose_name='URL проекта',
+        help_text='Ссылка проекта',
         default=''
     )
 
+    action_name = models.CharField(
+        max_length=150,
+        verbose_name='Название целевого действия',
+        blank=True,
+        null=True,
+        validators=[MinLengthValidator(3)]
+    )
+    
     new_cost_per_action = models.DecimalField(
         verbose_name="Цена за действие",
         default=None,
@@ -63,7 +71,7 @@ class Project(models.Model):
         null=True,
         max_digits=10,
         decimal_places=2,
-        validators=[MinValueValidator(5)]
+        validators=[MinValueValidator(Decimal('5'))]
     )
     
     cost_per_action = models.DecimalField(
@@ -71,7 +79,7 @@ class Project(models.Model):
         default=5,
         max_digits=10,
         decimal_places=2,
-        validators=[MinValueValidator(5)]
+        validators=[MinValueValidator(Decimal('5'))]
     )
     
     first_price = models.DecimalField(
@@ -79,7 +87,7 @@ class Project(models.Model):
         default=5,
         max_digits=10,
         decimal_places=2,
-        validators=[MinValueValidator(5)]
+        validators=[MinValueValidator(Decimal('5'))]
     )
     
     created_at = models.DateTimeField(

@@ -4,14 +4,14 @@ from django.conf import settings
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.views.decorators.http import require_POST
-from django.contrib.auth.decorators import login_required
 from django.core.validators import MinValueValidator
 from django.http import JsonResponse
 
+from apps.core.decorators import role_required
 from apps.partners.models import PartnerTransaction
 
 
-@login_required
+@role_required('partner')
 @require_POST
 def create_payout_request(request):
     """Создать заявку на вывод средств партнёра"""

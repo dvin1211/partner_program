@@ -162,6 +162,7 @@
                                 <button class="btn btn-primary btn-block ConnectProjectModal" {% if user.profile_completed %}data-project-id="{{ project.id }}"
                                         data-project-name="{{ project.name }}" data-project-description="{{ project.description }}"
                                         data-project-advertiser="{{ project.advertiser.username }}"
+                                        data-project-action-name="{{ project.action_name }}"
                                         data-project-cost="{{ project.cost_per_action }}"
                                         data-project-partners-count="{{ project.partners.count }}"
                                         data-project-created-at='{{ project.created_at|timezone:"Europe/Moscow"|date:"j E Y H:i" }}'

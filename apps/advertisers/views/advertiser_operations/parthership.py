@@ -1,16 +1,16 @@
 from django.shortcuts import redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.views.decorators.http import require_POST
 from django.utils.timezone import now
 
+from apps.core.decorators import role_required
 from apps.users.models import User
 from apps.partnerships.models import ProjectPartner
 from utils import send_email_via_mailru
 
 
-@login_required
+@role_required('advertiser')
 @require_POST
 @transaction.atomic
 def stop_partnership_with_partner(request,partner_id):

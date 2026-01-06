@@ -1,10 +1,7 @@
-from .project import add_project, delete_project,edit_project
-from .update_api_settings import update_api_settings
-from .top_up_balance import top_up_balance
-from .update_requisites import update_requisites_settings
-from .read_notifications import read_advertiser_notifications
+from .project import *
+from .adv_settings import *
+from .adv_notifications import *
+from .adv_balance import *
+from .partners_info import *
+
 from .parthership import stop_partnership_with_partner
-from .mark_all_as_read import mark_all_notifications_read
-from .mark_as_read import mark_notification_read
-from .notifications_json import notifications_json
-from .get_connected_partners_info import partners_json

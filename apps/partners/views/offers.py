@@ -11,7 +11,9 @@ from .common import _get_available_projects
 def offers(request):  
     """Доступные предложения"""
     user = request.user
-    
+    if not user.profile_completed:
+        user.partner_profile.is_complete_profile()
+        
     projects_search_q = ''
     
     notifications_count = PartnerActivity.objects.filter(partner=user.partner_profile,is_read=False).count()

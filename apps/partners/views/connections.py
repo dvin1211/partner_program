@@ -2,10 +2,10 @@ import json
 
 from django.shortcuts import render
 
-from .common import _get_connected_projects
-from utils import _apply_search, _paginate
 from apps.core.decorators import role_required
 from apps.partners.models import PartnerActivity
+from utils import _apply_search, _paginate
+from .common import _get_connected_projects
 
 
 @role_required('partner')

@@ -159,6 +159,7 @@
                             <tr class="hidden sm:table-row">
                                 <th>ID</th>
                                 <th>Ссылка</th>
+                                <th>Проект</th>
                                 <th>Статус</th>
                                 <th>Клики</th>
                                 <th>Продажи</th>
@@ -191,6 +192,9 @@
                                         </div>
                                     </div>
                                 </td>
+                                <td class="block sm:table-cell"><span
+                                          class="badge badge-{%if link.project.status == 'Подтверждено' %}success{% elif link.project.status == 'На модерации'%}warning{% else %}error{% endif %} mr-2">
+                                    {{ link.project.status }}</span></td>
                                 <td class="hidden sm:table-cell"><span
                                           class="badge badge-{%if link.is_active %}success{% else %}error{% endif %} mr-2">
                                         {% if link.is_active %}Активна{% else %} Неактивна {% endif %} </span></td>

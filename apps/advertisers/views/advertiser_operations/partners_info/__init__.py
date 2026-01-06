@@ -1,0 +1,1 @@
+from .get_connected_partners_info import partners_json

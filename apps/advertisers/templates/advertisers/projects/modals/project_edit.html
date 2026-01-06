@@ -22,18 +22,15 @@
                     minlength="3" placeholder="Например: Интернет магазин" required>
             </div>
 
-            <!-- URL и Cookie -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- URL -->
-                <div class="form-control">
+            <!-- Целевое действие -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">                
+                 <div class="form-control">
                     <label class="label">
-                        <span class="label-text">URL или ID</span>
+                        <span class="label-text">Название целевого действия</span>
                     </label>
-                    <input type="text" name="url" id="editProjectUrl" class="input input-bordered w-full" required
-                        placeholder="Ссылка или идентификатор" required>
+                    <input type="text" name="customActionName" id="customActionNameInput"
+                        class="input input-bordered w-full" required>
                 </div>
-
-                <!-- Цена за действие -->
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Цена за действие</span>

@@ -9,7 +9,8 @@ from .common import _get_available_projects,_get_connected_projects
 def dashboard(request):  
     """Информационная панель партнёра"""
     user = request.user
-    user.partner_profile.is_complete_profile()
+    if not user.profile_completed:
+        user.partner_profile.is_complete_profile()
     
     last_activity = PartnerActivity.objects.filter(partner=user.partner_profile,is_read=False).order_by('-created_at')
     notifications_count = PartnerActivity.objects.filter(partner=user.partner_profile,is_read=False).count()

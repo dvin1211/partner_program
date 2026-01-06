@@ -18,7 +18,7 @@ export function setupConnectionModal() {
     // Предварительно находим все data-поля в модалке
     const fieldElements = {};
     const fieldSelectors = [
-        'project-name', 'advertiser', 'costPerAction', 
+        'project-name', 'advertiser','ActionName', 'costPerAction', 
         'partners-count', 'created-at', 'description', 'project-url'
     ];
 
@@ -44,6 +44,7 @@ export function setupConnectionModal() {
             if (field === "costPerAction" && dataset.projectCost) {
                 element.innerHTML = `${dataset.projectCost} ₽`;
             }
+            if (field === "ActionName" && dataset.projectActionName)
             if (field === 'description' && dataset.projectDescription) {
                 element.innerHTML = dataset.projectDescription;
             }

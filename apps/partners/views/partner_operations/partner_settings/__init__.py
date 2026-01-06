@@ -1,0 +1,1 @@
+from .update_partner_payout_settings import payout_settings_view

@@ -53,7 +53,11 @@
                                 <span>{{ project.created_at|date:"d.m.Y" }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Комиссия:</span>
+                                <span class="text-gray-600">Целевое действие:</span>
+                                <span class="font-bold">{{ project.action_name }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Цена за действие:</span>
                                 <span class="font-bold">{{ project.cost_per_action }} ₽</span>
                             </div>
                         </div>

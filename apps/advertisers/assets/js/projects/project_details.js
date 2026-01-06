@@ -10,6 +10,7 @@ export function setupProjectDetails() {
             document.getElementById('ProjectDescription').textContent = projectData.projectDescription;
             document.getElementById('ProjectPartnersCount').textContent = projectData.projectPartnersCount;
             document.getElementById('ProjectTotalClicks').textContent = projectData.projectTotalClicks;
+            document.getElementById('ActionName').textContent = projectData.projectActionName;
             document.getElementById('CostPerAction').textContent = projectData.projectCost + ' ₽';
             document.getElementById('ProjectUrl').textContent = projectData.projectUrl;
             document.getElementById('ProjectTemplateUrl').textContent = projectData.projectLinkTemplate;

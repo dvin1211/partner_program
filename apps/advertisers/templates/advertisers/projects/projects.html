@@ -280,6 +280,7 @@
                                 data-project-description="{{ project.description }}"
                                 data-project-url="{{ project.url }}" data-project-status="{{ project.status }}"
                                 data-project-is-active="{{ project.is_active|yesno:'true,false' }}"
+                                data-project-action-name="{{ project.action_name|default:'' }}"
                                 data-project-cost="{{ project.cost_per_action }}"
                                 data-project-partners-count="{{ project.partners.count }}"
                                 data-project-link-template="{{ project.link_template }}"
@@ -295,6 +296,7 @@
                                 data-project-name="{{ project.name }}" data-project-url="{{ project.url }}"
                                 data-project-description="{{ project.description }}"
                                 data-project-status="{{ project.status }}"
+                                data-project-action-name="{{ project.action_name|default:'' }}"
                                 data-project-cost="{{ project.cost_per_action }}"
                                 data-project-reduced-price="{{ project.get_reduced_price }}"
                                 data-project-is-active="{{ project.is_active|yesno:'true,false' }}">
