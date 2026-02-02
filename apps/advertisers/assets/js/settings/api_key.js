@@ -43,7 +43,6 @@ export function setupApiKeySettings() {
       const apiKeyElement = document.getElementById('api_key');
 
       if (!apiKeyElement) {
-        console.error('Элемент с API ключом не найден');
         showAlert('Ошибка: поле с ключом не найдено', 'error');
         return;
       }
@@ -51,14 +50,11 @@ export function setupApiKeySettings() {
       const apiKey = apiKeyElement.value;
 
       if (!apiKey) {
-        console.warn('API ключ пустой');
         showAlert('Нет ключа для копирования', 'warning');
         return;
       }
 
-      // Проверка поддержки Clipboard API
       if (!navigator.clipboard) {
-        console.warn('Clipboard API не поддерживается');
         fallbackCopy(apiKey);
         return;
       }
@@ -68,18 +64,16 @@ export function setupApiKeySettings() {
         showAlert('API ключ скопирован!', 'success');
         updateButtonState(btnCopy, true);
       } catch (err) {
-        console.error('Ошибка копирования:', err);
         fallbackCopy(apiKey);
       }
     });
   }
 
-  // Резервный метод копирования
   function fallbackCopy(text) {
     try {
       const textarea = document.createElement('textarea');
       textarea.value = text;
-      textarea.style.position = 'fixed'; // Невидимый элемент
+      textarea.style.position = 'fixed'; 
       document.body.appendChild(textarea);
       textarea.select();
 
@@ -92,7 +86,6 @@ export function setupApiKeySettings() {
         throw new Error('Резервное копирование не удалось');
       }
     } catch (err) {
-      console.error('Резервное копирование не удалось:', err);
       showAlert('Не удалось скопировать ключ. Скопируйте вручную.', 'error');
     }
   }

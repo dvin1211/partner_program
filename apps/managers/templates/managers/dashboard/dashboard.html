@@ -55,7 +55,7 @@
                     <div class="flex justify-between items-center">
                         <div>
                             <p class="text-sm opacity-80">Заявок на выплату средств</p>
-                            <p class="text-2xl font-bold">{{ transactions_count }}</p>
+                            <p class="text-2xl font-bold">{{ partner_transactions_count }}</p>
                         </div>
                         <i class="fas fa-money-bill text-3xl opacity-80"></i>
                     </div>
@@ -135,6 +135,15 @@
                                     </div>
                                     <span class="text-sm text-base-content/60">{{ notification.created_at|timesince }} назад</span>
                                 </div>
+                            {% empty %}
+                            <div class="flex flex-col justify-center items-center text-center py-10"
+                                 id="empty-state">
+                                <div class="text-gray-300 text-5xl mb-4">
+                                    <i class="fas fa-sad-cry"></i>
+                                </div>
+                                <h3 class="text-lg font-medium text-gray-500 mb-2">Нет последних активностей</h3>
+                                <p class="text-gray-400 text-sm mb-4">Здесь будут отображаться последние уведомления</p>
+                            </div>
                             {% endfor %}
                         </div>
                     </div>
@@ -150,18 +159,26 @@
                             <i class="fas fa-bolt text-primary mr-2"></i>
                             Быстрые действия
                         </h2>
-                        <div class="space-y-2">
-                            <button class="btn btn-primary btn-block justify-start">
-                                <i class="fas fa-search mr-2"></i>
-                                Проверить пользователя
+                        <div class="grid grid-cols-1 gap-2">
+                            <button class="btn btn-outline justify-start" onclick="document.getElementById('projects-moderation-modal').show()">
+                                <i class="fas fa-project-diagram mr-2"></i>
+                                Модерация проектов
                             </button>
-                            <button class="btn btn-outline btn-block justify-start">
-                                <i class="fas fa-file-alt mr-2"></i>
-                                Шаблоны ответов
+                            <button class="btn btn-outline justify-start" onclick="document.getElementById('platforms-moderation-modal').show()">
+                                <i class="fas fa-project-diagram mr-2"></i>
+                                Модерация площадок
                             </button>
-                            <button class="btn btn-outline btn-block justify-start">
-                                <i class="fas fa-headset mr-2"></i>
-                                Чат поддержки
+                            <button class="btn btn-outline justify-start" onclick="document.getElementById('payouts-moderation-modal').show()">
+                                <i class="fas fa-money-bill-wave mr-2"></i>
+                                Модерация выплат партнёрам
+                            </button>
+                            <button class="btn btn-outline justify-start">
+                                <i class="fas fa-money-bill-wave mr-2"></i>
+                                Модерация пополнений у рекламодателей
+                            </button>
+                            <button class="btn btn-outline justify-start">
+                                <i class="fas fa-star mr-2"></i>
+                                Модерация отзывов
                             </button>
                         </div>
                     </div>
@@ -170,4 +187,11 @@
         </div>
     </div>
 </div>
+
+
+{% include "managers/dashboard/modals/projects.html" %}
+{% include "managers/dashboard/modals/platforms.html" %}
+{% include "managers/dashboard/modals/payouts.html" %}
+{% include "managers/dashboard/modals/reviews.html" %}
+
 {% endblock %}

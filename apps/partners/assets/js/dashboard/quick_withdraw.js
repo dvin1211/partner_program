@@ -5,30 +5,22 @@ export function setupQuickWithdraw() {
     const balanceElement = document.getElementById('partner-balance');
     const amountInput = form.querySelector('input[name="amount"]');
 
-    // Кэшируем элементы и константы
     const ALERT_DURATION = 5000;
     const ANIMATION_DURATION = 500;
 
-    // Функции для работы с числами с запятыми
     const parseNumberWithComma = (numberString) => {
         if (!numberString) return 0;
 
-        let cleaned = numberString.toString().replace(/\s/g, ''); // Убираем пробелы
+        let cleaned = numberString.toString().replace(/\s/g, ''); 
 
-        // Если есть запятая И нет точек ИЛИ запятая после последней точки
         if (cleaned.includes(',') && (!cleaned.includes('.') || cleaned.lastIndexOf(',') > cleaned.lastIndexOf('.'))) {
-            // Запятая - десятичный разделитель
-            cleaned = cleaned.replace(/\./g, '')  // Убираем точки (разделители тысяч)
-                .replace(',', '.');   // Заменяем запятую на точку
+            cleaned = cleaned.replace(/\./g, '')
+                .replace(',', '.');   
         }
-        // Если есть точка И нет запятых ИЛИ точка после последней запятой
         else if (cleaned.includes('.') && (!cleaned.includes(',') || cleaned.lastIndexOf('.') > cleaned.lastIndexOf(','))) {
-            // Точка - десятичный разделитель, запятые - разделители тысяч
-            cleaned = cleaned.replace(/,/g, '');  // Убираем запятые
+            cleaned = cleaned.replace(/,/g, '');  
         }
-        // Если есть и точка и запятая, но непонятно что есть что
         else if (cleaned.includes(',') && cleaned.includes('.')) {
-            // Берем последний разделитель как десятичный
             const lastSeparator = Math.max(cleaned.lastIndexOf(','), cleaned.lastIndexOf('.'));
             if (cleaned[lastSeparator] === ',') {
                 cleaned = cleaned.replace(/\./g, '').replace(',', '.');
@@ -45,14 +37,12 @@ export function setupQuickWithdraw() {
         return number.toFixed(2).replace('.', ',');
     };
 
-    // Функция для получения значения из input
     const getAmountFromForm = () => {
         if (!amountInput) return 0;
         const inputValue = amountInput.value;
         return parseNumberWithComma(inputValue);
     };
 
-    // Функция для анимации баланса
     const animateBalance = (withdrawAmount, duration = 1000) => {
         if (!balanceElement) return;
 
@@ -82,7 +72,6 @@ export function setupQuickWithdraw() {
         requestAnimationFrame(update);
     };
 
-    // Функция для создания уведомлений
     const createAlertMessage = (message, level = 'error') => {
         const iconClass = level === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle';
         const alertClass = `alert-${level}`;
@@ -94,7 +83,6 @@ export function setupQuickWithdraw() {
         `;
     };
 
-    // Функция для показа сообщений
     const showMessages = (messages) => {
         messageContainer.innerHTML = '';
 
@@ -113,7 +101,6 @@ export function setupQuickWithdraw() {
         });
     };
 
-    // Функция для показа ошибки
     const showNetworkError = () => {
         modal.close();
         showMessages([{
@@ -122,14 +109,12 @@ export function setupQuickWithdraw() {
         }]);
     };
 
-    // Основной обработчик
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         const formData = new FormData(form);
         const withdrawAmount = getAmountFromForm();
 
-        // Валидация суммы
         if (withdrawAmount <= 0) {
             showMessages([{
                 level: 'error',
@@ -138,7 +123,6 @@ export function setupQuickWithdraw() {
             return;
         }
 
-        // Получаем текущий баланс для проверки
         const currentBalance = parseNumberWithComma(balanceElement.textContent);
         console.log('Withdraw amount:', withdrawAmount, 'Current balance:', currentBalance);
 
@@ -153,7 +137,6 @@ export function setupQuickWithdraw() {
         try {
             addAlertStyles();
 
-            // Создаем правильные данные для отправки
             const requestData = new URLSearchParams();
             for (let [key, value] of formData.entries()) {
                 if (key === 'amount') {
@@ -180,18 +163,14 @@ export function setupQuickWithdraw() {
             const data = await response.json();
             console.log('Success:', data);
 
-            // Закрываем модальное окно
             modal.close();
 
-            // Запускаем анимацию уменьшения баланса
             setTimeout(() => {
                 animateBalance(withdrawAmount, 1000);
             }, 300);
             document.getElementById('partner-withdraw-balance').textContent = currentBalance - withdrawAmount;
-            // Показываем сообщения
             showMessages(data.messages || []);
 
-            // Очищаем форму
             form.reset();
 
         } catch (error) {

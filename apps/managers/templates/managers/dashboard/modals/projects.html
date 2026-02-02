@@ -1,0 +1,374 @@
+<dialog id="projects-moderation-modal" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box max-w-6xl max-h-[90vh] p-0 overflow-hidden">
+    
+    <!-- Заголовок и фильтры -->
+    <div class="sticky top-0 z-10 bg-base-100 border-b border-base-300 p-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h3 class="text-2xl font-bold flex items-center gap-2">
+            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+            </svg>
+            Модерация проектов
+          </h3>
+          <p class="text-gray-500 text-sm mt-1">Проверьте проекты перед публикацией</p>
+        </div>
+        
+        <div class="flex items-center gap-2">
+          <div class="join">
+            <button class="btn btn-sm join-item btn-active">Все</button>
+            <button class="btn btn-sm join-item btn-ghost">Новые</button>
+            <button class="btn btn-sm join-item btn-ghost">На проверке</button>
+          </div>
+          <form method="dialog">
+            <button class="btn btn-circle btn-ghost btn-sm">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Статистика -->
+      <div class="grid grid-cols-3 gap-3 mt-4">
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">На модерации</div>
+          <div class="stat-value text-lg">8</div>
+        </div>
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">Ожидают правок</div>
+          <div class="stat-value text-lg">2</div>
+        </div>
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">Сегодня</div>
+          <div class="stat-value text-lg">12</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Список проектов -->
+    <div class="p-6 overflow-y-auto h-[calc(90vh-200px)]">
+      <div class="space-y-4 mb-30">
+        
+        <!-- Проект 1 -->
+        <div class="card card-border border border-base-300 hover:border-primary/50 transition-all duration-200">
+          <div class="card-body p-5">
+            <div class="flex flex-col lg:flex-row gap-4">
+              <!-- Основная информация -->
+              <div class="flex-1">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                  <div>
+                    <div class="flex items-center gap-2 mb-2">
+                      <h4 class="text-lg font-bold">SEO-продвижение сайта</h4>
+                      <span class="badge badge-primary badge-sm">Новый</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+                      <span>ID: #PRJ-001</span>
+                      <span class="hidden sm:inline">•</span>
+                      <span class="flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        dm.vin2973
+                      </span>
+                      <span class="hidden sm:inline">•</span>
+                      <span class="badge badge-outline badge-sm">Маркетинг</span>
+                    </div>
+                  </div>
+                  
+                  <!-- Цена -->
+                  <div class="text-right">
+                    <div class="text-2xl font-bold text-primary">250 ₽</div>
+                    <div class="text-sm text-gray-500">за действие</div>
+                  </div>
+                </div>
+                
+                <!-- Описание -->
+                <div class="mt-4">
+                  <div class="font-medium text-gray-700 mb-2">Описание проекта:</div>
+                  <p class="text-gray-600 bg-base-100 p-3 rounded-lg border border-base-300">
+                    Комплексное SEO-продвижение интернет-магазина электроники. Включает технический аудит сайта, 
+                    оптимизацию мета-тегов, работу над контентом и построение ссылочной массы.
+                  </p>
+                </div>
+                
+                <!-- Детали -->
+                <div class="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-3">
+                  <div class="flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>06.08.2025</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Бюджет: 50 000 ₽</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="text-success">Верифицирован</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                    <span>Партнёров: 24</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Действия -->
+            <div class="card-actions justify-end mt-4 pt-4 border-t border-base-300">
+              <button class="btn btn-outline btn-error" onclick="event.preventDefault()">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                Отклонить
+              </button>
+              <button class="btn btn-success">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Одобрить
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Проект 2 -->
+        <div class="card card-border border border-base-300 hover:border-primary/50 transition-all duration-200">
+          <div class="card-body p-5">
+            <div class="flex flex-col lg:flex-row gap-4">
+              <div class="flex-1">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                  <div>
+                    <div class="flex items-center gap-2 mb-2">
+                      <h4 class="text-lg font-bold">Разработка мобильного приложения</h4>
+                      <span class="badge badge-info badge-sm">iOS/Android</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+                      <span>ID: #PRJ-002</span>
+                      <span class="hidden sm:inline">•</span>
+                      <span class="flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        johndoe
+                      </span>
+                      <span class="hidden sm:inline">•</span>
+                      <span class="badge badge-outline badge-sm">Разработка</span>
+                    </div>
+                  </div>
+                  
+                  <div class="text-right">
+                    <div class="text-2xl font-bold text-primary">500 ₽</div>
+                    <div class="text-sm text-gray-500">за установку</div>
+                  </div>
+                </div>
+                
+                <div class="mt-4">
+                  <div class="font-medium text-gray-700 mb-2">Описание проекта:</div>
+                  <p class="text-gray-600 bg-base-100 p-3 rounded-lg border border-base-300">
+                    Создание кроссплатформенного приложения для фитнес-трекинга с интеграцией 
+                    Apple Health и Google Fit. Поддержка wearables и синхронизация с облаком.
+                  </p>
+                </div>
+                
+                <div class="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-3">
+                  <div class="flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>05.08.2025</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Бюджет: 120 000 ₽</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="text-warning">Ожидает верификации</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                    <span>Партнёров: 18</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-actions justify-end mt-4 pt-4 border-t border-base-300">
+              <button class="btn btn-outline btn-error" onclick="event.preventDefault()">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                Отклонить
+              </button>
+              <button class="btn btn-success">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Одобрить
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Проект 3 -->
+        <div class="card card-border border border-base-300 hover:border-primary/50 transition-all duration-200">
+          <div class="card-body p-5">
+            <div class="flex flex-col lg:flex-row gap-4">
+              <div class="flex-1">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                  <div>
+                    <div class="flex items-center gap-2 mb-2">
+                      <h4 class="text-lg font-bold">Реклама в Telegram каналах</h4>
+                      <span class="badge badge-secondary badge-sm">Реклама</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+                      <span>ID: #PRJ-003</span>
+                      <span class="hidden sm:inline">•</span>
+                      <span class="flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        crypto.expert
+                      </span>
+                      <span class="hidden sm:inline">•</span>
+                      <span class="badge badge-outline badge-sm">Крипто</span>
+                    </div>
+                  </div>
+                  
+                  <div class="text-right">
+                    <div class="text-2xl font-bold text-primary">150 ₽</div>
+                    <div class="text-sm text-gray-500">за переход</div>
+                  </div>
+                </div>
+                
+                <div class="mt-4">
+                  <div class="font-medium text-gray-700 mb-2">Описание проекта:</div>
+                  <p class="text-gray-600 bg-base-100 p-3 rounded-lg border border-base-300">
+                    Размещение рекламы криптовалютного проекта в тематических Telegram-каналах. 
+                    Требуется аудитория от 10K подписчиков, активность от 5%.
+                  </p>
+                </div>
+                
+                <div class="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-3">
+                  <div class="flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>04.08.2025</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Бюджет: 75 000 ₽</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="text-success">Верифицирован</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                    <span>Партнёров: 42</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-actions justify-end mt-4 pt-4 border-t border-base-300">
+              <button class="btn btn-outline btn-error" onclick="event.preventDefault()">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                Отклонить
+              </button>
+              <button class="btn btn-success">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Одобрить
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Пагинация и действия -->
+    <div class="sticky bottom-0 bg-base-100 border-t border-base-300 p-4">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-sm text-gray-500">
+          Показано <span class="font-bold">3</span> из <span class="font-bold">8</span> проектов
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="join">
+            <button class="btn join-item btn-sm">1</button>
+            <button class="btn join-item btn-sm btn-active">2</button>
+            <button class="btn join-item btn-sm">3</button>
+          </div>
+          <button class="btn btn-primary btn-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Одобрить все
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Фон для закрытия -->
+  <form method="dialog" class="modal-backdrop">
+    <button>закрыть</button>
+  </form>
+</dialog>
+
+<style>
+  /* Кастомные стили для красоты */
+  .card-border {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .card-border:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+  }
+  
+  /* Стили для скроллбара */
+  .overflow-y-auto::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+</style>

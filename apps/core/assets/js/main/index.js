@@ -255,16 +255,12 @@ const addAlertStyles = () => {
 
 // ==================== ИНИЦИАЛИЗАЦИЯ ПРИЛОЖЕНИЯ ====================
 const App = {
-    // Инициализация приложения
     init: () => {
-        // Инициализация утилит
         UIHelpers.initSmoothScrolling();
         UIHelpers.initNavbarScrollEffect();
 
-        // Инициализация модальных окон
         ModalManager.init();
 
-        // Обработка параметров URL
         URLParamsHandler.handleURLParams();
     }
 };
@@ -273,12 +269,9 @@ const App = {
 // Запуск приложения после загрузки DOM
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Главная страница. Основной контент
     App.init();
 
-    // Стили для анимаций
     addAlertStyles();
 
-    // Настройка обратной связи
     // setupFeedback();
 });

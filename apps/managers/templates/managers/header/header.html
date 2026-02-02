@@ -22,12 +22,44 @@
                         <i class="fas fa-chart-line"></i> Дашборд
                     </a>
                 </li>
-                <li><a href="{% url 'manager_projects' %}" class="nav-item"><i class="fa-solid fa-suitcase"></i> Проекты</a></li>
-                <li><a href="{% url 'manager_platforms' %}" class="nav-item"><i class="fas fa-globe"></i> Площадки</a></li>
+                <li><a href="{% url 'manager_projects' %}" class="nav-item indicator">
+                        {% if pending_projects_count != 0 %}
+                        <span class="indicator-item badge badge-sm badge-soft">
+                            {{ pending_projects_count }}
+                        </span>
+                        {% endif %}
+                        <i class="fa-solid fa-suitcase"></i> Проекты</a></li>
+                <li><a href="{% url 'manager_platforms' %}" class="nav-item indicator">
+                        {% if pending_platforms_count != 0 %}
+                        <span class="indicator-item badge badge-sm badge-soft">
+                            {{ pending_platforms_count }}
+                        </span>
+                        {% endif %}
+                    <i class="fas fa-globe"></i> Площадки</a></li>
                 <li><a href="{% url 'manager_users' %}" class="nav-item"><i class="fas fa-users"></i> Пользователи</a></li>
-                <li><a href="{% url 'manager_partners' %}" class="nav-item"><i class="fa-solid fa-credit-card"></i> Выплаты</a></li>
-                <li><a href="{% url 'manager_advertisers' %}" class="nav-item"><i class="fas fa-money-bill-wave"></i> Пополнения</a></li>
-                <li><a href="{% url 'manager_reviews' %}"><i class="fa-solid fa-comments"></i> Отзывы</a></li>
+                <li><a href="{% url 'manager_partners' %}" class="nav-item indicator">
+                        {% if partner_transactions_count != 0 %}
+                        <span class="indicator-item badge badge-sm badge-soft">
+                            {{ partner_transactions_count }}
+                        </span>
+                        {% endif %}
+                        <i class="fa-solid fa-credit-card"></i> Выплаты
+                    </a>
+                </li>
+                <li><a href="{% url 'manager_advertisers' %}" class="nav-item indicator">
+                        {% if advertiser_transactions_count != 0 %}
+                        <span class="indicator-item badge badge-sm badge-soft">
+                            {{ advertiser_transactions_count }}
+                        </span>
+                        {% endif %}
+                    <i class="fas fa-money-bill-wave"></i> Пополнения</a></li>
+                <li><a href="{% url 'manager_reviews' %}" class="nav-item indicator">
+                        {% if reviews_count != 0 %}
+                        <span class="indicator-item badge badge-sm badge-soft">
+                            {{ reviews_count }}
+                        </span>
+                        {% endif %}
+                    <i class="fa-solid fa-comments"></i> Отзывы</a></li>
                 {% if request.user.is_staff %}<li><a href="/admin"> <i class="fas fa-user-shield"></i> Админ. панель</a></li>{% endif %}
             </ul>
         </div>
@@ -52,14 +84,24 @@
                 </a>
             </li>
             <li>
-                <a href="{% url 'manager_projects' %}" class="nav-item text-xs xl:text-sm">
+                <a href="{% url 'manager_projects' %}" class="nav-item indicator text-xs xl:text-sm">
+                        {% if pending_projects_count != 0 %}
+                        <span class="indicator-item badge badge-sm badge-soft">
+                            {{ pending_projects_count }}
+                        </span>
+                        {% endif %}
                     <i class="fa-solid fa-suitcase"></i>
                     <span class="hidden xl:inline">Проекты</span>
                     <span class="xl:hidden">Пр.</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'manager_platforms' %}" class="nav-item text-xs xl:text-sm">
+                <a href="{% url 'manager_platforms' %}" class="nav-item indicator text-xs xl:text-sm">
+                    {% if pending_platforms_count != 0 %}
+                    <span class="indicator-item badge badge-sm badge-soft">
+                        {{ pending_platforms_count }}
+                    </span>
+                    {% endif %}
                     <i class="fas fa-globe"></i>
                     <span class="hidden xl:inline">Площадки</span>
                     <span class="xl:hidden">Пл.</span>
@@ -73,21 +115,36 @@
                 </a>
             </li>
             <li>
-                <a href="{% url 'manager_partners' %}" class="nav-item text-xs xl:text-sm">
+                <a href="{% url 'manager_partners' %}" class="nav-item indicator text-xs xl:text-sm">
+                    {% if partner_transactions_count != 0 %}
+                    <span class="indicator-item badge badge-sm badge-soft">
+                        {{ partner_transactions_count }}
+                    </span>
+                    {% endif %}
                     <i class="fa-solid fa-credit-card"></i>
                     <span class="hidden xl:inline">Выплаты</span>
                     <span class="xl:hidden">Выпл.</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'manager_advertisers' %}" class="nav-item text-xs xl:text-sm">
+                <a href="{% url 'manager_advertisers' %}" class="nav-item indicator text-xs xl:text-sm">
+                    {% if advertiser_transactions_count != 0 %}
+                    <span class="indicator-item badge badge-sm badge-soft">
+                        {{ advertiser_transactions_count }}
+                    </span>
+                    {% endif %}
                     <i class="fas fa-money-bill-wave"></i>
                     <span class="hidden xl:inline">Пополнения</span>
                     <span class="xl:hidden">Попол.</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'manager_reviews' %}" class="nav-item text-xs xl:text-sm">
+                <a href="{% url 'manager_reviews' %}" class="nav-item indicator text-xs xl:text-sm">
+                    {% if reviews_count != 0 %}
+                    <span class="indicator-item badge badge-sm badge-soft">
+                        {{ reviews_count }}
+                    </span>
+                    {% endif %}
                     <i class="fa-solid fa-comments"></i>
                     <span class="hidden xl:inline">Отзывы</span>
                     <span class="xl:hidden">Отз.</span>

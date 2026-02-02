@@ -18,23 +18,18 @@ export function setupTransactions() {
     });
 }
 
-// Основная функция заполнения данных
 function fillTransactionData(dataset) {
-    // Базовая информация
     document.getElementById('TransactionID').textContent = dataset.transactionId;
     document.getElementById('TransactionAmount').textContent = `${dataset.transactionAmount} ₽`;
     document.getElementById('TransactionDate').textContent = dataset.transactionDate;
     document.getElementById('TransactionPartner').textContent = dataset.transactionPartner;
     document.getElementById('TransactionPartnerEmail').textContent = dataset.transactionPartnerEmail;
     
-    // Статус
     updateTransactionStatus(dataset.transactionStatus);
     
-    // Реквизиты
     updateTransactionRequisites(dataset);
 }
 
-// Обновление статуса
 function updateTransactionStatus(status) {
     const transactionStatus = document.getElementById('TransactionStatus');
     transactionStatus.innerHTML = '';
@@ -45,7 +40,6 @@ function updateTransactionStatus(status) {
     transactionStatus.appendChild(statusBadge);
 }
 
-// Обновление реквизитов
 function updateTransactionRequisites(dataset) {
     const requisitesContainer = document.getElementById('TransactionRequisites');
     requisitesContainer.innerHTML = '';
@@ -79,12 +73,10 @@ function updateTransactionRequisites(dataset) {
     }
 }
 
-// Управление формами
 function manageForms(actionType, dataset) {
     const approveForm = document.getElementById('approve-form');
     const rejectForm = document.getElementById('reject-form');
     
-    // Скрываем все формы сначала
     approveForm.classList.add('hidden');
     rejectForm.classList.add('hidden');
     

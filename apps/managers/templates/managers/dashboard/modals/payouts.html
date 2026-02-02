@@ -1,0 +1,644 @@
+<dialog id="payouts-moderation-modal" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box max-w-6xl max-h-[90vh] p-0 overflow-hidden">
+    
+    <!-- Заголовок и фильтры -->
+    <div class="sticky top-0 z-10 bg-base-100 border-b border-base-300 p-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h3 class="text-2xl font-bold flex items-center gap-2">
+            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
+            Модерация выплат партнёрам
+          </h3>
+          <p class="text-gray-500 text-sm mt-1">Обработка заявок на вывод средств</p>
+        </div>
+        
+        <div class="flex items-center gap-2">
+          <div class="join">
+            <button class="btn btn-sm join-item btn-active">Все</button>
+            <button class="btn btn-sm join-item btn-ghost">Новые</button>
+            <button class="btn btn-sm join-item btn-ghost">В обработке</button>
+            <button class="btn btn-sm join-item btn-ghost">Завершённые</button>
+          </div>
+          <form method="dialog">
+            <button class="btn btn-circle btn-ghost btn-sm">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Статистика и фильтры суммы -->
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-3 mt-4">
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">На модерации</div>
+          <div class="stat-value text-lg">7</div>
+        </div>
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">Сумма</div>
+          <div class="stat-value text-lg">145 800 ₽</div>
+        </div>
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">Сегодня</div>
+          <div class="stat-value text-lg">3</div>
+        </div>
+        <div class="col-span-2">
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-sm text-gray-600">Фильтр по сумме:</span>
+              <div class="join">
+                <button class="btn btn-xs join-item">Все</button>
+                <button class="btn btn-xs join-item btn-ghost">до 5K</button>
+                <button class="btn btn-xs join-item btn-ghost">5K-20K</button>
+                <button class="btn btn-xs join-item btn-ghost">20K+</button>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-sm text-gray-600">Сортировка:</span>
+              <select class="select select-bordered select-xs">
+                <option>По дате (новые)</option>
+                <option>По сумме (↑)</option>
+                <option>По сумме (↓)</option>
+                <option>По партнёру</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Список выплат -->
+    <div class="p-6 overflow-y-auto h-[calc(90vh-200px)]">
+      <div class="space-y-4">
+        
+        <!-- Выплата 1 -->
+        <div class="card card-border border border-base-300 hover:border-primary/50 transition-all duration-200">
+          <div class="card-body p-5">
+            <div class="flex flex-col lg:flex-row gap-6">
+              <!-- Основная информация -->
+              <div class="flex-1">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                  <div>
+                    <div class="flex items-center gap-2 mb-2">
+                      <h4 class="text-lg font-bold">Выплата #PYT-0451</h4>
+                      <span class="badge badge-warning badge-sm">Новая</span>
+                      <span class="badge badge-outline badge-sm">Карта</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+                      <span class="flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        vinokurov.d
+                      </span>
+                      <span class="hidden sm:inline">•</span>
+                      <span>ID партнёра: #PTR-023</span>
+                      <span class="hidden sm:inline">•</span>
+                      <span class="flex items-center gap-1 text-success">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Верифицирован
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <!-- Сумма -->
+                  <div class="text-right">
+                    <div class="text-3xl font-bold text-primary">28 500 ₽</div>
+                    <div class="text-sm text-gray-500">к выплате</div>
+                  </div>
+                </div>
+                
+                <!-- Детали выплаты -->
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="space-y-3">
+                    <div>
+                      <div class="font-medium text-gray-700 mb-1">Способ выплаты:</div>
+                      <div class="flex items-center gap-2 p-3 bg-base-100 rounded-lg border border-base-300">
+                        <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                        </svg>
+                        <div>
+                          <div class="font-medium">Банковская карта</div>
+                          <div class="text-sm text-gray-500">**** 4891 • Tinkoff Bank</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <div class="font-medium text-gray-700 mb-1">Реквизиты:</div>
+                      <div class="p-3 bg-base-100 rounded-lg border border-base-300 space-y-1">
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Номер карты:</span>
+                          <span class="font-mono">**** **** **** 4891</span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Держатель:</span>
+                          <span>VINOKUROV D.</span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Срок действия:</span>
+                          <span>08/28</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="space-y-3">
+                    <div>
+                      <div class="font-medium text-gray-700 mb-1">Информация о выплате:</div>
+                      <div class="p-3 bg-base-100 rounded-lg border border-base-300 space-y-2">
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Дата запроса:</span>
+                          <span class="font-medium">06.08.2025 14:30</span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Баланс партнёра:</span>
+                          <span class="font-medium">42 150 ₽</span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Комиссия системы:</span>
+                          <span class="text-error">-500 ₽ (1.8%)</span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Сумма к получению:</span>
+                          <span class="font-bold text-success">28 000 ₽</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <div class="font-medium text-gray-700 mb-1">История выплат:</div>
+                      <div class="text-sm text-gray-600">
+                        <div class="flex items-center gap-2">
+                          <div class="badge badge-sm badge-success">✓</div>
+                          <span>3 успешные выплаты за последний месяц</span>
+                        </div>
+                        <div class="flex items-center gap-2 mt-1">
+                          <div class="badge badge-sm badge-success">✓</div>
+                          <span>Последняя выплата: 28.07.2025 (15 000 ₽)</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Проекты и статистика -->
+                <div class="mt-4">
+                  <div class="font-medium text-gray-700 mb-2">Проекты партнёра:</div>
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div class="p-3 bg-base-100 rounded-lg border border-base-300">
+                      <div class="font-medium">SEO-продвижение</div>
+                      <div class="text-sm text-gray-600">Заработано: 18 500 ₽</div>
+                    </div>
+                    <div class="p-3 bg-base-100 rounded-lg border border-base-300">
+                      <div class="font-medium">Разработка приложения</div>
+                      <div class="text-sm text-gray-600">Заработано: 7 000 ₽</div>
+                    </div>
+                    <div class="p-3 bg-base-100 rounded-lg border border-base-300">
+                      <div class="font-medium">Реклама в Telegram</div>
+                      <div class="text-sm text-gray-600">Заработано: 3 000 ₽</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Действия -->
+            <div class="card-actions justify-between mt-4 pt-4 border-t border-base-300">
+              <div class="flex items-center gap-2">
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  </svg>
+                  Детали партнёра
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                  </svg>
+                  Копировать реквизиты
+                </button>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-outline btn-error" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                  Отклонить
+                </button>
+                <button class="btn btn-success">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Выплатить
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Выплата 2 -->
+        <div class="card card-border border border-base-300 hover:border-primary/50 transition-all duration-200">
+          <div class="card-body p-5">
+            <div class="flex flex-col lg:flex-row gap-6">
+              <div class="flex-1">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                  <div>
+                    <div class="flex items-center gap-2 mb-2">
+                      <h4 class="text-lg font-bold">Выплата #PYT-0452</h4>
+                      <span class="badge badge-info badge-sm">В обработке</span>
+                      <span class="badge badge-outline badge-sm">ЮMoney</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+                      <span class="flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        crypto.expert
+                      </span>
+                      <span class="hidden sm:inline">•</span>
+                      <span>ID партнёра: #PTR-042</span>
+                      <span class="hidden sm:inline">•</span>
+                      <span class="flex items-center gap-1 text-warning">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.998-.833-2.732 0L4.224 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                        </svg>
+                        Требует проверки
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div class="text-right">
+                    <div class="text-3xl font-bold text-primary">52 300 ₽</div>
+                    <div class="text-sm text-gray-500">к выплате</div>
+                  </div>
+                </div>
+                
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="space-y-3">
+                    <div>
+                      <div class="font-medium text-gray-700 mb-1">Способ выплаты:</div>
+                      <div class="flex items-center gap-2 p-3 bg-base-100 rounded-lg border border-base-300">
+                        <svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M14.422 0c.484 0 .966.052 1.437.153 3.354.619 5.698 3.834 5.09 7.188-.619 3.354-3.834 5.698-7.188 5.09a6.536 6.536 0 0 1-1.154-.203c-.364-.082-.738.13-.82.495s.13.738.495.82c.448.101.907.151 1.367.151 4.078 0 7.384-3.306 7.384-7.384S19.5.616 15.422.616c-.46 0-.919.05-1.367.151-.365.082-.577.455-.495.82.082.365.455.577.82.495.378-.085.763-.128 1.154-.128zM9.578 24c-.484 0-.966-.052-1.437-.153-3.354-.619-5.698-3.834-5.09-7.188.619-3.354 3.834-5.698 7.188-5.09.39.072.788.119 1.187.142.365.021.66.33.639.695-.021.365-.33.66-.695.639-.328-.018-.658-.052-.985-.111-2.244-.414-4.368 1.133-4.782 3.377-.414 2.244 1.133 4.368 3.377 4.782.327.059.657.093.985.111.365.021.674.33.695.695.021.365-.274.674-.639.695-.399.023-.797.07-1.187.142z"/>
+                        </svg>
+                        <div>
+                          <div class="font-medium">ЮMoney (Яндекс.Деньги)</div>
+                          <div class="text-sm text-gray-500">4100 1234 **** 5678</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <div class="font-medium text-gray-700 mb-1">Реквизиты:</div>
+                      <div class="p-3 bg-base-100 rounded-lg border border-base-300 space-y-1">
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Кошелёк:</span>
+                          <span class="font-mono">4100 1234 **** 5678</span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Владелец:</span>
+                          <span>PETROV A.</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="space-y-3">
+                    <div>
+                      <div class="font-medium text-gray-700 mb-1">Информация о выплате:</div>
+                      <div class="p-3 bg-base-100 rounded-lg border border-base-300 space-y-2">
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Дата запроса:</span>
+                          <span class="font-medium">05.08.2025 11:15</span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Баланс партнёра:</span>
+                          <span class="font-medium">78 900 ₽</span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Комиссия системы:</span>
+                          <span class="text-error">-1 046 ₽ (2%)</span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Сумма к получению:</span>
+                          <span class="font-bold text-success">51 254 ₽</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <div class="font-medium text-gray-700 mb-1">Предупреждение:</div>
+                      <div class="p-3 bg-warning/10 rounded-lg border border-warning/20">
+                        <div class="flex items-start gap-2">
+                          <svg class="w-5 h-5 text-warning mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.998-.833-2.732 0L4.224 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                          </svg>
+                          <div class="text-sm">
+                            <span class="font-semibold">Первая выплата.</span> Рекомендуется проверить активность партнёра и соответствие проектов.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Проекты и статистика -->
+                <div class="mt-4">
+                  <div class="font-medium text-gray-700 mb-2">Проекты партнёра:</div>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="p-3 bg-base-100 rounded-lg border border-base-300">
+                      <div class="font-medium">Реклама в Telegram</div>
+                      <div class="text-sm text-gray-600">Заработано: 52 300 ₽</div>
+                    </div>
+                    <div class="p-3 bg-base-100 rounded-lg border border-base-300 opacity-50">
+                      <div class="font-medium">Другие проекты</div>
+                      <div class="text-sm text-gray-600">Нет активных проектов</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-actions justify-between mt-4 pt-4 border-t border-base-300">
+              <div class="flex items-center gap-2">
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  </svg>
+                  Детали партнёра
+                </button>
+                <button class="btn btn-warning btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                  </svg>
+                  Запросить документы
+                </button>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-outline btn-error" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                  Отклонить
+                </button>
+                <button class="btn btn-success">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Выплатить
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Выплата 3 -->
+        <div class="card card-border border border-base-300 hover:border-primary/50 transition-all duration-200">
+          <div class="card-body p-5">
+            <div class="flex flex-col lg:flex-row gap-6">
+              <div class="flex-1">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                  <div>
+                    <div class="flex items-center gap-2 mb-2">
+                      <h4 class="text-lg font-bold">Выплата #PYT-0453</h4>
+                      <span class="badge badge-primary badge-sm">Срочная</span>
+                      <span class="badge badge-outline badge-sm">Qiwi</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+                      <span class="flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        fitness.guru
+                      </span>
+                      <span class="hidden sm:inline">•</span>
+                      <span>ID партнёра: #PTR-065</span>
+                      <span class="hidden sm:inline">•</span>
+                      <span class="flex items-center gap-1 text-success">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Премиум-партнёр
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div class="text-right">
+                    <div class="text-3xl font-bold text-primary">65 000 ₽</div>
+                    <div class="text-sm text-gray-500">к выплате</div>
+                  </div>
+                </div>
+                
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="space-y-3">
+                    <div>
+                      <div class="font-medium text-gray-700 mb-1">Способ выплаты:</div>
+                      <div class="flex items-center gap-2 p-3 bg-base-100 rounded-lg border border-base-300">
+                        <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M11.064 0C5.17 0 .392 4.778.392 10.672c0 5.894 4.778 10.672 10.672 10.672 5.894 0 10.672-4.778 10.672-10.672C21.736 4.778 16.958 0 11.064 0zm3.127 5.89c.784 0 1.42.636 1.42 1.42s-.636 1.42-1.42 1.42-1.42-.636-1.42-1.42.636-1.42 1.42-1.42zm-6.253 0c.784 0 1.42.636 1.42 1.42s-.636 1.42-1.42 1.42-1.42-.636-1.42-1.42.636-1.42 1.42-1.42zm6.253 9.547c-2.047 0-3.708-1.66-3.708-3.708s1.66-3.708 3.708-3.708 3.708 1.66 3.708 3.708-1.66 3.708-3.708 3.708z"/>
+                        </svg>
+                        <div>
+                          <div class="font-medium">QIWI Кошелёк</div>
+                          <div class="text-sm text-gray-500">+7 912 *** 45 67</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <div class="font-medium text-gray-700 mb-1">Реквизиты:</div>
+                      <div class="p-3 bg-base-100 rounded-lg border border-base-300 space-y-1">
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Номер кошелька:</span>
+                          <span class="font-mono">+7 912 *** 45 67</span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Владелец:</span>
+                          <span>SIDOROVA M.</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="space-y-3">
+                    <div>
+                      <div class="font-medium text-gray-700 mb-1">Информация о выплате:</div>
+                      <div class="p-3 bg-base-100 rounded-lg border border-base-300 space-y-2">
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Дата запроса:</span>
+                          <span class="font-medium">04.08.2025 09:45</span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Баланс партнёра:</span>
+                          <span class="font-medium">152 800 ₽</span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Комиссия системы:</span>
+                          <span class="text-error">-1 950 ₽ (3%)</span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span class="text-gray-600">Сумма к получению:</span>
+                          <span class="font-bold text-success">63 050 ₽</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <div class="font-medium text-gray-700 mb-1">Особые условия:</div>
+                      <div class="p-3 bg-primary/10 rounded-lg border border-primary/20">
+                        <div class="flex items-start gap-2">
+                          <svg class="w-5 h-5 text-primary mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                          </svg>
+                          <div class="text-sm">
+                            <span class="font-semibold">Премиум-партнёр.</span> Выплаты производятся в приоритетном порядке. Более 20 успешных выплат.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Проекты и статистика -->
+                <div class="mt-4">
+                  <div class="font-medium text-gray-700 mb-2">Проекты партнёра:</div>
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div class="p-3 bg-base-100 rounded-lg border border-base-300">
+                      <div class="font-medium">Фитнес приложение</div>
+                      <div class="text-sm text-gray-600">Заработано: 42 000 ₽</div>
+                    </div>
+                    <div class="p-3 bg-base-100 rounded-lg border border-base-300">
+                      <div class="font-medium">Спорт товары</div>
+                      <div class="text-sm text-gray-600">Заработано: 18 000 ₽</div>
+                    </div>
+                    <div class="p-3 bg-base-100 rounded-lg border border-base-300">
+                      <div class="font-medium">Здоровое питание</div>
+                      <div class="text-sm text-gray-600">Заработано: 5 000 ₽</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-actions justify-between mt-4 pt-4 border-t border-base-300">
+              <div class="flex items-center gap-2">
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  Быстрая выплата
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                  История операций
+                </button>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-outline btn-error" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                  Отложить
+                </button>
+                <button class="btn btn-success">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Выплатить сейчас
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Пагинация и массовые действия -->
+    <div class="sticky bottom-0 bg-base-100 border-t border-base-300 p-4">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-sm text-gray-500">
+          <div class="flex items-center gap-2">
+            <span>Итого к выплате:</span>
+            <span class="font-bold text-lg text-primary">145 800 ₽</span>
+          </div>
+          <div class="text-xs text-gray-400 mt-1">7 заявок, средняя сумма: 20 829 ₽</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="join">
+            <button class="btn join-item btn-sm">1</button>
+            <button class="btn join-item btn-sm btn-active">2</button>
+            <button class="btn join-item btn-sm">3</button>
+          </div>
+          <div class="dropdown dropdown-top">
+            <div tabindex="0" role="button" class="btn btn-primary btn-sm">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Массовые действия
+            </div>
+            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+              <li><a onclick="event.preventDefault()">Одобрить все проверенные</a></li>
+              <li><a onclick="event.preventDefault()">Отложить на завтра</a></li>
+              <li><a onclick="event.preventDefault()">Экспорт в Excel</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Фон для закрытия -->
+  <form method="dialog" class="modal-backdrop">
+    <button>закрыть</button>
+  </form>
+</dialog>
+
+<style>
+  /* Кастомные стили для красоты */
+  .card-border {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .card-border:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+  }
+  
+  /* Стили для скроллбара */
+  .overflow-y-auto::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+  
+  /* Анимация для суммы */
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+  
+  .text-primary {
+    animation: pulse-glow 3s infinite;
+  }
+</style>

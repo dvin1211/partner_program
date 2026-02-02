@@ -12,7 +12,6 @@ export function setupEditPlatformModal() {
   editPlatformBtns.forEach(btn => {
     btn.addEventListener('click', function () {
       const dataset = this.dataset;
-      console.log(dataset)
       editPlatformName.value = dataset.platformName || '';
 
       editPlatformType.value = dataset.platformType || '';

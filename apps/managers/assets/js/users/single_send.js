@@ -12,12 +12,10 @@ export function setupSingleSend() {
             
             const form = document.getElementById('send-msg-form');
             
-            // Удаляем предыдущий обработчик, если он есть
             if (submitHandler) {
                 form.removeEventListener('submit', submitHandler);
             }
             
-            // Создаем новый обработчик
             submitHandler = async function (e) {
                 e.preventDefault();
                 const formData = new FormData(e.target);

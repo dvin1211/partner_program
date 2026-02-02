@@ -1,12 +1,16 @@
 from dotenv import load_dotenv
+
 import os
 from pathlib import Path
 import warnings
 import platform
 
+from website_partner_project.logger import LOGGING
+
+
+
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -78,9 +82,6 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
 STATIC_URL = os.getenv("STATIC_URL")
 
 # Name of our static files' folder (after called python manage.py collectstatic)
@@ -133,8 +134,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'website_partner_project.wsgi.application'
 
 warnings.filterwarnings('ignore', category=UserWarning, message='.*order.*')
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -146,10 +145,6 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT')
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -166,10 +161,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'Europe/Moscow'
@@ -178,9 +169,6 @@ TIME_ZONE = 'Europe/Moscow'
 USE_TZ = True
 
 CSRF_COOKIE_HTTPONLY = False
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

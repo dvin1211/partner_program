@@ -4,7 +4,6 @@ export function setupProjectDetails() {
         btn.addEventListener('click', function () {
             const projectData = this.dataset;
 
-            // Заполняем модальное окно
             document.getElementById('ProjectID').textContent = `ID проекта: ${projectData.projectId}`;
             document.getElementById('ProjectTitle').textContent = projectData.projectName;
             document.getElementById('ProjectDescription').textContent = projectData.projectDescription;
@@ -17,7 +16,6 @@ export function setupProjectDetails() {
             document.getElementById('ProjectConversion').textContent = projectData.projectConversionsPercent + '%';
             document.getElementById('ProjectTotalConversion').textContent = projectData.projectConversionCount;
 
-            // Статус проекта
             const statusBadge = document.getElementById('ProjectStatusBadge');
             const statusText = document.getElementById('ProjectStatusText');
 

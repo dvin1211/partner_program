@@ -10,10 +10,9 @@ import smtplib
     expires = 120,
     max_retries = 3,
     autoretry_for=(smtplib.SMTPException, ConnectionError, TimeoutError)
-
-
 )
 def send_email_via_mailru(self,recipient, message, subject):
+    """Отправить сообщение на email"""
     try:
         email = EmailMessage(
             subject=subject,

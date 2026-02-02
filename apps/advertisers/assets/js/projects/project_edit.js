@@ -4,7 +4,6 @@ export function setupProjectEdit() {
 
     editButtons.forEach(button => {
         button.addEventListener('click', () => {
-            // Получаем данные проекта из data-атрибутов
             const projectData = {
                 id: button.dataset.projectId,
                 name: button.dataset.projectName,
@@ -15,7 +14,6 @@ export function setupProjectEdit() {
                 reducedPrice: button.dataset.projectReducedPrice.replace(',', '.')
             };
 
-            // Заполняем форму
             const formFields = {
                 id: 'editProjectId',
                 name: 'editProjectName',
@@ -33,15 +31,12 @@ export function setupProjectEdit() {
             document.getElementById(formFields.actionName).value = projectData.actionName;
             document.getElementById(formFields.costPerAction).value = projectData.costPerAction;
 
-            // Устанавливаем минимальное значение для reducedPrice
             const reducedPrice = Math.max(Number(projectData.reducedPrice), 5);
             document.getElementById(formFields.costPerAction).min = reducedPrice;
 
-            // Настраиваем форму
             const form = document.getElementById('editProjectForm');
             form.action = `/advertiser/edit_project/${projectData.id}`;
 
-            // Открываем модальное окно
             modal.showModal();
         });
     });

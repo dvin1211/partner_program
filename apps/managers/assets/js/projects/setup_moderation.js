@@ -12,11 +12,9 @@ export function setupModals() {
     function showDetailsModal(element) {
         const data = element.dataset;
 
-        // Установка заголовка
         document.getElementById('modalTitle').textContent = data.name || `Проект #${data.id}`;
         document.getElementById('modalType').textContent = 'Проект';
 
-        // Статус с цветом
         const statusEl = document.getElementById('modalStatus');
         statusEl.textContent = data.status || 'На модерации';
         statusEl.className = 'badge badge-lg ' + (
@@ -24,7 +22,6 @@ export function setupModals() {
                 data.status === 'Отклонено' ? 'badge-error' : 'badge-warning'
         );
 
-        // Контактная информация
         document.getElementById('modalContactEmail').textContent = data.email || 'Не указан';
         document.getElementById('modalAdvertiserContainer').classList.remove('hidden');
         document.getElementById('modalProjectDetails').classList.remove('hidden');

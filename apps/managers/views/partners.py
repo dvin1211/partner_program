@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.db.models import Q
 
+from apps.partners.models import PartnerTransaction
 from apps.core.decorators import role_required
 from apps.partners.models import PartnerTransaction
-from apps.managers.models import ManagerActivity
+from apps.managers.views.utils import get_manager_stats
 from utils import _paginate
 
 
@@ -30,13 +31,12 @@ def manager_partners(request):
         transactions = transactions.filter(status=transactions_type_q)
     transactions_page=_paginate(request,transactions,count,"transactions_page")
     
-    notifications_count = ManagerActivity.objects.filter(manager=user.managerprofile,is_read=False).count()
-
     context = {
         "users_search_q":users_search_q,
         "transactions_type_q":transactions_type_q,
         "transactions":transactions_page,
-        "notifications_count":notifications_count,
+        
+        **get_manager_stats(user)
     }
     
     return render(request, 'managers/partners/partners.html',context=context)

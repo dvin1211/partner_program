@@ -12,12 +12,10 @@ export function setupModals() {
     function showDetailsModal(element) {
         const data = element.dataset;
         
-        // Установка заголовка
         document.getElementById('modalTitle').textContent = data.name || `Площадка #${data.id}`;
         document.getElementById('modalType').textContent = 'Площадка';
         document.getElementById('modalPlatformType').textContent = data.platformType;
 
-        // Статус с цветом
         const statusEl = document.getElementById('modalStatus');
         statusEl.textContent = data.status || 'На модерации';
         statusEl.className = 'badge badge-lg ' + (

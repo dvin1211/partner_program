@@ -9,11 +9,9 @@ export function setupProjectDeletion () {
         button.addEventListener('click', () => {
             const { projectId, projectName } = button.dataset;
 
-            // Устанавливаем данные в модальное окно
             projectNameSpan.textContent = projectName;
             projectIdInput.value = projectId;
 
-            // Настраиваем форму на правильный URL
             form.action = `/advertiser/del_project/${projectId}`;
 
             // Открываем модальное окно

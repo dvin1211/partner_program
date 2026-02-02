@@ -1,0 +1,538 @@
+<dialog id="platforms-moderation-modal" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box max-w-6xl max-h-[90vh] p-0 overflow-hidden">
+    
+    <!-- Заголовок и фильтры -->
+    <div class="sticky top-0 z-10 bg-base-100 border-b border-base-300 p-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h3 class="text-2xl font-bold flex items-center gap-2">
+            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+            </svg>
+            Модерация площадок партнёров
+          </h3>
+          <p class="text-gray-500 text-sm mt-1">Проверьте площадки перед подключением к проектам</p>
+        </div>
+        
+        <div class="flex items-center gap-2">
+          <div class="join">
+            <button class="btn btn-sm join-item btn-active">Все</button>
+            <button class="btn btn-sm join-item btn-ghost">Новые</button>
+            <button class="btn btn-sm join-item btn-ghost">На проверке</button>
+            <button class="btn btn-sm join-item btn-ghost">Заблокированные</button>
+          </div>
+          <form method="dialog">
+            <button class="btn btn-circle btn-ghost btn-sm">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Статистика -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">На модерации</div>
+          <div class="stat-value text-lg">15</div>
+        </div>
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">Веб-сайты</div>
+          <div class="stat-value text-lg">8</div>
+        </div>
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">Соц. сети</div>
+          <div class="stat-value text-lg">5</div>
+        </div>
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">Telegram</div>
+          <div class="stat-value text-lg">2</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Список площадок -->
+    <div class="p-6 overflow-y-auto h-[calc(90vh-200px)]">
+      <div class="space-y-4">
+        
+        <!-- Площадка 1 -->
+        <div class="card card-border border border-base-300 hover:border-primary/50 transition-all duration-200">
+          <div class="card-body p-5">
+            <div class="flex flex-col lg:flex-row gap-4">
+              <!-- Основная информация -->
+              <div class="flex-1">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                  <div>
+                    <div class="flex items-center gap-2 mb-2">
+                      <h4 class="text-lg font-bold">TechReview Blog</h4>
+                      <span class="badge badge-primary badge-sm">Новый</span>
+                      <span class="badge badge-outline badge-sm">Веб-сайт</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+                      <span>ID: #PLT-045</span>
+                      <span class="hidden sm:inline">•</span>
+                      <span class="flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        vinokurov.d
+                      </span>
+                      <span class="hidden sm:inline">•</span>
+                      <span class="flex items-center gap-1 text-success">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Верифицирован
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <!-- Статистика -->
+                  <div class="text-right">
+                    <div class="text-2xl font-bold text-primary">12.5K</div>
+                    <div class="text-sm text-gray-500">посетителей/месяц</div>
+                  </div>
+                </div>
+                
+                <!-- URL и описание -->
+                <div class="mt-4">
+                  <div class="flex items-center gap-2 mb-2">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                    </svg>
+                    <a href="https://techreviewblog.com" class="text-primary hover:underline font-medium" target="_blank">
+                      https://techreviewblog.com
+                    </a>
+                  </div>
+                  <div class="font-medium text-gray-700 mb-2">Описание площадки:</div>
+                  <p class="text-gray-600 bg-base-100 p-3 rounded-lg border border-base-300">
+                    Блог о технологиях, гаджетах и IT-новостях. Обзоры смартфонов, ноутбуков, 
+                    умных устройств. Целевая аудитория: 18-35 лет, интересуются технологиями.
+                  </p>
+                </div>
+                
+                <!-- Детали и метрики -->
+                <div class="mt-4">
+                  <div class="font-medium text-gray-700 mb-3">Метрики и категории:</div>
+                  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div class="flex items-center gap-2">
+                      <div class="tooltip" data-tip="Трафик">
+                        <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                      </div>
+                      <span class="text-sm">Трафик: 12.5K</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="tooltip" data-tip="CTR">
+                        <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                      </div>
+                      <span class="text-sm">CTR: 3.2%</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="tooltip" data-tip="Дата регистрации">
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                      </div>
+                      <span class="text-sm">Создана: 05.08.2025</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="tooltip" data-tip="Категории">
+                        <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
+                      </div>
+                      <span class="text-sm">Технологии, Гаджеты</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Подключенные проекты -->
+                <div class="mt-4">
+                  <div class="font-medium text-gray-700 mb-2">Подключенные проекты:</div>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="badge badge-sm">SEO-продвижение (#PRJ-001)</span>
+                    <span class="badge badge-sm">Разработка приложения (#PRJ-002)</span>
+                    <span class="badge badge-sm badge-outline">+3 других</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Действия -->
+            <div class="card-actions justify-between mt-4 pt-4 border-t border-base-300">
+              <div class="flex items-center gap-2">
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  </svg>
+                  Посмотреть
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                  </svg>
+                  Запросить правки
+                </button>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-outline btn-error" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                  Отклонить
+                </button>
+                <button class="btn btn-success">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Одобрить
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Площадка 2 -->
+        <div class="card card-border border border-base-300 hover:border-primary/50 transition-all duration-200">
+          <div class="card-body p-5">
+            <div class="flex flex-col lg:flex-row gap-4">
+              <div class="flex-1">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                  <div>
+                    <div class="flex items-center gap-2 mb-2">
+                      <h4 class="text-lg font-bold">Crypto Investors TG</h4>
+                      <span class="badge badge-info badge-sm">Telegram</span>
+                      <span class="badge badge-warning badge-sm">На проверке</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+                      <span>ID: #PLT-046</span>
+                      <span class="hidden sm:inline">•</span>
+                      <span class="flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        crypto.expert
+                      </span>
+                      <span class="hidden sm:inline">•</span>
+                      <span class="flex items-center gap-1 text-warning">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Требует верификации
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div class="text-right">
+                    <div class="text-2xl font-bold text-primary">8.7K</div>
+                    <div class="text-sm text-gray-500">подписчиков</div>
+                  </div>
+                </div>
+                
+                <div class="mt-4">
+                  <div class="flex items-center gap-2 mb-2">
+                    <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.111c-.611-.287-1.424-.527-2.39-.727.848-.567 1.416-1.376 1.637-2.302-1.016.595-2.066 1.016-3.167 1.225-.899-.947-2.179-1.525-3.594-1.525-2.716 0-4.917 2.183-4.917 4.875 0 .38.044.75.127 1.106-4.086-.204-7.708-2.155-10.133-5.121-.424.722-.666 1.561-.666 2.455 0 1.689.864 3.18 2.178 4.055-.803-.025-1.558-.245-2.219-.611v.061c0 2.362 1.697 4.333 3.95 4.779-.413.112-.848.171-1.296.171-.317 0-.626-.031-.927-.089.626 1.948 2.444 3.367 4.599 3.407-1.685 1.307-3.808 2.086-6.115 2.086-.397 0-.789-.023-1.175-.068 2.179 1.388 4.768 2.197 7.548 2.197 9.057 0 14.01-7.464 14.01-13.944 0-.211-.005-.423-.014-.633.961-.688 1.796-1.549 2.455-2.526z"/>
+                    </svg>
+                    <a href="https://t.me/crypto_investors_channel" class="text-primary hover:underline font-medium" target="_blank">
+                      @crypto_investors_channel
+                    </a>
+                  </div>
+                  <div class="font-medium text-gray-700 mb-2">Описание площадки:</div>
+                  <p class="text-gray-600 bg-base-100 p-3 rounded-lg border border-base-300">
+                    Telegram-канал о криптовалютах, блокчейне и инвестициях. Ежедневные аналитические обзоры, 
+                    сигналы для торговли. Аудитория: инвесторы, трейдеры, IT-специалисты.
+                  </p>
+                </div>
+                
+                <div class="mt-4">
+                  <div class="font-medium text-gray-700 mb-3">Метрики и категории:</div>
+                  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div class="flex items-center gap-2">
+                      <div class="tooltip" data-tip="Подписчики">
+                        <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                      </div>
+                      <span class="text-sm">Подписчики: 8.7K</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="tooltip" data-tip="ER (Engagement Rate)">
+                        <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                        </svg>
+                      </div>
+                      <span class="text-sm">ER: 4.8%</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="tooltip" data-tip="Дата регистрации">
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                      </div>
+                      <span class="text-sm">Создана: 03.08.2025</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="tooltip" data-tip="Категории">
+                        <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
+                      </div>
+                      <span class="text-sm">Крипто, Финансы, Инвестиции</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="mt-4">
+                  <div class="font-medium text-gray-700 mb-2">Подключенные проекты:</div>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="badge badge-sm">Реклама в Telegram (#PRJ-003)</span>
+                    <span class="badge badge-sm badge-outline">Нет других проектов</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-actions justify-between mt-4 pt-4 border-t border-base-300">
+              <div class="flex items-center gap-2">
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  </svg>
+                  Посмотреть
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>
+                  </svg>
+                  Заблокировать
+                </button>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-outline btn-error" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                  Отклонить
+                </button>
+                <button class="btn btn-success">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Одобрить
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Площадка 3 -->
+        <div class="card card-border border border-base-300 hover:border-primary/50 transition-all duration-200">
+          <div class="card-body p-5">
+            <div class="flex flex-col lg:flex-row gap-4">
+              <div class="flex-1">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                  <div>
+                    <div class="flex items-center gap-2 mb-2">
+                      <h4 class="text-lg font-bold">Fitness Instagram</h4>
+                      <span class="badge badge-secondary badge-sm">Instagram</span>
+                      <span class="badge badge-error badge-sm">Требуются правки</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+                      <span>ID: #PLT-047</span>
+                      <span class="hidden sm:inline">•</span>
+                      <span class="flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        fitness.guru
+                      </span>
+                      <span class="hidden sm:inline">•</span>
+                      <span class="flex items-center gap-1 text-success">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Верифицирован
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div class="text-right">
+                    <div class="text-2xl font-bold text-primary">24.3K</div>
+                    <div class="text-sm text-gray-500">подписчиков</div>
+                  </div>
+                </div>
+                
+                <div class="mt-4">
+                  <div class="flex items-center gap-2 mb-2">
+                    <svg class="w-4 h-4 text-pink-500" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                    <a href="https://instagram.com/fitness_guru_page" class="text-primary hover:underline font-medium" target="_blank">
+                      @fitness_guru_page
+                    </a>
+                  </div>
+                  <div class="font-medium text-gray-700 mb-2">Описание площадки:</div>
+                  <p class="text-gray-600 bg-base-100 p-3 rounded-lg border border-base-300">
+                    Instagram-аккаунт о фитнесе, правильном питании и здоровом образе жизни. 
+                    Тренировочные программы, рецепты, мотивация. Аудитория: 18-45 лет.
+                  </p>
+                </div>
+                
+                <div class="mt-4">
+                  <div class="font-medium text-gray-700 mb-3">Метрики и категории:</div>
+                  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div class="flex items-center gap-2">
+                      <div class="tooltip" data-tip="Подписчики">
+                        <svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                      </div>
+                      <span class="text-sm">Подписчики: 24.3K</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="tooltip" data-tip="ER (Engagement Rate)">
+                        <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
+                        </svg>
+                      </div>
+                      <span class="text-sm">ER: 5.2%</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="tooltip" data-tip="Дата регистрации">
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                      </div>
+                      <span class="text-sm">Создана: 01.08.2025</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="tooltip" data-tip="Категории">
+                        <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
+                      </div>
+                      <span class="text-sm">Фитнес, Здоровье, Спорт</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="mt-4">
+                  <div class="font-medium text-gray-700 mb-2">Причина правок:</div>
+                  <p class="text-error bg-error/10 p-3 rounded-lg border border-error/20">
+                    <span class="font-semibold">Требуется подтверждение метрик:</span> 
+                    Предоставленные скриншоты аналитики нечеткие. Запросить свежие данные из Instagram Insights.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-actions justify-between mt-4 pt-4 border-t border-base-300">
+              <div class="flex items-center gap-2">
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  </svg>
+                  Посмотреть
+                </button>
+                <button class="btn btn-warning btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                  </svg>
+                  Запросить правки
+                </button>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-outline btn-error" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                  Отклонить
+                </button>
+                <button class="btn btn-success">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Одобрить
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Пагинация и действия -->
+    <div class="sticky bottom-0 bg-base-100 border-t border-base-300 p-4">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-sm text-gray-500">
+          Показано <span class="font-bold">3</span> из <span class="font-bold">15</span> площадок
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="join">
+            <button class="btn join-item btn-sm">1</button>
+            <button class="btn join-item btn-sm btn-active">2</button>
+            <button class="btn join-item btn-sm">3</button>
+            <button class="btn join-item btn-sm">4</button>
+            <button class="btn join-item btn-sm">5</button>
+          </div>
+          <button class="btn btn-primary btn-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Одобрить выбранные
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Фон для закрытия -->
+  <form method="dialog" class="modal-backdrop">
+    <button>закрыть</button>
+  </form>
+</dialog>
+
+<style>
+  /* Кастомные стили для красоты */
+  .card-border {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .card-border:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+  }
+  
+  /* Стили для скроллбара */
+  .overflow-y-auto::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+  
+  /* Стили для иконок платформ */
+  .platform-icon {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  }
+</style>

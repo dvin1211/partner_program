@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.db.models import Q
 
-from apps.core.decorators import role_required
 from apps.advertisers.models import AdvertiserTransaction
-from apps.managers.models import ManagerActivity
+from apps.core.decorators import role_required
+from apps.managers.views.utils import get_manager_stats
 from utils import _paginate
 
 
@@ -32,13 +32,14 @@ def manager_advertisers(request):
         advertiser_transactions = advertiser_transactions.filter(status=transactions_type_q)
     transactions = _paginate(request,advertiser_transactions,count,"transactions_page")
 
-    notifications_count = ManagerActivity.objects.filter(manager=user.managerprofile,is_read=False).count()
+    
     
     context = {
         "transactions_type_q":transactions_type_q,
         "users_search_q":users_search_q,
         "transactions": transactions,
-        "notifications_count":notifications_count
+        
+        **get_manager_stats(user)
     }
     
     return render(request, 'managers/advertisers/advertisers.html',context=context)

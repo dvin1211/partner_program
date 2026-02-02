@@ -23,7 +23,6 @@ export function setupPartnerInfoModal() {
             const response = await fetch(`/advertiser/partners/json/${partnerId}`);
             if (response.ok) { 
                 const json = await response.json();
-                console.log(json);
 
                 firstLetterBlock.innerHTML = json.partner.username.slice(0,1);
                 partnerName.innerHTML = json.partner.username;

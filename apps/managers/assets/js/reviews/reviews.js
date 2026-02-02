@@ -54,6 +54,7 @@ function deleteReview(reviewId) {
         });
 
         if (!response.ok) {
+            showNotification('Ошибка сервера','error')
             console.error('Server error:', response.status, response.statusText);
             return;
         }
@@ -68,7 +69,6 @@ function deleteReview(reviewId) {
 
 // Функция для показа уведомлений
 function showNotification(message, type = 'info') {
-    // Создаем элемент уведомления
     const notification = document.createElement('div');
     notification.className = `alert alert-${type} fixed top-4 right-4 z-50 max-w-md shadow-lg`;
     notification.innerHTML = `
@@ -82,7 +82,6 @@ function showNotification(message, type = 'info') {
 
     document.body.appendChild(notification);
 
-    // Автоматически удаляем уведомление через 3 секунды
     setTimeout(() => {
         if (notification.parentElement) {
             notification.remove();
@@ -105,6 +104,7 @@ function setupSaveChanges() {
             });
 
             if (!response.ok) {
+                showNotification('Ошибка сервера','error')
                 console.error('Server error:', response.status, response.statusText);
                 return;
             }

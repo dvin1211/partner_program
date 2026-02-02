@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalCountElement = document.getElementById('total-count');
     const formMarkAllAsRead = document.getElementById('mark-all-as-read');
 
-    // Инициализация
     initNotifications();
 
     function initNotifications() {
@@ -19,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setupEventListeners();
     }
 
-    // --- Пагинация ---
     function setupPagination() {
         const prev = document.getElementById('previous_page_number');
         const curr = document.getElementById('current_page_number');
@@ -58,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.history.pushState(state, state.title, state.url);
     }
 
-    // --- Слушатели ---
     function setupEventListeners() {
         refreshButton.addEventListener('click', () => {
             refreshNotifications().then(() => showToast('Уведомления обновлены', 'success'))
@@ -71,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     }
 
-    // --- Работа с уведомлениями ---
     async function refreshNotifications(page = null) {
         toggleLoading(true);
         try {
@@ -183,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
         totalCountElement.textContent = total_count;
     }
 
-    // --- Прочитать уведомления ---
     async function handleMarkAsRead(e) {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -232,7 +227,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Утилиты ---
     function toggleLoading(isLoading) {
         refreshButton.classList.toggle('animate-spin', isLoading);
         loadingIndicator.classList.toggle('hidden', !isLoading);

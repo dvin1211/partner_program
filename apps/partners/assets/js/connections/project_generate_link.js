@@ -138,7 +138,6 @@ export function setupProjectGenerateLink() {
                 validateRequiredParams();
 
             } catch (error) {
-                console.error('Ошибка парсинга параметров:', error);
                 alert('Ошибка при обработке параметров ссылки');
             }
         });
@@ -246,6 +245,7 @@ export function setupProjectGenerateLink() {
 
             generatedLinkInput.value = url.toString();
         } catch (error) {
+            alert('Ошибка генерации ссылки')
             console.error('Ошибка генерации ссылки:', error);
         }
     }

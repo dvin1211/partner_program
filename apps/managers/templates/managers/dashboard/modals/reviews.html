@@ -1,0 +1,708 @@
+<dialog id="reviews-moderation-modal" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box max-w-6xl max-h-[90vh] p-0 overflow-hidden">
+    
+    <!-- Заголовок и фильтры -->
+    <div class="sticky top-0 z-10 bg-base-100 border-b border-base-300 p-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h3 class="text-2xl font-bold flex items-center gap-2">
+            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+            </svg>
+            Модерация отзывов
+          </h3>
+          <p class="text-gray-500 text-sm mt-1">Управление отзывами пользователей</p>
+        </div>
+        
+        <div class="flex items-center gap-2">
+          <div class="join">
+            <button class="btn btn-sm join-item btn-active">Все</button>
+            <button class="btn btn-sm join-item btn-ghost">На модерации</button>
+            <button class="btn btn-sm join-item btn-ghost">Одобренные</button>
+            <button class="btn btn-sm join-item btn-ghost">Отклонённые</button>
+          </div>
+          <form method="dialog">
+            <button class="btn btn-circle btn-ghost btn-sm">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Статистика -->
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-4">
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">На модерации</div>
+          <div class="stat-value text-lg">14</div>
+        </div>
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">⭐ 5 звёзд</div>
+          <div class="stat-value text-lg">8</div>
+        </div>
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">⭐ 4 звезды</div>
+          <div class="stat-value text-lg">4</div>
+        </div>
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">Жалобы</div>
+          <div class="stat-value text-lg">2</div>
+        </div>
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">Ответы</div>
+          <div class="stat-value text-lg">5</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Список отзывов -->
+    <div class="p-6 overflow-y-auto h-[calc(90vh-200px)]">
+      <div class="space-y-4">
+        
+        <!-- Отзыв 1 -->
+        <div class="card card-border border border-base-300 hover:border-primary/50 transition-all duration-200" id="review-1">
+          <div class="card-body p-5">
+            <!-- Шапка отзыва -->
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
+              <div class="flex items-start gap-3">
+                <div class="avatar">
+                  <div class="w-12 h-12 rounded-full bg-primary text-primary-content flex items-center justify-center font-bold">
+                    VK
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-bold text-lg flex items-center gap-2">
+                    vinokurov.d
+                    <span class="badge badge-success badge-sm">Верифицирован</span>
+                  </h4>
+                  <div class="flex items-center gap-2 text-sm text-gray-500">
+                    <span>06.08.2025 14:30</span>
+                    <span>•</span>
+                    <span>Проект: SEO-продвижение</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="flex items-center gap-3">
+                <!-- Рейтинг -->
+                <div class="rating rating-md">
+                  <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked disabled />
+                  <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked disabled />
+                  <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked disabled />
+                  <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked disabled />
+                  <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked disabled />
+                </div>
+                <span class="badge badge-warning badge-sm">Новый</span>
+              </div>
+            </div>
+            
+            <!-- Контент отзыва -->
+            <div class="mb-4">
+              <div class="font-medium text-gray-700 mb-2">Оригинальный отзыв:</div>
+              <div class="p-3 bg-base-100 rounded-lg border border-base-300 min-h-[100px]" id="review-content-1">
+                Отличная партнёрская программа! Работаю с ними уже 3 месяца, выплаты всегда вовремя. 
+                Поддержка отвечает быстро и помогает решить любые вопросы. Особенно понравился проект 
+                по SEO-продвижению - высокие ставки и чёткие ТЗ. Рекомендую всем, кто ищет надёжного 
+                партнёра для заработка в интернете!
+              </div>
+              
+              <!-- Редактирование отзыва -->
+              <div class="mt-3 hidden" id="edit-form-1">
+                <div class="font-medium text-gray-700 mb-2">Редактирование отзыва:</div>
+                <textarea class="textarea textarea-bordered w-full min-h-[120px]" id="edit-textarea-1">
+Отличная партнёрская программа! Работаю с ними уже 3 месяца, выплаты всегда вовремя. 
+Поддержка отвечает быстро и помогает решить любые вопросы. Особенно понравился проект 
+по SEO-продвижению - высокие ставки и чёткие ТЗ. Рекомендую всем, кто ищет надёжного 
+партнёра для заработка в интернете!
+                </textarea>
+                <div class="flex justify-end gap-2 mt-2">
+                  <button class="btn btn-ghost btn-sm" onclick="cancelEdit('review-1')">Отмена</button>
+                  <button class="btn btn-primary btn-sm" onclick="saveEdit('review-1')">Сохранить</button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Дополнительная информация -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+              <div class="p-3 bg-base-100 rounded-lg border border-base-300">
+                <div class="font-medium text-gray-700 mb-1">Доп. информация:</div>
+                <div class="text-sm space-y-1">
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Опыт работы:</span>
+                    <span>3 месяца</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Выплат получено:</span>
+                    <span>5 (все вовремя)</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="p-3 bg-base-100 rounded-lg border border-base-300">
+                <div class="font-medium text-gray-700 mb-1">Модерация:</div>
+                <div class="text-sm space-y-1">
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Проверен:</span>
+                    <span class="text-success">✅ Автоматически</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Качество текста:</span>
+                    <span class="text-success">Высокое</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="p-3 bg-base-100 rounded-lg border border-base-300">
+                <div class="font-medium text-gray-700 mb-1">История:</div>
+                <div class="text-sm space-y-1">
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Отзывов ранее:</span>
+                    <span>2 положительных</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Ответ от команды:</span>
+                    <span class="text-warning">Не отвечен</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Действия -->
+            <div class="card-actions justify-between mt-4 pt-4 border-t border-base-300">
+              <div class="flex flex-wrap gap-2">
+                <button class="btn btn-ghost btn-sm" onclick="toggleEdit('review-1')">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                  </svg>
+                  Редактировать
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                  </svg>
+                  Ответить
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  Жалоба
+                </button>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-outline btn-error" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                  Отклонить
+                </button>
+                <button class="btn btn-success">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Опубликовать
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Отзыв 2 (требует редактирования) -->
+        <div class="card card-border border border-error/30 hover:border-error/50 transition-all duration-200" id="review-2">
+          <div class="card-body p-5">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
+              <div class="flex items-start gap-3">
+                <div class="avatar">
+                  <div class="w-12 h-12 rounded-full bg-error text-error-content flex items-center justify-center font-bold">
+                    CE
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-bold text-lg flex items-center gap-2">
+                    crypto.expert
+                    <span class="badge badge-warning badge-sm">На проверке</span>
+                  </h4>
+                  <div class="flex items-center gap-2 text-sm text-gray-500">
+                    <span>05.08.2025 11:15</span>
+                    <span>•</span>
+                    <span>Проект: Реклама в Telegram</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="flex items-center gap-3">
+                <div class="rating rating-md">
+                  <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked disabled />
+                  <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked disabled />
+                  <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked disabled />
+                  <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" />
+                  <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" />
+                </div>
+                <span class="badge badge-error badge-sm">Требует правок</span>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <div class="font-medium text-gray-700 mb-2">Оригинальный отзыв:</div>
+              <div class="p-3 bg-error/10 rounded-lg border border-error/20 min-h-[100px]" id="review-content-2">
+                Прога норм, бабло платят. Делал рекламу крипты в канале, за день накрутил 10к. 
+                Админы адекватные, не кидают. Всем советую, не пожалеете!!! 
+                П.С. если нужны подписчики в телегу - обращайтесь, делаю накрутку качественно.
+              </div>
+              
+              <!-- Редактирование отзыва -->
+              <div class="mt-3" id="edit-form-2">
+                <div class="font-medium text-gray-700 mb-2">Редактирование отзыва:</div>
+                <div class="mb-2 text-sm text-error flex items-center gap-1">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.998-.833-2.732 0L4.224 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                  </svg>
+                  <span>Обнаружены проблемы: сленг, реклама сторонних услуг</span>
+                </div>
+                <textarea class="textarea textarea-bordered w-full min-h-[120px] textarea-error" id="edit-textarea-2">
+Хорошая партнёрская программа, выплаты поступают своевременно. Занимался рекламой криптовалютного проекта в Telegram-канале, показал хорошие результаты за короткий срок.
+Администраторы адекватно реагируют на обращения и помогают решать вопросы. Рекомендую партнёрскую программу для сотрудничества.
+                </textarea>
+                <div class="flex justify-end gap-2 mt-2">
+                  <button class="btn btn-ghost btn-sm" onclick="cancelEdit('review-2')">Отмена</button>
+                  <button class="btn btn-primary btn-sm" onclick="saveEdit('review-2')">Сохранить</button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Причины правок -->
+            <div class="mb-4">
+              <div class="font-medium text-gray-700 mb-2">Причины для редактирования:</div>
+              <div class="flex flex-wrap gap-2">
+                <span class="badge badge-error badge-sm">Слишком много сленга</span>
+                <span class="badge badge-error badge-sm">Реклама сторонних услуг</span>
+                <span class="badge badge-warning badge-sm">Низкое качество текста</span>
+                <span class="badge badge-warning badge-sm">Мало деталей</span>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+              <div class="p-3 bg-base-100 rounded-lg border border-base-300">
+                <div class="font-medium text-gray-700 mb-1">Доп. информация:</div>
+                <div class="text-sm space-y-1">
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Опыт работы:</span>
+                    <span>1 месяц</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Выплат получено:</span>
+                    <span>1 (недавно)</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="p-3 bg-base-100 rounded-lg border border-base-300">
+                <div class="font-medium text-gray-700 mb-1">Модерация:</div>
+                <div class="text-sm space-y-1">
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Проверен:</span>
+                    <span class="text-error">❌ Автоматически</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Качество текста:</span>
+                    <span class="text-error">Низкое</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="p-3 bg-base-100 rounded-lg border border-base-300">
+                <div class="font-medium text-gray-700 mb-1">История:</div>
+                <div class="text-sm space-y-1">
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Отзывов ранее:</span>
+                    <span>0 (первый отзыв)</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Жалобы:</span>
+                    <span class="text-error">1 на рекламу</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-actions justify-between mt-4 pt-4 border-t border-base-300">
+              <div class="flex flex-wrap gap-2">
+                <button class="btn btn-ghost btn-sm" onclick="toggleEdit('review-2')">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                  </svg>
+                  Редактировать
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>
+                  </svg>
+                  Блокировать
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  Заметка
+                </button>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-outline btn-error" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                  Удалить
+                </button>
+                <button class="btn btn-success">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Опубликовать
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Отзыв 3 (с ответом) -->
+        <div class="card card-border border border-success/30 hover:border-success/50 transition-all duration-200" id="review-3">
+          <div class="card-body p-5">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
+              <div class="flex items-start gap-3">
+                <div class="avatar">
+                  <div class="w-12 h-12 rounded-full bg-success text-success-content flex items-center justify-center font-bold">
+                    FG
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-bold text-lg flex items-center gap-2">
+                    fitness.guru
+                    <span class="badge badge-success badge-sm">Премиум</span>
+                  </h4>
+                  <div class="flex items-center gap-2 text-sm text-gray-500">
+                    <span>04.08.2025 09:45</span>
+                    <span>•</span>
+                    <span>Проект: Фитнес приложение</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="flex items-center gap-3">
+                <div class="rating rating-md">
+                  <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked disabled />
+                  <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked disabled />
+                  <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked disabled />
+                  <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked disabled />
+                  <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" />
+                </div>
+                <span class="badge badge-success badge-sm">Опубликован</span>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <div class="font-medium text-gray-700 mb-2">Оригинальный отзыв:</div>
+              <div class="p-3 bg-base-100 rounded-lg border border-base-300 min-h-[100px]" id="review-content-3">
+                Партнёрская программа отлично подходит для фитнес-блогеров. Высокие ставки за конверсии, 
+                качественные креативы и хорошая поддержка. Работаю с проектом фитнес-приложения уже 2 месяца, 
+                стабильно получаю выплаты. Единственное пожелание - добавить больше аналитики по географии кликов.
+              </div>
+              
+              <!-- Редактирование отзыва -->
+              <div class="mt-3 hidden" id="edit-form-3">
+                <div class="font-medium text-gray-700 mb-2">Редактирование отзыва:</div>
+                <textarea class="textarea textarea-bordered w-full min-h-[120px]" id="edit-textarea-3">
+Партнёрская программа отлично подходит для фитнес-блогеров. Высокие ставки за конверсии, 
+качественные креативы и хорошая поддержка. Работаю с проектом фитнес-приложения уже 2 месяца, 
+стабильно получаю выплаты. Единственное пожелание - добавить больше аналитики по географии кликов.
+                </textarea>
+                <div class="flex justify-end gap-2 mt-2">
+                  <button class="btn btn-ghost btn-sm" onclick="cancelEdit('review-3')">Отмена</button>
+                  <button class="btn btn-primary btn-sm" onclick="saveEdit('review-3')">Сохранить</button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Ответ от команды -->
+            <div class="mb-4">
+              <div class="font-medium text-gray-700 mb-2 flex items-center gap-2">
+                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
+                </svg>
+                Ответ от команды:
+              </div>
+              <div class="p-3 bg-primary/10 rounded-lg border border-primary/20 ml-8">
+                <div class="flex justify-between items-start mb-2">
+                  <div class="font-medium">Алексей, менеджер поддержки</div>
+                  <span class="text-sm text-gray-500">06.08.2025 15:20</span>
+                </div>
+                <p class="text-gray-700">
+                  Спасибо за отзыв и конструктивное предложение! Рады, что вам нравится работать с нами. 
+                  Что касается аналитики по географии - мы как раз работаем над этим улучшением. 
+                  Ожидайте обновление в личном кабинете в течение 2 недель.
+                </p>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+              <div class="p-3 bg-base-100 rounded-lg border border-base-300">
+                <div class="font-medium text-gray-700 mb-1">Доп. информация:</div>
+                <div class="text-sm space-y-1">
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Опыт работы:</span>
+                    <span>6 месяцев</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Выплат получено:</span>
+                    <span>12 (все вовремя)</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="p-3 bg-base-100 rounded-lg border border-base-300">
+                <div class="font-medium text-gray-700 mb-1">Модерация:</div>
+                <div class="text-sm space-y-1">
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Проверен:</span>
+                    <span class="text-success">✅ Модератором</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Качество текста:</span>
+                    <span class="text-success">Очень высокое</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="p-3 bg-base-100 rounded-lg border border-base-300">
+                <div class="font-medium text-gray-700 mb-1">Статистика:</div>
+                <div class="text-sm space-y-1">
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Просмотров:</span>
+                    <span>148</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Лайков:</span>
+                    <span>23</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-actions justify-between mt-4 pt-4 border-t border-base-300">
+              <div class="flex flex-wrap gap-2">
+                <button class="btn btn-ghost btn-sm" onclick="toggleEdit('review-3')">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                  </svg>
+                  Редактировать
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
+                  </svg>
+                  Поднять
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                  </svg>
+                  Ответить
+                </button>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-outline" onclick="event.preventDefault()">
+                  Снять с публикации
+                </button>
+                <button class="btn btn-success" disabled>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Опубликовано
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Пагинация и инструменты -->
+    <div class="sticky bottom-0 bg-base-100 border-t border-base-300 p-4">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-sm text-gray-500">
+          Показано <span class="font-bold">3</span> из <span class="font-bold">14</span> отзывов
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="join">
+            <button class="btn join-item btn-sm">1</button>
+            <button class="btn join-item btn-sm btn-active">2</button>
+            <button class="btn join-item btn-sm">3</button>
+            <button class="btn join-item btn-sm">4</button>
+            <button class="btn join-item btn-sm">5</button>
+          </div>
+          <div class="dropdown dropdown-top">
+            <div tabindex="0" role="button" class="btn btn-primary btn-sm">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+              </svg>
+              Инструменты
+            </div>
+            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+              <li><a onclick="event.preventDefault()">Шаблоны ответов</a></li>
+              <li><a onclick="event.preventDefault()">Массовая модерация</a></li>
+              <li><a onclick="event.preventDefault()">Экспорт отзывов</a></li>
+              <li><a onclick="event.preventDefault()">Настройки фильтров</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Фон для закрытия -->
+  <form method="dialog" class="modal-backdrop">
+    <button>закрыть</button>
+  </form>
+</dialog>
+
+<script>
+  // Функции для редактирования отзывов
+  function toggleEdit(reviewId) {
+    const reviewElement = document.getElementById(reviewId);
+    const contentId = reviewId.replace('review', 'review-content');
+    const formId = reviewId.replace('review', 'edit-form');
+    const textareaId = reviewId.replace('review', 'edit-textarea');
+    
+    const contentElement = document.getElementById(contentId);
+    const formElement = document.getElementById(formId);
+    const textareaElement = document.getElementById(textareaId);
+    
+    if (formElement.classList.contains('hidden')) {
+      // Сохраняем оригинальный текст в textarea
+      textareaElement.value = contentElement.textContent.trim();
+      // Показываем форму редактирования
+      formElement.classList.remove('hidden');
+      contentElement.classList.add('hidden');
+    } else {
+      // Скрываем форму редактирования
+      formElement.classList.add('hidden');
+      contentElement.classList.remove('hidden');
+    }
+  }
+  
+  function cancelEdit(reviewId) {
+    const contentId = reviewId.replace('review', 'review-content');
+    const formId = reviewId.replace('review', 'edit-form');
+    
+    document.getElementById(formId).classList.add('hidden');
+    document.getElementById(contentId).classList.remove('hidden');
+  }
+  
+  function saveEdit(reviewId) {
+    const contentId = reviewId.replace('review', 'review-content');
+    const formId = reviewId.replace('review', 'edit-form');
+    const textareaId = reviewId.replace('review', 'edit-textarea');
+    
+    const newText = document.getElementById(textareaId).value.trim();
+    
+    if (newText) {
+      // Обновляем текст отзыва
+      document.getElementById(contentId).textContent = newText;
+      
+      // Показываем уведомление
+      showNotification('Отзыв успешно отредактирован', 'success');
+      
+      // Скрываем форму
+      document.getElementById(formId).classList.add('hidden');
+      document.getElementById(contentId).classList.remove('hidden');
+      
+      // Меняем статус отзыва
+      const badge = document.querySelector(`#${reviewId} .badge-error`);
+      if (badge && badge.textContent.includes('Требует правок')) {
+        badge.classList.remove('badge-error');
+        badge.classList.add('badge-warning');
+        badge.textContent = 'Отредактирован';
+      }
+    } else {
+      showNotification('Отзыв не может быть пустым', 'error');
+    }
+  }
+  
+  function showNotification(message, type = 'info') {
+    // Создаем элемент уведомления
+    const notification = document.createElement('div');
+    notification.className = `toast toast-top toast-center`;
+    notification.innerHTML = `
+      <div class="alert alert-${type}">
+        <span>${message}</span>
+      </div>
+    `;
+    
+    // Добавляем на страницу
+    document.body.appendChild(notification);
+    
+    // Удаляем через 3 секунды
+    setTimeout(() => {
+      notification.remove();
+    }, 3000);
+  }
+  
+  // Инициализация для второго отзыва (уже открыт для редактирования)
+  document.addEventListener('DOMContentLoaded', function() {
+    // Второй отзыв изначально в режиме редактирования
+    const review2 = document.getElementById('review-2');
+    if (review2) {
+      const contentId = 'review-content-2';
+      const formId = 'edit-form-2';
+      
+      document.getElementById(contentId).classList.add('hidden');
+      document.getElementById(formId).classList.remove('hidden');
+    }
+  });
+</script>
+
+<style>
+  /* Кастомные стили для красоты */
+  .card-border {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .card-border:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+  }
+  
+  /* Стили для скроллбара */
+  .overflow-y-auto::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+  
+  /* Стили для рейтинга */
+  .rating input {
+    cursor: default;
+  }
+  
+  /* Анимация для отзыва требующего правок */
+  @keyframes pulse-warning {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.9; }
+  }
+  
+  .border-error\/30 {
+    animation: pulse-warning 2s infinite;
+  }
+</style>

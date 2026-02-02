@@ -7,9 +7,10 @@ export function setupAdvertiserTransactions() {
         sendDetailsBtn.forEach(item => {
             item.addEventListener('click', function () {
                 const dataset = this.dataset;
+                console.log(dataset)
                 document.getElementById('advertiser_transaction_id').value = dataset.advTransactionId;
                 document.getElementById('advertiser_transaction_requisites').innerHTML = `<a class='text-blue-700' href='/manager/advertiser_requisites/${dataset.advId}'>Реквизиты</a>`
-                document.getElementById('advertiser_transaction_fio').innerText = dataset.advTransactionIfo;
+                document.getElementById('advertiser_transaction_fio').innerText = dataset.advTransactionIfo.trim().toLowerCase() != 'none' ? dataset.advTransactionIfo : "Не указано";
                 document.getElementById('advertiser_transaction_email').innerText = dataset.advTransactionEmail;
                 document.getElementById('advertiser_transaction_amount').innerText = String(dataset.advTransactionAmount) + "₽";
                 document.getElementById('advertiser_transaction_amount_with_commission').innerText = String(dataset.advTransactionAmountWithCommission) + "₽";
@@ -146,8 +147,6 @@ export function setupAdvertiserTransactions() {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data)
-
                     const messageContainer = document.getElementById('adv_transactions_messages__container');
                     messageContainer.innerHTML = '';
 
@@ -207,8 +206,6 @@ export function setupAdvertiserTransactions() {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data)
-
                     const messageContainer = document.getElementById('adv_transactions_messages__container');
                     messageContainer.innerHTML = '';
 

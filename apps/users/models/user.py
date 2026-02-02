@@ -75,6 +75,7 @@ class User(AbstractUser):
         """Разблокировать пользователя"""
         self.is_blocked = False
         self.block_until = None
+        self.blocking_reason = None
         self.save()
 
     def is_currently_blocked(self):

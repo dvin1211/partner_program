@@ -79,8 +79,8 @@
                                 <div>
                                     <div class="font-bold">
                                         <a href="{% url 'advertiser' transaction.advertiser.user.id %}">
-                                            {% if transaction.advertiser.user.firstname %}
-                                                {{ transaction.advertiser.user.get_ifo }}
+                                            {% if transaction.advertiser.user.get_full_name %}
+                                                {{ transaction.advertiser.user.get_full_name }}
                                             {% else %}
                                                 Не указано
                                             {% endif %}

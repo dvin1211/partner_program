@@ -30,9 +30,7 @@ export function setupConnectionModal() {
     // Единый обработчик для всех кнопок
     const handleModalOpen = function() {
         const { dataset } = this;
-        console.log(dataset)
         
-        // Обновляем текстовые поля
         Object.entries(fieldElements).forEach(([field, element]) => {
             if (field == "project-name" && dataset.projectName)
             {
@@ -60,7 +58,6 @@ export function setupConnectionModal() {
             }
         });
 
-        // Обновляем action формы
         if (form && dataset.projectId) {
             form.action = `/partner/connect_project/${dataset.projectId}`;
         }

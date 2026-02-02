@@ -35,24 +35,20 @@ document.addEventListener('DOMContentLoaded', function () {
     `;
     document.head.appendChild(style);
 
-    // Обрабатываем все сообщения
     const alertMessages = document.querySelectorAll('.alert-message');
 
     alertMessages.forEach((element, index) => {
-        // Добавляем небольшую задержку для каждого следующего сообщения
         const delay = 5000 + (index * 200);
 
         setTimeout(() => {
-            // Добавляем классы для анимации ухода влево
             element.classList.add(
                 'animate-slide-out-left',
-                'transform-gpu', // Аппаратное ускорение
+                'transform-gpu', 
                 'transition-all',
                 'duration-800',
                 'ease-in-out'
             );
 
-            // Удаляем элемент после завершения анимации
             setTimeout(() => {
                 if (element.parentNode) {
                     element.remove();

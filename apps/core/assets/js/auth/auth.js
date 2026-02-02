@@ -35,7 +35,6 @@ function showToast(message, type = 'info') {
                 <span>${message}</span>
             </div>`;
 
-    console.log(document.getElementById('auth_messages__container'))
     document.getElementById('auth_messages__container').appendChild(toast);
     setTimeout(() => {
         toast.classList.add('animate-slide-out-left');

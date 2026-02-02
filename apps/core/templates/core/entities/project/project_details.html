@@ -54,7 +54,7 @@
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Целевое действие:</span>
-                                <span class="font-bold">{{ project.action_name }}</span>
+                                <span class="font-bold">{{ project.action_name|default:"Не заполнено" }}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Цена за действие:</span>

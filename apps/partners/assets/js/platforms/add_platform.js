@@ -8,7 +8,6 @@ export function setupPlatformAdd(){
     modal.classList.add("modal-open");
   });
 
-  // Закрыть модалку
   btnCloseModal.addEventListener("click", () => {
     modal.classList.remove("modal-open");
   });

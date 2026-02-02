@@ -1,0 +1,924 @@
+<dialog id="deposit-moderation-modal" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box max-w-6xl max-h-[90vh] p-0 overflow-hidden">
+    
+    <!-- Заголовок и фильтры -->
+    <div class="sticky top-0 z-10 bg-base-100 border-b border-base-300 p-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h3 class="text-2xl font-bold flex items-center gap-2">
+            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Модерация пополнения баланса
+          </h3>
+          <p class="text-gray-500 text-sm mt-1">Обработка заявок на пополнение средств</p>
+        </div>
+        
+        <div class="flex items-center gap-2">
+          <div class="join">
+            <button class="btn btn-sm join-item btn-active">Все</button>
+            <button class="btn btn-sm join-item btn-ghost">Ожидают реквизиты</button>
+            <button class="btn btn-sm join-item btn-ghost">Ожидают оплаты</button>
+            <button class="btn btn-sm join-item btn-ghost">Проверка оплаты</button>
+          </div>
+          <form method="dialog">
+            <button class="btn btn-circle btn-ghost btn-sm">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Статистика -->
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-4">
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">На модерации</div>
+          <div class="stat-value text-lg">9</div>
+        </div>
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">Сумма</div>
+          <div class="stat-value text-lg">245 000 ₽</div>
+        </div>
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">Сегодня</div>
+          <div class="stat-value text-lg">4</div>
+        </div>
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">Карты</div>
+          <div class="stat-value text-lg">6</div>
+        </div>
+        <div class="stat p-3 bg-base-200 rounded-lg">
+          <div class="stat-title">Крипто</div>
+          <div class="stat-value text-lg">3</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Список заявок на пополнение -->
+    <div class="p-6 overflow-y-auto h-[calc(90vh-200px)]">
+      <div class="space-y-4">
+        
+        <!-- Заявка 1 - Ожидает реквизитов -->
+        <div class="card card-border border border-warning/30 hover:border-warning/50 transition-all duration-200">
+          <div class="card-body p-5">
+            <!-- Шапка заявки -->
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
+              <div class="flex items-start gap-3">
+                <div class="avatar">
+                  <div class="w-12 h-12 rounded-full bg-warning text-warning-content flex items-center justify-center font-bold">
+                    VK
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-bold text-lg flex items-center gap-2">
+                    vinokurov.d
+                    <span class="badge badge-warning badge-sm">Ожидает реквизитов</span>
+                  </h4>
+                  <div class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+                    <span>Заявка #DEP-0781</span>
+                    <span>•</span>
+                    <span>06.08.2025 14:30</span>
+                    <span>•</span>
+                    <span class="flex items-center gap-1 text-success">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                      Верифицирован
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="text-right">
+                <div class="text-3xl font-bold text-primary">50 000 ₽</div>
+                <div class="text-sm text-gray-500">сумма пополнения</div>
+              </div>
+            </div>
+            
+            <!-- Информация о заявке -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div class="space-y-3">
+                <div>
+                  <div class="font-medium text-gray-700 mb-2">Информация о заявке:</div>
+                  <div class="p-3 bg-base-100 rounded-lg border border-base-300 space-y-2">
+                    <div class="flex justify-between">
+                      <span class="text-gray-600">Способ оплаты:</span>
+                      <span class="font-medium flex items-center gap-1">
+                        <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                        </svg>
+                        Банковская карта
+                      </span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-600">Банк:</span>
+                      <span class="font-medium">Тинькофф</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-600">Текущий баланс:</span>
+                      <span class="font-medium">8 500 ₽</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-600">Будет после пополнения:</span>
+                      <span class="font-bold text-success">58 500 ₽</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <div class="font-medium text-gray-700 mb-2">История пополнений:</div>
+                  <div class="text-sm space-y-1">
+                    <div class="flex items-center gap-2">
+                      <div class="badge badge-sm badge-success">✓</div>
+                      <span>3 успешных пополнения за последний месяц</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="badge badge-sm badge-success">✓</span>
+                      <span>Последнее: 28.07.2025 (25 000 ₽)</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="badge badge-sm badge-info">i</div>
+                      <span>Никаких проблем с оплатами</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="space-y-3">
+                <!-- Блок реквизитов -->
+                <div id="requisites-section-1">
+                  <div class="font-medium text-gray-700 mb-2">Реквизиты для оплаты:</div>
+                  <div class="p-3 bg-warning/10 rounded-lg border border-warning/20">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="text-warning font-medium">Требуется отправить реквизиты</div>
+                      <button class="btn btn-warning btn-sm" onclick="showRequisitesForm('1')">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        Отправить
+                      </button>
+                    </div>
+                    <p class="text-sm text-gray-600">
+                      Пользователь ожидает реквизиты для оплаты 50 000 ₽. 
+                      После отправки реквизитов статус изменится на "Ожидает оплаты".
+                    </p>
+                  </div>
+                </div>
+                
+                <!-- Форма отправки реквизитов (скрыта по умолчанию) -->
+                <div class="hidden" id="requisites-form-1">
+                  <div class="font-medium text-gray-700 mb-2">Отправка реквизитов:</div>
+                  <div class="p-4 bg-base-100 rounded-lg border border-base-300 space-y-3">
+                    <div class="form-control">
+                      <label class="label">
+                        <span class="label-text">Номер карты/счёта</span>
+                      </label>
+                      <input type="text" class="input input-bordered" value="5536 9141 3574 2689" id="card-number-1">
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                      <div class="form-control">
+                        <label class="label">
+                          <span class="label-text">Держатель</span>
+                        </label>
+                        <input type="text" class="input input-bordered" value="ИВАН ИВАНОВ" id="card-holder-1">
+                      </div>
+                      <div class="form-control">
+                        <label class="label">
+                          <span class="label-text">Срок действия</span>
+                        </label>
+                        <input type="text" class="input input-bordered" value="08/28" id="card-expiry-1">
+                      </div>
+                    </div>
+                    
+                    <div class="form-control">
+                      <label class="label">
+                        <span class="label-text">Банк получателя</span>
+                      </label>
+                      <input type="text" class="input input-bordered" value="Тинькофф Банк" id="bank-name-1">
+                    </div>
+                    
+                    <div class="form-control">
+                      <label class="label">
+                        <span class="label-text">Комментарий к платежу</span>
+                      </label>
+                      <input type="text" class="input input-bordered" value="DEP-0781 vinokurov.d" id="payment-comment-1">
+                    </div>
+                    
+                    <div class="flex justify-end gap-2 mt-4">
+                      <button class="btn btn-ghost btn-sm" onclick="cancelRequisites('1')">Отмена</button>
+                      <button class="btn btn-primary btn-sm" onclick="sendRequisites('1')">Отправить реквизиты</button>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Статус после отправки реквизитов -->
+                <div class="hidden" id="requisites-sent-1">
+                  <div class="p-3 bg-info/10 rounded-lg border border-info/20">
+                    <div class="flex items-center gap-2 mb-2">
+                      <svg class="w-5 h-5 text-info" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                      <div class="font-medium text-info">Реквизиты отправлены</div>
+                    </div>
+                    <div class="text-sm space-y-1">
+                      <div class="flex justify-between">
+                        <span class="text-gray-600">Отправлено:</span>
+                        <span>06.08.2025 15:00</span>
+                      </div>
+                      <div class="flex justify-between">
+                        <span class="text-gray-600">Карта:</span>
+                        <span class="font-mono">5536 91** **** 2689</span>
+                      </div>
+                      <div class="flex justify-between">
+                        <span class="text-gray-600">Статус:</span>
+                        <span class="badge badge-info badge-sm">Ожидает оплаты</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Действия -->
+            <div class="card-actions justify-between mt-4 pt-4 border-t border-base-300">
+              <div class="flex items-center gap-2">
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  </svg>
+                  Детали партнёра
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                  </svg>
+                  Копировать данные
+                </button>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-outline btn-error" onclick="rejectDeposit('DEP-0781')">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                  Отклонить
+                </button>
+                <button class="btn btn-success" id="approve-btn-1" disabled onclick="approveDeposit('DEP-0781')">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Одобрить
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Заявка 2 - Ожидает оплаты (после отправки реквизитов) -->
+        <div class="card card-border border border-info/30 hover:border-info/50 transition-all duration-200">
+          <div class="card-body p-5">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
+              <div class="flex items-start gap-3">
+                <div class="avatar">
+                  <div class="w-12 h-12 rounded-full bg-info text-info-content flex items-center justify-center font-bold">
+                    CE
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-bold text-lg flex items-center gap-2">
+                    crypto.expert
+                    <span class="badge badge-info badge-sm">Ожидает оплаты</span>
+                  </h4>
+                  <div class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+                    <span>Заявка #DEP-0782</span>
+                    <span>•</span>
+                    <span>05.08.2025 11:15</span>
+                    <span>•</span>
+                    <span class="flex items-center gap-1 text-warning">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                      На проверке
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="text-right">
+                <div class="text-3xl font-bold text-primary">75 000 ₽</div>
+                <div class="text-sm text-gray-500">сумма пополнения</div>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div class="space-y-3">
+                <div>
+                  <div class="font-medium text-gray-700 mb-2">Информация о заявке:</div>
+                  <div class="p-3 bg-base-100 rounded-lg border border-base-300 space-y-2">
+                    <div class="flex justify-between">
+                      <span class="text-gray-600">Способ оплаты:</span>
+                      <span class="font-medium flex items-center gap-1">
+                        <svg class="w-4 h-4 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M14.422 0c.484 0 .966.052 1.437.153 3.354.619 5.698 3.834 5.09 7.188-.619 3.354-3.834 5.698-7.188 5.09a6.536 6.536 0 0 1-1.154-.203c-.364-.082-.738.13-.82.495s.13.738.495.82c.448.101.907.151 1.367.151 4.078 0 7.384-3.306 7.384-7.384S19.5.616 15.422.616c-.46 0-.919.05-1.367.151-.365.082-.577.455-.495.82.082.365.455.577.82.495.378-.085.763-.128 1.154-.128zM9.578 24c-.484 0-.966-.052-1.437-.153-3.354-.619-5.698-3.834-5.09-7.188.619-3.354 3.834-5.698 7.188-5.09.39.072.788.119 1.187.142.365.021.66.33.639.695-.021.365-.33.66-.695.639-.328-.018-.658-.052-.985-.111-2.244-.414-4.368 1.133-4.782 3.377-.414 2.244 1.133 4.368 3.377 4.782.327.059.657.093.985.111.365.021.674.33.695.695.021.365-.274.674-.639.695-.399.023-.797.07-1.187.142z"/>
+                        </svg>
+                        Криптовалюта (USDT)
+                      </span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-600">Сеть:</span>
+                      <span class="font-medium">TRC-20</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-600">Текущий баланс:</span>
+                      <span class="font-medium">12 300 ₽</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-600">Будет после пополнения:</span>
+                      <span class="font-bold text-success">87 300 ₽</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <div class="font-medium text-gray-700 mb-2">Предупреждение:</div>
+                  <div class="p-3 bg-warning/10 rounded-lg border border-warning/20">
+                    <div class="flex items-start gap-2">
+                      <svg class="w-5 h-5 text-warning mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.998-.833-2.732 0L4.224 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                      </svg>
+                      <div class="text-sm">
+                        <span class="font-semibold">Первое пополнение криптовалютой.</span> 
+                        Требуется дополнительная проверка после получения оплаты.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="space-y-3">
+                <div>
+                  <div class="font-medium text-gray-700 mb-2">Отправленные реквизиты:</div>
+                  <div class="p-3 bg-info/10 rounded-lg border border-info/20">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="text-info font-medium">Реквизиты отправлены</div>
+                      <button class="btn btn-info btn-sm" onclick="showPaymentCheckForm('2')">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Проверить оплату
+                      </button>
+                    </div>
+                    <div class="space-y-2">
+                      <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Кошелёк:</span>
+                        <span class="font-mono">TQrDpKv7hGq8YJj4wX3z...</span>
+                      </div>
+                      <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Сеть:</span>
+                        <span>TRC-20 (Tron)</span>
+                      </div>
+                      <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Отправлено:</span>
+                        <span>05.08.2025 12:00</span>
+                      </div>
+                      <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Сумма к получению:</span>
+                        <span class="font-bold">~1 785 USDT</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Форма проверки оплаты -->
+                <div class="hidden" id="payment-check-form-2">
+                  <div class="font-medium text-gray-700 mb-2">Проверка оплаты:</div>
+                  <div class="p-4 bg-base-100 rounded-lg border border-base-300 space-y-3">
+                    <div class="form-control">
+                      <label class="label">
+                        <span class="label-text">Хэш транзакции</span>
+                      </label>
+                      <input type="text" class="input input-bordered" placeholder="Введите хэш транзакции" id="tx-hash-2">
+                      <label class="label">
+                        <span class="label-text-alt">Можно найти в истории переводов кошелька</span>
+                      </label>
+                    </div>
+                    
+                    <div class="form-control">
+                      <label class="label">
+                        <span class="label-text">Сумма получена</span>
+                      </label>
+                      <div class="flex items-center gap-2">
+                        <input type="number" class="input input-bordered flex-1" value="1785" id="received-amount-2">
+                        <span class="text-gray-600">USDT</span>
+                      </div>
+                    </div>
+                    
+                    <div class="form-control">
+                      <label class="label">
+                        <span class="label-text">Комиссия сети</span>
+                      </label>
+                      <div class="flex items-center gap-2">
+                        <input type="number" class="input input-bordered flex-1" value="1" id="network-fee-2">
+                        <span class="text-gray-600">USDT</span>
+                      </div>
+                    </div>
+                    
+                    <div class="form-control">
+                      <label class="label">
+                        <span class="label-text">Курс USDT/RUB</span>
+                      </label>
+                      <div class="flex items-center gap-2">
+                        <input type="number" class="input input-bordered flex-1" value="42" id="exchange-rate-2">
+                        <span class="text-gray-600">₽ за 1 USDT</span>
+                      </div>
+                    </div>
+                    
+                    <div class="p-3 bg-base-200 rounded-lg">
+                      <div class="flex justify-between font-medium">
+                        <span>Итоговая сумма в рублях:</span>
+                        <span class="text-primary">74 928 ₽</span>
+                      </div>
+                      <div class="text-sm text-gray-500 mt-1">
+                        (1 785 USDT - 1 USDT комиссия) × 42 ₽ = 74 928 ₽
+                      </div>
+                    </div>
+                    
+                    <div class="flex justify-end gap-2 mt-4">
+                      <button class="btn btn-ghost btn-sm" onclick="cancelPaymentCheck('2')">Отмена</button>
+                      <button class="btn btn-primary btn-sm" onclick="confirmPayment('2')">Подтвердить оплату</button>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Статус после проверки оплаты -->
+                <div class="hidden" id="payment-confirmed-2">
+                  <div class="p-3 bg-success/10 rounded-lg border border-success/20">
+                    <div class="flex items-center gap-2 mb-2">
+                      <svg class="w-5 h-5 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                      <div class="font-medium text-success">Оплата подтверждена</div>
+                    </div>
+                    <div class="text-sm space-y-1">
+                      <div class="flex justify-between">
+                        <span class="text-gray-600">Подтверждено:</span>
+                        <span>06.08.2025 10:30</span>
+                      </div>
+                      <div class="flex justify-between">
+                        <span class="text-gray-600">Сумма:</span>
+                        <span class="font-bold">74 928 ₽</span>
+                      </div>
+                      <div class="flex justify-between">
+                        <span class="text-gray-600">Хэш:</span>
+                        <span class="font-mono text-xs">0x8f3a...c7d2</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-actions justify-between mt-4 pt-4 border-t border-base-300">
+              <div class="flex items-center gap-2">
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                  </svg>
+                  Проверить транзакцию
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  Напомнить об оплате
+                </button>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-outline btn-error" onclick="rejectDeposit('DEP-0782')">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                  Отклонить
+                </button>
+                <button class="btn btn-success" id="approve-btn-2" onclick="approveDeposit('DEP-0782')">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Одобрить
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Заявка 3 - Оплата подтверждена, готово к одобрению -->
+        <div class="card card-border border border-success/30 hover:border-success/50 transition-all duration-200">
+          <div class="card-body p-5">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
+              <div class="flex items-start gap-3">
+                <div class="avatar">
+                  <div class="w-12 h-12 rounded-full bg-success text-success-content flex items-center justify-center font-bold">
+                    FG
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-bold text-lg flex items-center gap-2">
+                    fitness.guru
+                    <span class="badge badge-success badge-sm">Оплата подтверждена</span>
+                    <span class="badge badge-primary badge-sm">Премиум</span>
+                  </h4>
+                  <div class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+                    <span>Заявка #DEP-0783</span>
+                    <span>•</span>
+                    <span>04.08.2025 09:45</span>
+                    <span>•</span>
+                    <span class="flex items-center gap-1 text-success">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                      Премиум-партнёр
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="text-right">
+                <div class="text-3xl font-bold text-primary">120 000 ₽</div>
+                <div class="text-sm text-gray-500">сумма пополнения</div>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div class="space-y-3">
+                <div>
+                  <div class="font-medium text-gray-700 mb-2">Информация о заявке:</div>
+                  <div class="p-3 bg-base-100 rounded-lg border border-base-300 space-y-2">
+                    <div class="flex justify-between">
+                      <span class="text-gray-600">Способ оплаты:</span>
+                      <span class="font-medium flex items-center gap-1">
+                        <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        Банковский перевод
+                      </span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-600">Банк:</span>
+                      <span class="font-medium">Сбербанк</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-600">Текущий баланс:</span>
+                      <span class="font-medium">32 800 ₽</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-600">Будет после пополнения:</span>
+                      <span class="font-bold text-success">152 800 ₽</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <div class="font-medium text-gray-700 mb-2">История пополнений:</div>
+                  <div class="text-sm space-y-1">
+                    <div class="flex items-center gap-2">
+                      <div class="badge badge-sm badge-success">✓</div>
+                      <span>8 успешных пополнений за 6 месяцев</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="badge badge-sm badge-success">✓</span>
+                      <span>Средняя сумма: 85 000 ₽</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="badge badge-sm badge-primary">★</div>
+                      <span>Премиум-партнёр, приоритетная обработка</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="space-y-3">
+                <div>
+                  <div class="font-medium text-gray-700 mb-2">Проверка оплаты:</div>
+                  <div class="p-3 bg-success/10 rounded-lg border border-success/20">
+                    <div class="flex items-center gap-2 mb-2">
+                      <svg class="w-5 h-5 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                      <div class="font-medium text-success">Оплата получена и проверена</div>
+                    </div>
+                    <div class="space-y-2">
+                      <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Поступление:</span>
+                        <span>04.08.2025 14:20</span>
+                      </div>
+                      <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Сумма получена:</span>
+                        <span class="font-bold">120 000 ₽</span>
+                      </div>
+                      <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Номер платежа:</span>
+                        <span class="font-mono">ПП-784512369</span>
+                      </div>
+                      <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Проверил:</span>
+                        <span>Алексей (менеджер)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Форма одобрения -->
+                <div>
+                  <div class="font-medium text-gray-700 mb-2">Одобрение пополнения:</div>
+                  <div class="p-4 bg-base-100 rounded-lg border border-base-300 space-y-3">
+                    <div class="form-control">
+                      <label class="label">
+                        <span class="label-text">Комментарий (необязательно)</span>
+                      </label>
+                      <textarea class="textarea textarea-bordered" placeholder="Комментарий для внутреннего использования" rows="2" id="approval-comment-3"></textarea>
+                    </div>
+                    
+                    <div class="form-control">
+                      <label class="label cursor-pointer justify-start gap-2">
+                        <input type="checkbox" class="checkbox checkbox-primary" id="send-notification-3" checked />
+                        <span class="label-text">Отправить уведомление партнёру</span>
+                      </label>
+                    </div>
+                    
+                    <div class="flex justify-end gap-2 mt-4">
+                      <button class="btn btn-outline btn-error" onclick="rejectDeposit('DEP-0783')">
+                        Отклонить
+                      </button>
+                      <button class="btn btn-success" onclick="approveDeposit('DEP-0783')">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Одобрить пополнение
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-actions justify-between mt-4 pt-4 border-t border-base-300">
+              <div class="flex items-center gap-2">
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  Быстрое одобрение
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="event.preventDefault()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                  Выписка
+                </button>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-outline btn-error" onclick="rejectDeposit('DEP-0783')">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                  Отклонить
+                </button>
+                <button class="btn btn-success" onclick="approveDeposit('DEP-0783')">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Одобрить
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Пагинация и инструменты -->
+    <div class="sticky bottom-0 bg-base-100 border-t border-base-300 p-4">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-sm text-gray-500">
+          <div class="flex items-center gap-2">
+            <span>Итого на пополнение:</span>
+            <span class="font-bold text-lg text-primary">245 000 ₽</span>
+          </div>
+          <div class="text-xs text-gray-400 mt-1">9 заявок, 3 требуют действий</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="join">
+            <button class="btn join-item btn-sm">1</button>
+            <button class="btn join-item btn-sm btn-active">2</button>
+            <button class="btn join-item btn-sm">3</button>
+          </div>
+          <div class="dropdown dropdown-top">
+            <div tabindex="0" role="button" class="btn btn-primary btn-sm">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Инструменты
+            </div>
+            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+              <li><a onclick="event.preventDefault()">Шаблоны реквизитов</a></li>
+              <li><a onclick="event.preventDefault()">Массовая отправка</a></li>
+              <li><a onclick="event.preventDefault()">Экспорт заявок</a></li>
+              <li><a onclick="event.preventDefault()">Настройки лимитов</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Фон для закрытия -->
+  <form method="dialog" class="modal-backdrop">
+    <button>закрыть</button>
+  </form>
+</dialog>
+
+<!-- Кнопка для открытия модального окна -->
+<button class="btn btn-outline justify-start" onclick="document.getElementById('deposit-moderation-modal').showModal()">
+  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+  </svg>
+  Модерация пополнения баланса
+</button>
+
+<script>
+  // Функции для управления процессом пополнения
+  
+  // Показ формы отправки реквизитов
+  function showRequisitesForm(depositId) {
+    document.getElementById(`requisites-section-${depositId}`).classList.add('hidden');
+    document.getElementById(`requisites-form-${depositId}`).classList.remove('hidden');
+  }
+  
+  // Отмена отправки реквизитов
+  function cancelRequisites(depositId) {
+    document.getElementById(`requisites-form-${depositId}`).classList.add('hidden');
+    document.getElementById(`requisites-section-${depositId}`).classList.remove('hidden');
+  }
+  
+  // Отправка реквизитов
+  function sendRequisites(depositId) {
+    const cardNumber = document.getElementById(`card-number-${depositId}`).value;
+    const cardHolder = document.getElementById(`card-holder-${depositId}`).value;
+    const bankName = document.getElementById(`bank-name-${depositId}`).value;
+    
+    if (!cardNumber || !cardHolder || !bankName) {
+      showNotification('Заполните все обязательные поля', 'error');
+      return;
+    }
+    
+    // Скрываем форму и показываем статус "отправлено"
+    document.getElementById(`requisites-form-${depositId}`).classList.add('hidden');
+    document.getElementById(`requisites-sent-${depositId}`).classList.remove('hidden');
+    
+    // Меняем статус заявки
+    const badge = document.querySelector(`#deposit-moderation-modal [id*="${depositId}"] .badge-warning`);
+    if (badge) {
+      badge.classList.remove('badge-warning');
+      badge.classList.add('badge-info');
+      badge.textContent = 'Ожидает оплаты';
+    }
+    
+    // Активируем кнопку одобрения
+    document.getElementById(`approve-btn-${depositId}`).disabled = false;
+    
+    showNotification('Реквизиты успешно отправлены', 'success');
+  }
+  
+  // Показ формы проверки оплаты
+  function showPaymentCheckForm(depositId) {
+    document.getElementById(`payment-check-form-${depositId}`).classList.remove('hidden');
+  }
+  
+  // Отмена проверки оплаты
+  function cancelPaymentCheck(depositId) {
+    document.getElementById(`payment-check-form-${depositId}`).classList.add('hidden');
+  }
+  
+  // Подтверждение оплаты
+  function confirmPayment(depositId) {
+    const txHash = document.getElementById(`tx-hash-${depositId}`).value;
+    const receivedAmount = document.getElementById(`received-amount-${depositId}`).value;
+    
+    if (!txHash || !receivedAmount) {
+      showNotification('Заполните хэш транзакции и сумму', 'error');
+      return;
+    }
+    
+    // Скрываем форму и показываем статус "подтверждено"
+    document.getElementById(`payment-check-form-${depositId}`).classList.add('hidden');
+    document.getElementById(`payment-confirmed-${depositId}`).classList.remove('hidden');
+    
+    // Меняем статус заявки
+    const badge = document.querySelector(`#deposit-moderation-modal [id*="${depositId}"] .badge-info`);
+    if (badge) {
+      badge.classList.remove('badge-info');
+      badge.classList.add('badge-success');
+      badge.textContent = 'Оплата подтверждена';
+    }
+    
+    showNotification('Оплата успешно подтверждена', 'success');
+  }
+  
+  // Одобрение пополнения
+  function approveDeposit(depositId) {
+    const comment = document.getElementById(`approval-comment-${depositId}`);
+    const sendNotification = document.getElementById(`send-notification-${depositId}`);
+    
+    // Здесь будет API запрос на одобрение
+    console.log(`Одобрено пополнение: ${depositId}`);
+    console.log('Комментарий:', comment ? comment.value : 'нет');
+    console.log('Уведомление:', sendNotification ? sendNotification.checked : true);
+    
+    showNotification(`Пополнение ${depositId} одобрено`, 'success');
+    
+    // В реальном приложении здесь будет обновление интерфейса
+    // или закрытие/удаление карточки заявки
+  }
+  
+  // Отклонение пополнения
+  function rejectDeposit(depositId) {
+    if (confirm(`Вы уверены, что хотите отклонить пополнение ${depositId}?`)) {
+      // Здесь будет API запрос на отклонение
+      console.log(`Отклонено пополнение: ${depositId}`);
+      showNotification(`Пополнение ${depositId} отклонено`, 'error');
+    }
+  }
+  
+  // Показ уведомлений
+  function showNotification(message, type = 'info') {
+    // Создаем элемент уведомления
+    const notification = document.createElement('div');
+    notification.className = `toast toast-top toast-center`;
+    notification.innerHTML = `
+      <div class="alert alert-${type}">
+        <span>${message}</span>
+      </div>
+    `;
+    
+    // Добавляем на страницу
+    document.body.appendChild(notification);
+    
+    // Удаляем через 3 секунды
+    setTimeout(() => {
+      notification.remove();
+    }, 3000);
+  }
+</script>
+
+<style>
+  /* Кастомные стили для красоты */
+  .card-border {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .card-border:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+  }
+  
+  /* Стили для скроллбара */
+  .overflow-y-auto::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+  
+  /* Анимация для статусов */
+  @keyframes pulse-warning {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.9; }
+  }
+  
+  .border-warning\/30 {
+    animation: pulse-warning 2s infinite;
+  }
+  
+  @keyframes pulse-info {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.95; }
+  }
+  
+  .border-info\/30 {
+    animation: pulse-info 2s infinite;
+  }
+</style>

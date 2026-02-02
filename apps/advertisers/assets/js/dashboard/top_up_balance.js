@@ -3,11 +3,9 @@ export function setupTopUpBalance() {
     const form = document.getElementById('top_up_balance');
     const messageContainer = document.getElementById('dashboard_messages__container');
 
-    // Кэшируем элементы и константы
     const ALERT_DURATION = 5000;
     const ANIMATION_DURATION = 500;
 
-    // Функция для создания уведомлений
     const createAlertMessage = (message, level = 'error') => {
         const iconClass = level === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle';
         const alertClass = `alert-${level}`;
@@ -19,7 +17,6 @@ export function setupTopUpBalance() {
         `;
     };
 
-    // Функция для показа сообщений
     const showMessages = (messages) => {
         messageContainer.innerHTML = '';
 
@@ -28,7 +25,6 @@ export function setupTopUpBalance() {
             messageElement.innerHTML = createAlertMessage(msg.message, msg.level);
             messageContainer.appendChild(messageElement.firstElementChild);
 
-            // Автоматическое скрытие
             setTimeout(() => {
                 const alert = messageContainer.querySelector('.alert-message:last-child');
                 if (alert) {
@@ -39,7 +35,6 @@ export function setupTopUpBalance() {
         });
     };
 
-    // Функция для показа ошибки
     const showNetworkError = () => {
         modal.close();
         showMessages([{
@@ -48,7 +43,6 @@ export function setupTopUpBalance() {
         }]);
     };
 
-    // Основной обработчик
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -71,7 +65,6 @@ export function setupTopUpBalance() {
             showMessages(data.messages || []);
 
         } catch (error) {
-            console.error('Request failed:', error);
             showNetworkError();
         }
     });

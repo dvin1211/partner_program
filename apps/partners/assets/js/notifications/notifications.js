@@ -2,7 +2,6 @@ import '@fortawesome/fontawesome-free/js/all'
 import '/apps/partners/assets/css/partner.css'
 
 document.addEventListener('DOMContentLoaded', () => {
-    // DOM элементы
     const refreshButton = document.getElementById('refresh-notifications');
     const notificationsList = document.getElementById('notifications-list');
     const loadingIndicator = document.getElementById('loading-indicator');
@@ -11,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalCountElement = document.getElementById('total-count');
     const formMarkAllAsRead = document.getElementById('mark-all-as-read');
 
-    // Инициализация
     initNotifications();
 
     function initNotifications() {
@@ -19,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setupEventListeners();
     }
 
-    // --- Пагинация ---
     function setupPagination() {
         const prev = document.getElementById('previous_page_number');
         const curr = document.getElementById('current_page_number');
@@ -58,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.history.pushState(state, state.title, state.url);
     }
 
-    // --- Слушатели ---
     function setupEventListeners() {
         refreshButton.addEventListener('click', () => {
             refreshNotifications().then(() => showToast('Уведомления обновлены', 'success'))
@@ -71,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     }
 
-    // --- Работа с уведомлениями ---
     async function refreshNotifications(page = null) {
         toggleLoading(true);
         try {

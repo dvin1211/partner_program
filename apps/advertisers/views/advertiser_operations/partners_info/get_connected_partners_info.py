@@ -42,7 +42,7 @@ def partners_json(request,partner_id):
     all_connections_subquery = ProjectPartner.objects.filter(
         partner=OuterRef('pk'),
         advertiser=user,
-    ).values('partner').annotate(
+    ).exclude(project__status='Удалено').values('partner').annotate(
         count=Count('id')
     ).values('count')[:1]
 
@@ -51,7 +51,7 @@ def partners_json(request,partner_id):
         partner=OuterRef('pk'),
         advertiser=user,
         status=ProjectPartner.StatusType.ACTIVE
-    ).values('partner').annotate(  # Используем values и annotate
+    ).exclude(project__status='Удалено').values('partner').annotate(
         count=Count('id')
     ).values('count')[:1]
 
@@ -59,7 +59,7 @@ def partners_json(request,partner_id):
     paused_connections_subquery = ProjectPartner.objects.filter(
         partner=OuterRef('pk'),
         status=ProjectPartner.StatusType.SUSPENDED
-    ).values('partner').annotate(
+    ).exclude(project__status='Удалено').values('partner').annotate(
         count=Count('id')
     ).values('count')[:1]
 
@@ -105,6 +105,6 @@ def partners_json(request,partner_id):
                 "income":partnership.project.get_partnership_conversions_sum(partner,partnership),
                 "conversions_count": partnership.project.get_partnerhip_conversions_count(partner,partnership),
                 "conversion_rate":partnership.project.get_partnerhip_conversion_percent(partner,partnership)
-            } for partnership in partner.project_memberships.filter(advertiser=user)
+            } for partnership in partner.project_memberships.filter(advertiser=user).exclude(project__status='Удалено')
         ]
     })

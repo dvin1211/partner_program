@@ -1,20 +1,17 @@
 let currentLinkData = null;
 let customParamCounter = 0;
-let isInitialized = false; // Флаг инициализации
+let isInitialized = false; 
 
 export function setupEditLink() {
     const editBtns = document.querySelectorAll('.edit_generated_link');
     
-    // Удаляем старые обработчики, чтобы избежать дублирования
     editBtns.forEach(btn => {
         btn.removeEventListener('click', handleEditClick);
         btn.addEventListener('click', handleEditClick);
     });
 }
 
-// Обработчик клика по кнопке редактирования
 function handleEditClick() {
-    // Первоначальная настройка данных
     const dataset = this.dataset;
 
     const requiredParams = JSON.parse(dataset.linkParams.replace(/'/g, '"'));
@@ -28,25 +25,20 @@ function handleEditClick() {
         base_url: linkUrl.origin
     }
 
-    // Очищаем предыдущие параметры
     clearCustomParams();
     
-    // Текущие параметры
     displayExistingParams(linkUrl.searchParams, requiredParams);
 
-    // Добавление новых параметров (инициализируем только один раз)
     if (!isInitialized) {
         initCustomParamsSystem();
         isInitialized = true;
     }
 
-    // Настройка формы изменения
     document.getElementById('edit_partner_link_form').action = `/partner/edit_partner_link/${dataset.linkId}`;
 
     document.getElementById('editPartnerLinkModal').show();
 }
 
-// Очистка кастомных параметров
 function clearCustomParams() {
     const customParamsList = document.getElementById('customParamsList');
     const noCustomParamsMessage = document.getElementById('noCustomParamsMessage');
@@ -56,17 +48,14 @@ function clearCustomParams() {
     noCustomParamsMessage.style.display = 'block';
 }
 
-// СУЩЕСТВУЮЩИЕ ПАРАМЕТРЫ
 function displayExistingParams(params, requiredParams) {
     const container = document.getElementById('existingParamsList');
     const noParamsMsg = document.getElementById('noExistingParamsMessage');
 
     container.innerHTML = '';
 
-    // Получаем все параметры кроме pid
     const paramsArray = Array.from(params.entries());
 
-    // Получаем все параметры кроме pid
     const otherParams = paramsArray.filter(([key]) => key !== 'pid');
 
     if (otherParams.length === 0) {
@@ -135,7 +124,6 @@ function createExistingParamElement(key, value, isRequiredParam = false) {
         <div class="flex items-center gap-2">
     `;
 
-    // Кнопка удаления (только для необязательных параметров)
     if (!isRequiredParam) {
         div.innerHTML += `
             <button type="button" class="remove-existing-param-btn btn btn-sm btn-outline btn-error">
@@ -149,7 +137,6 @@ function createExistingParamElement(key, value, isRequiredParam = false) {
 
     div.innerHTML += `</div>`;
 
-    // Получаем элементы
     const editBtn = div.querySelector('.edit-value-btn');
     const removeBtn = div.querySelector('.remove-existing-param-btn');
     const valueDisplay = div.querySelector('.value-display');
@@ -158,20 +145,16 @@ function createExistingParamElement(key, value, isRequiredParam = false) {
     const saveBtn = div.querySelector('.save-value-btn');
     const cancelBtn = div.querySelector('.cancel-edit-btn');
 
-    // Функция переключения в режим редактирования
     if (editBtn) {
         editBtn.addEventListener('click', function () {
-            // Скрываем отображение, показываем поле редактирования
             valueDisplay.classList.add('hidden');
             valueEdit.classList.remove('hidden');
             
-            // Фокусируемся на поле ввода и выделяем текст
             valueInput.focus();
             valueInput.select();
         });
     }
 
-    // Функция сохранения значения
     if (saveBtn) {
         saveBtn.addEventListener('click', function () {
             const newValue = valueInput.value.trim();
@@ -182,32 +165,25 @@ function createExistingParamElement(key, value, isRequiredParam = false) {
                 return;
             }
             
-            // Обновляем отображение
             valueDisplay.textContent = newValue;
             div.dataset.currentValue = newValue;
             
-            // Возвращаемся к режиму отображения
             valueDisplay.classList.remove('hidden');
             valueEdit.classList.add('hidden');
             
-            // Обновляем предпросмотр ссылки
             updatePreview();
         });
     }
 
-    // Функция отмены редактирования
     if (cancelBtn) {
         cancelBtn.addEventListener('click', function () {
-            // Возвращаем исходное значение
             valueInput.value = div.dataset.currentValue;
             
-            // Возвращаемся к режиму отображения
             valueDisplay.classList.remove('hidden');
             valueEdit.classList.add('hidden');
         });
     }
 
-    // Сохранение по нажатию Enter, отмена по Escape
     if (valueInput) {
         valueInput.addEventListener('keydown', function (e) {
             if (e.key === 'Enter' && saveBtn) {
@@ -218,14 +194,12 @@ function createExistingParamElement(key, value, isRequiredParam = false) {
         });
     }
 
-    // Функция удаления параметра (только для необязательных)
     if (removeBtn) {
         removeBtn.addEventListener('click', function () {
             if (confirm(`Удалить параметр "${key}"?`)) {
                 div.remove();
                 updatePreview();
 
-                // Показываем сообщение если не осталось параметров
                 const container = document.getElementById('existingParamsList');
                 const noParamsMsg = document.getElementById('noExistingParamsMessage');
 
@@ -241,16 +215,13 @@ function createExistingParamElement(key, value, isRequiredParam = false) {
     return div;
 }
 
-// Вспомогательная функция для экранирования HTML
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
 }
 
-// Функция для показа уведомлений
 function showNotification(message, type = 'info') {
-    // Создаем уведомление
     const notification = document.createElement('div');
     notification.className = `alert alert-${type} fixed top-4 right-4 z-50 max-w-sm`;
     notification.innerHTML = `
@@ -261,7 +232,6 @@ function showNotification(message, type = 'info') {
 
     document.body.appendChild(notification);
 
-    // Удаляем через 3 секунды
     setTimeout(() => {
         notification.remove();
     }, 3000);
@@ -275,10 +245,8 @@ function initCustomParamsSystem() {
 
     customParamCounter = 0;
 
-    // Очищаем старый обработчик, чтобы избежать дублирования
     addCustomParamBtn.removeEventListener('click', addCustomParamHandler);
     
-    // Функция-обработчик для добавления параметра
     function addCustomParamHandler() {
         addCustomParameter();
         updateCustomParamsVisibility();
@@ -286,11 +254,9 @@ function initCustomParamsSystem() {
     
     addCustomParamBtn.addEventListener('click', addCustomParamHandler);
 
-    // Функция добавления нового параметра
     function addCustomParameter(key = '', value = '') {
         customParamCounter++;
 
-        // Скрываем сообщение "нет параметров"
         noCustomParamsMessage.style.display = 'none';
 
         const paramElement = document.createElement('div');
@@ -347,14 +313,11 @@ function initCustomParamsSystem() {
 
         customParamsList.appendChild(paramElement);
 
-        // Обработчики событий
         const keyInput = paramElement.querySelector('.custom-param-key');
         const valueInput = paramElement.querySelector('.custom-param-value');
         const removeBtn = paramElement.querySelector('.remove-param-btn');
         const saveBtn = paramElement.querySelector('.save-param-btn');
-        const statusDiv = paramElement.querySelector('.param-status');
 
-        // Валидация ключа
         keyInput.addEventListener('input', function (e) {
             e.target.value = e.target.value.replace(/[^a-zA-Z0-9_]/g, '');
             updatePreview();
@@ -362,23 +325,19 @@ function initCustomParamsSystem() {
 
         valueInput.addEventListener('input', updatePreview);
 
-        // Удаление параметра
         removeBtn.addEventListener('click', function () {
             paramElement.remove();
             updateCustomParamsVisibility();
             updatePreview();
         });
 
-        // Сохранение параметра (добавление в существующие)
         saveBtn.addEventListener('click', function () {
             const key = keyInput.value.trim();
             const value = valueInput.value.trim();
 
             if (key && value) {
-                // Добавляем в существующие параметры
                 addToExistingParams(key, value);
 
-                // Удаляем из новых параметров
                 paramElement.remove();
                 updateCustomParamsVisibility();
             }
@@ -400,17 +359,14 @@ function initCustomParamsSystem() {
         return paramElement;
     }
 
-    // Функция обновления видимости
     function updateCustomParamsVisibility() {
         const hasCustomParams = customParamsList.children.length > 0;
         noCustomParamsMessage.style.display = hasCustomParams ? 'none' : 'block';
     }
 
-    // Инициализация
     updateCustomParamsVisibility();
 }
 
-// Добавление параметра в существующие
 function addToExistingParams(key, value) {
     const container = document.getElementById('existingParamsList');
     const noParamsMsg = document.getElementById('noExistingParamsMessage');
@@ -420,7 +376,6 @@ function addToExistingParams(key, value) {
     const paramElement = createExistingParamElement(key, value);
     container.appendChild(paramElement);
 
-    // Обновляем предпросмотр
     updatePreview();
 }
 
@@ -434,7 +389,6 @@ function updatePreview() {
         const pid = currentLinkData.id;
         const allParams = { pid: pid.toString() };
 
-        // Существующие параметры из data-атрибутов
         document.querySelectorAll('.existing-param-item').forEach(item => {
             const key = item.dataset.key;
             const value = item.dataset.currentValue || item.dataset.value;
@@ -443,7 +397,6 @@ function updatePreview() {
             }
         });
 
-        // Новые параметры из инпутов
         document.querySelectorAll('.custom-param-item').forEach(item => {
             const keyInput = item.querySelector('.custom-param-key');
             const valueInput = item.querySelector('.custom-param-value');
@@ -456,7 +409,6 @@ function updatePreview() {
             }
         });
 
-        // Формируем URL
         const url = new URL(baseUrl);
         Object.entries(allParams).forEach(([key, value]) => {
             if (value) {
@@ -471,11 +423,9 @@ function updatePreview() {
     }
 }
 
-// Удаляем глобальный обработчик, чтобы избежать дублирования
 document.removeEventListener('click', previewUpdateHandler);
 document.removeEventListener('input', previewInputHandler);
 
-// Создаем именованные функции для обработчиков
 function previewUpdateHandler(e) {
     if (e.target.closest('.remove-existing-param-btn')) {
         setTimeout(updatePreview, 50);
@@ -484,17 +434,14 @@ function previewUpdateHandler(e) {
 
 function previewInputHandler(e) {
     if (e.target.closest('.custom-param-key') || e.target.closest('.custom-param-value')) {
-        // Дебаунс для производительности
         clearTimeout(window.previewUpdateTimeout);
         window.previewUpdateTimeout = setTimeout(updatePreview, 100);
     }
 }
 
-// Настройка обновления предпросмотра
 function setupPreviewUpdates() {
     document.addEventListener('click', previewUpdateHandler);
     document.addEventListener('input', previewInputHandler);
 }
 
-// Инициализируем обновление предпросмотра один раз
 setupPreviewUpdates();

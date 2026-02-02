@@ -193,11 +193,15 @@
                                     </div>
                                 </td>
                                 <td class="block sm:table-cell"><span
-                                          class="badge badge-{%if link.project.status == 'Подтверждено' %}success{% elif link.project.status == 'На модерации'%}warning{% else %}error{% endif %} mr-2">
+                                          class="badge badge-{% if link.project.status == 'Подтверждено' %}success{% elif link.project.status == 'На модерации'%}warning{% else %}error{% endif %} mr-2">
                                     {{ link.project.status }}</span></td>
-                                <td class="hidden sm:table-cell"><span
-                                          class="badge badge-{%if link.is_active %}success{% else %}error{% endif %} mr-2">
-                                        {% if link.is_active %}Активна{% else %} Неактивна {% endif %} </span></td>
+                                <td class="hidden sm:table-cell">
+                                    <span class="badge badge-{% if link.project.status == 'Подтверждено' %}{%if link.is_active %}success{% else %}error{% endif %}{% else %}error{% endif %} mr-2">
+                                        {% if link.project.status == 'Подтверждено' %}
+                                            {% if link.is_active %}Активна{% else %} Неактивна {% endif %}
+                                        {% else %} Неактивна {% endif %}
+                                    </span>
+                                </td>
                                 <td class="hidden sm:table-cell">{{ link.clicks.all|length }}</td>
                                 <td class="hidden sm:table-cell">{{ link.conversions.all|length }}</td>
                                 <td class="hidden sm:table-cell"><span class="badge badge-warning">{{ link.conversion_percent|floatformat:2 }}%</span></td>
@@ -215,9 +219,11 @@
                                                 <li class="copy_generated_link" data-clipboard-text="{{ link.url }}">
                                                     <a><i class="fas fa-copy mr-2"></i>Копировать</a>
                                                 </li>
-                                                <li class="edit_generated_link" data-link-url="{{ link.url }}" data-link-id="{{ link.id }}" data-link-params="{{ link.params }}">
-                                                    <a><i class="fa-solid fa-pen-to-square mr-2"></i>Изменить</a>
-                                                </li>
+                                                {% if link.project.status != 'Удалено' %}
+                                                    <li class="edit_generated_link" data-link-url="{{ link.url }}" data-link-id="{{ link.id }}" data-link-params="{{ link.params }}">
+                                                        <a><i class="fa-solid fa-pen-to-square mr-2"></i>Изменить</a>
+                                                    </li>
+                                                {% endif %}
                                                 <li class="delete_generated_link" data-link-id="{{ link.id }}">
                                                     <a class="text-red-500"><i class="fas fa-trash-alt mr-2"></i>Удалить</a>
                                                 </li>
